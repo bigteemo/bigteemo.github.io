@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[题型总结: 滑动窗口 Sliding Window]]></title>
+    <url>%2F2017%2F09%2F10%2FAlgorithm-Summary-Sliding-Window%2F</url>
+    <content type="text"><![CDATA[基本思路滑动窗口的问题可以解决一系列，有两个字符串，找一个字符串存在另一个字符串的某种性质的问题。可以解决的问题参考同名tag. 这里只是列举一下模板 1234567891011121314151617181920212223242526272829303132333435363738394041&#125;int SlidingWindow(String s, String p) &#123; // 先建立一个map来存储p中的每一个字符出现的次数,etc Map&lt;Character, Integer&gt; map = new HashMap&lt;&gt;(); for (char ch: p.toCharArray()) &#123; map.put(ch, ...) &#125; // 然后用两个左右指针，右指针遍历字符串s。同时需要维护一个变量count, // 这个变量的作用在于知晓需要找的性质是否找到之类的问题。 int start = 0, end = 0, count = 0; while (end &lt; s.length()) &#123; char right = s.charAt(end); // 更新map中对应的数值, 同时需要更新count // count更新的条件取决于不同的题目。比如可以是所有的字符都出现过了。 if (map.containsKey(right)) &#123; // ... if (map.get(right) == 0) count--; &#125; // 查看寻找的条件是否已达到 while (count == 0) &#123; // 更新要求的答案 // 更新count start++; &#125; return res; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>题型总结</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[294. Flip Game II]]></title>
     <url>%2F2017%2F08%2F17%2F2017-08-17-294-Flip-Game-II%2F</url>
     <content type="text"><![CDATA[You are playing the following Flip Game with your friend: Given a string that contains only these two characters: + and -, you and your friend take turns to flip two consecutive “++” into “–”. The game ends when a person can no longer make a move and therefore the other person will be the winner. Write a function to determine if the starting player can guarantee a win. For example, given s = “++++”, return true. The starting player can guarantee a win by flipping the middle “++” to become “+–+”. Follow up:Derive your algorithm’s runtime complexity. 解法1：DFS O(N!!)每次尝试一个可以flip的位置，然后进行下一轮，如果下一轮的人不能获胜，则证明first player可以赢。Time Complexity 按照这个人说的：1For the time complexity, here is what I thought, let&apos;s say the length of the input string s is n, there are at most n - 1 ways to replace &quot;++&quot; to &quot;--&quot; (imagine s is all &quot;+++...&quot;), once we replace one &quot;++&quot;, there are at most (n - 2) - 1 ways to do the replacement, it&apos;s a little bit like solving the N-Queens problem, the time complexity is (n - 1) x (n - 3) x (n - 5) x ..., so it&apos;s O(n!!), double factorial. C++1 Java1 解法2： DP参考这篇：https://leetcode.com/problems/flip-game-ii/discuss/]]></content>

@@ -314,6 +314,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/10/2017-07-10-591-Tag-Validator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/10/2017-07-10-591-Tag-Validator/" itemprop="url">591. Tag Validator</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-10T21:43:39-04:00">
+                2017-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a string representing a code snippet, you need to implement a tag validator to parse the code and return whether it is valid. A code snippet is valid if all the following rules hold:</p>
+<pre><code>The code must be wrapped in a valid closed tag. Otherwise, the code is invalid.
+A closed tag (not necessarily valid) has exactly the following format : &lt;TAG_NAME&gt;TAG_CONTENT&lt;/TAG_NAME&gt;. Among them, &lt;TAG_NAME&gt; is the start tag, and &lt;/TAG_NAME&gt; is the end tag. The TAG_NAME in start and end tags should be the same. A closed tag is valid if and only if the TAG_NAME and TAG_CONTENT are valid.
+A valid TAG_NAME only contain upper-case letters, and has length in range [1,9]. Otherwise, the TAG_NAME is invalid.
+A valid TAG_CONTENT may contain other valid closed tags, cdata and any characters (see note1) EXCEPT unmatched &lt;, unmatched start and end tag, and unmatched or closed tags with invalid TAG_NAME. Otherwise, the TAG_CONTENT is invalid.
+A start tag is unmatched if no end tag exists with the same TAG_NAME, and vice versa. However, you also need to consider the issue of unbalanced when tags are nested.
+A &lt; is unmatched if you cannot find a subsequent &gt;. And when you find a &lt; or &lt;/, all the subsequent characters until the next &gt; should be parsed as TAG_NAME (not necessarily valid).
+The cdata has the following format : &lt;![CDATA[CDATA_CONTENT]]&gt;. The range of CDATA_CONTENT is defined as the characters between &lt;![CDATA[ and the first subsequent ]]&gt;.
+CDATA_CONTENT may contain any characters. The function of cdata is to forbid the validator to parse CDATA_CONTENT, so even it has some characters that can be parsed as tag (no matter valid or invalid), you should treat it as regular characters.
+</code></pre><p>Valid Code Examples:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">Input: &quot;&lt;DIV&gt;This is the first line &lt;![CDATA[&lt;div&gt;]]&gt;&lt;/DIV&gt;&quot;</div><div class="line"></div><div class="line">Output: True</div><div class="line"></div><div class="line">Explanation:</div><div class="line"></div><div class="line">The code is wrapped in a closed tag : &lt;DIV&gt; and &lt;/DIV&gt;.</div><div class="line"></div><div class="line">The TAG_NAME is valid, the TAG_CONTENT consists of some characters and cdata.</div><div class="line"></div><div class="line">Although CDATA_CONTENT has unmatched start tag with invalid TAG_NAME, it should be considered as plain text, not parsed as tag.</div><div class="line"></div><div class="line">So TAG_CONTENT is valid, and then the code is valid. Thus return true.</div><div class="line"></div><div class="line"></div><div class="line">Input: &quot;&lt;DIV&gt;&gt;&gt;  ![cdata[]] &lt;![CDATA[&lt;div&gt;]&gt;]]&gt;]]&gt;&gt;]&lt;/DIV&gt;&quot;</div><div class="line"></div><div class="line">Output: True</div><div class="line"></div><div class="line">Explanation:</div><div class="line"></div><div class="line">We first separate the code into : start_tag|tag_content|end_tag.</div><div class="line"></div><div class="line">start_tag -&gt; &quot;&lt;DIV&gt;&quot;</div><div class="line"></div><div class="line">end_tag -&gt; &quot;&lt;/DIV&gt;&quot;</div><div class="line"></div><div class="line">tag_content could also be separated into : text1|cdata|text2.</div><div class="line"></div><div class="line">text1 -&gt; &quot;&gt;&gt;  ![cdata[]] &quot;</div><div class="line"></div><div class="line">cdata -&gt; &quot;&lt;![CDATA[&lt;div&gt;]&gt;]]&gt;&quot;, where the CDATA_CONTENT is &quot;&lt;div&gt;]&gt;&quot;</div><div class="line"></div><div class="line">text2 -&gt; &quot;]]&gt;&gt;]&quot;</div><div class="line"></div><div class="line"></div><div class="line">The reason why start_tag is NOT &quot;&lt;DIV&gt;&gt;&gt;&quot; is because of the rule 6.</div><div class="line">The reason why cdata is NOT &quot;&lt;![CDATA[&lt;div&gt;]&gt;]]&gt;]]&gt;&quot; is because of the rule 7.</div></pre></td></tr></table></figure></p>
+<p>Invalid Code Examples:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Input: &quot;&lt;A&gt;  &lt;B&gt; &lt;/A&gt;   &lt;/B&gt;&quot;</div><div class="line">Output: False</div><div class="line">Explanation: Unbalanced. If &quot;&lt;A&gt;&quot; is closed, then &quot;&lt;B&gt;&quot; must be unmatched, and vice versa.</div><div class="line"></div><div class="line">Input: &quot;&lt;DIV&gt;  div tag is not closed  &lt;DIV&gt;&quot;</div><div class="line">Output: False</div><div class="line"></div><div class="line">Input: &quot;&lt;DIV&gt;  unmatched &lt;  &lt;/DIV&gt;&quot;</div><div class="line">Output: False</div><div class="line"></div><div class="line">Input: &quot;&lt;DIV&gt; closed tags with invalid tag name  &lt;b&gt;123&lt;/b&gt; &lt;/DIV&gt;&quot;</div><div class="line">Output: False</div><div class="line"></div><div class="line">Input: &quot;&lt;DIV&gt; unmatched tags with invalid tag name  &lt;/1234567890&gt; and &lt;CDATA[[]]&gt;  &lt;/DIV&gt;&quot;</div><div class="line">Output: False</div><div class="line"></div><div class="line">Input: &quot;&lt;DIV&gt;  unmatched start tag &lt;B&gt;  and unmatched end tag &lt;/C&gt;  &lt;/DIV&gt;&quot;</div><div class="line">Output: False</div></pre></td></tr></table></figure></p>
+<p>Note:</p>
+<pre><code>For simplicity, you could assume the input code (including the any characters mentioned above) only contain letters, digits, &apos;&lt;&apos;,&apos;&gt;&apos;,&apos;/&apos;,&apos;!&apos;,&apos;[&apos;,&apos;]&apos; and &apos; &apos;.
+</code></pre><h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>此题比较繁琐，题目也巨长。实际上并不是很难。<br>主要要先总结一下要求：<br>字符串一定是以tag开头和结尾<br>tag的名字要符合：　<br>１．　１－　９个字符之内<br>２．　只能是upper case letters<br>３．　需要两两配对<br>４．　&lt;!出现的话一定需要match ＣＤＡＴＡ</p>
+<p>然后对于每一个tag,用一个stack去记录上一个tag的顺序即可。</p>
+<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String code)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// It should start with &lt; and end with &gt;</span></div><div class="line">        <span class="keyword">if</span> (code == <span class="keyword">null</span> || code.length() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (code.charAt(<span class="number">0</span>) != <span class="string">'&lt;'</span> || code.charAt(code.length() - <span class="number">1</span>) != <span class="string">'&gt;'</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Stack&lt;String&gt; stack = <span class="keyword">new</span> Stack&lt;String&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">boolean</span> tagExist = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; code.length(); i++) &#123;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (stack.isEmpty() &amp;&amp; tagExist) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">int</span> last = -<span class="number">1</span>;</div><div class="line">            <span class="keyword">if</span> (code.charAt(i) == <span class="string">'&lt;'</span>) &#123;</div><div class="line">                <span class="keyword">if</span> (!stack.isEmpty() &amp;&amp; code.charAt(i + <span class="number">1</span>) == <span class="string">'!'</span>) &#123;</div><div class="line">                    last = code.indexOf(<span class="string">"]]&gt;"</span>, i + <span class="number">1</span>);</div><div class="line">                    <span class="keyword">if</span> (last == -<span class="number">1</span> || !isValidCdata(code.substring(i + <span class="number">2</span>, last))) &#123;</div><div class="line">                        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">boolean</span> close = <span class="keyword">false</span>;</div><div class="line">                    <span class="keyword">if</span> (code.charAt(i + <span class="number">1</span>) == <span class="string">'/'</span>) &#123;</div><div class="line">                        close = <span class="keyword">true</span>;</div><div class="line">                        i++;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    last = code.indexOf(<span class="string">"&gt;"</span>, i+<span class="number">1</span>);</div><div class="line">                    <span class="keyword">if</span> (last == -<span class="number">1</span> || !isValidTagName(code.substring(i + <span class="number">1</span>, last))) &#123;</div><div class="line">                        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span> (close) &#123;</div><div class="line">                        <span class="keyword">if</span> (stack.isEmpty() || !stack.peek().equals(code.substring(i + <span class="number">1</span>, last))) &#123;</div><div class="line">                            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                        &#125; <span class="keyword">else</span> &#123;</div><div class="line">                            stack.pop();</div><div class="line">                        &#125;</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        tagExist = <span class="keyword">true</span>;</div><div class="line">                        stack.push(code.substring(i + <span class="number">1</span>, last));</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                i = last;   <span class="comment">// move i to the end of the tag</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> stack.isEmpty() &amp;&amp; tagExist;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isValidCdata</span><span class="params">(String content)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> tag = content.indexOf(<span class="string">"[CDATA["</span>);</div><div class="line">        <span class="keyword">return</span> tag == <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isValidTagName</span><span class="params">(String tag)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> len = tag.length();</div><div class="line">        <span class="keyword">if</span> (len &lt; <span class="number">1</span> || len &gt; <span class="number">9</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (tag.charAt(i) &lt; <span class="string">'A'</span> || tag.charAt(i) &gt; <span class="string">'Z'</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/10/2017-07-10-32-Longest-Valid-Parentheses/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1668,155 +1826,11 @@ How to make sure the duplicated files you find are not false positive?
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/06/2017-07-06-161-One-Edit-Distance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/06/2017-07-06-161-One-Edit-Distance/" itemprop="url">161. One Edit Distance</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T20:03:14-04:00">
-                2017-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given two strings S and T, determine if they are both one edit distance apart.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>这题一开始如果用dp做的话需要O(MN)的复杂度，TLE了。那么一定有更简便的方法。<br>这里呢用到了edit distance的性质。对于edit distance为１的两个string,只可能存在下面三种情况。<br>长度相等 =&gt; 有且仅有一个字符不一样<br>长度不相等，　那么如果删掉左面string的一个字符或者是右面的一个字符。<br>最后还要比较一下两者的长度是否只差１。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isOneEditDistance</span><span class="params">(String s, String t)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> m = s.length(), n = t.length();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; Math.min(m, n); i++) &#123;</div><div class="line">            <span class="keyword">if</span> (s.charAt(i) != t.charAt(i)) &#123;</div><div class="line">                <span class="keyword">if</span> (m == n) &#123;</div><div class="line">                    <span class="keyword">return</span> s.substring(i+<span class="number">1</span>).equals(t.substring(i+<span class="number">1</span>));</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (m &gt; n) &#123;</div><div class="line">                    <span class="keyword">return</span> s.substring(i+<span class="number">1</span>).equals(t.substring(i));</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">return</span> s.substring(i).equals(t.substring(i+<span class="number">1</span>));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> Math.abs(m - n) == <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1862,7 +1876,7 @@ How to make sure the duplicated files you find are not false positive?
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">390</span>
+                <span class="site-state-item-count">391</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1884,7 +1898,7 @@ How to make sure the duplicated files you find are not false positive?
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
