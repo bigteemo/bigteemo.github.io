@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[130. Surrounded Regions]]></title>
+    <url>%2F2017%2F09%2F18%2F130-Surrounded-Regions%2F</url>
+    <content type="text"><![CDATA[Given a 2D board containing ‘X’ and ‘O’ (the letter O), capture all regions surrounded by ‘X’. A region is captured by flipping all ‘O’s into ‘X’s in that surrounded region. For example,1234X X X XX O O XX X O XX O X X After running your function, the board should be:1234X X X XX X X XX X X XX O X X 解法1: DFS123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475class Solution &#123; int[][] ds = new int[][]&#123;&#123;-1,0&#125;,&#123;1,0&#125;,&#123;0,1&#125;,&#123;0,-1&#125;&#125;; public void solve(char[][] board) &#123; if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) &#123; return; &#125; int row = board.length; int col = board[0].length; for (int i = 0; i &lt; row; i++) &#123; if (board[i][0] == &apos;O&apos;) &#123; dfs(board, i, 0); &#125; if (board[i][col - 1] == &apos;O&apos;) &#123; dfs(board, i, col - 1); &#125; &#125; for (int j = 0; j &lt; col; j++) &#123; if (board[0][j] == &apos;O&apos;) &#123; dfs(board, 0, j); &#125; if (board[row - 1][j] == &apos;O&apos;) &#123; dfs(board, row - 1, j); &#125; &#125; // Need to convert all &apos;M&apos; into &apos;O&apos; for (int i = 0; i &lt; row; i++) &#123; for (int j = 0; j &lt; col; j++) &#123; if (board[i][j] == &apos;O&apos;) &#123; board[i][j] = &apos;X&apos;; &#125; else if (board[i][j] == &apos;M&apos;) &#123; board[i][j] = &apos;O&apos;; &#125; &#125; &#125; &#125;// private void dfs(char[][] board, int i, int j) &#123;// board[i][j] = &apos;M&apos;;// for (int[] d : ds) &#123;// int x = i + d[0];// int y = j + d[1];// if (x &gt;= 0 &amp;&amp; x &lt; board.length &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; board[0].length &amp;&amp; board[x][y] == &apos;O&apos;) &#123;// dfs(board, x, y);// &#125;// &#125;// &#125; private void dfs(char[][] board, int i, int j) &#123; if (i &lt; 0 || i &gt; board.length - 1 || j &lt;0 || j &gt; board[0].length - 1) return; if (board[i][j] == &apos;O&apos;) board[i][j] = &apos;M&apos;; if (i &gt; 1 &amp;&amp; board[i-1][j] == &apos;O&apos;) dfs(board, i-1, j); if (i &lt; board.length - 2 &amp;&amp; board[i+1][j] == &apos;O&apos;) dfs(board, i+1, j); if (j &gt; 1 &amp;&amp; board[i][j-1] == &apos;O&apos;) dfs(board, i, j-1); if (j &lt; board[i].length - 2 &amp;&amp; board[i][j+1] == &apos;O&apos; ) dfs(board, i, j+1); &#125;&#125; 解法2: Union Find1]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+        <tag>C++</tag>
+        <tag>DFS</tag>
+        <tag>Union Find</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[题型总结: 滑动窗口 Sliding Window]]></title>
     <url>%2F2017%2F09%2F10%2FAlgorithm-Summary-Sliding-Window%2F</url>
     <content type="text"><![CDATA[基本思路滑动窗口的问题可以解决一系列，有两个字符串，找一个字符串存在另一个字符串的某种性质的问题。可以解决的问题参考同名tag. 这里只是列举一下模板 1234567891011121314151617181920212223242526272829303132333435363738394041&#125;int SlidingWindow(String s, String p) &#123; // 先建立一个map来存储p中的每一个字符出现的次数,etc Map&lt;Character, Integer&gt; map = new HashMap&lt;&gt;(); for (char ch: p.toCharArray()) &#123; map.put(ch, ...) &#125; // 然后用两个左右指针，右指针遍历字符串s。同时需要维护一个变量count, // 这个变量的作用在于知晓需要找的性质是否找到之类的问题。 int start = 0, end = 0, count = 0; while (end &lt; s.length()) &#123; char right = s.charAt(end); // 更新map中对应的数值, 同时需要更新count // count更新的条件取决于不同的题目。比如可以是所有的字符都出现过了。 if (map.containsKey(right)) &#123; // ... if (map.get(right) == 0) count--; &#125; // 查看寻找的条件是否已达到 while (count == 0) &#123; // 更新要求的答案 // 更新count start++; &#125; return res; &#125;&#125;]]></content>
@@ -4406,8 +4421,8 @@
         <tag>Leetcode</tag>
         <tag>Java</tag>
         <tag>C++</tag>
-        <tag>Backtracking</tag>
         <tag>DFS</tag>
+        <tag>Backtracking</tag>
       </tags>
   </entry>
   <entry>
@@ -4555,8 +4570,8 @@
       <tags>
         <tag>Leetcode</tag>
         <tag>Java</tag>
-        <tag>Recursion</tag>
         <tag>C++</tag>
+        <tag>Recursion</tag>
         <tag>Binary Tree</tag>
       </tags>
   </entry>
@@ -4738,8 +4753,8 @@
       <tags>
         <tag>Leetcode</tag>
         <tag>Java</tag>
-        <tag>Recursion</tag>
         <tag>C++</tag>
+        <tag>Recursion</tag>
         <tag>Divide and Conquer</tag>
         <tag>Tree</tag>
       </tags>
@@ -5053,8 +5068,8 @@
       </categories>
       <tags>
         <tag>Leetcode</tag>
-        <tag>Dynamic programming</tag>
         <tag>Java</tag>
+        <tag>Dynamic programming</tag>
         <tag>局部最优和全局最优</tag>
       </tags>
   </entry>
