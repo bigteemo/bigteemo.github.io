@@ -314,6 +314,157 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/17/2017-07-17-598-Range-Addition-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/17/2017-07-17-598-Range-Addition-II/" itemprop="url">598. Range Addition II</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-17T20:53:10-04:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an m * n matrix M initialized with all 0’s and several update operations.</p>
+<p>Operations are represented by a 2D array, and each operation is represented by an array with two positive integers a and b, which means M[i][j] should be added by one for all 0 &lt;= i &lt; a and 0 &lt;= j &lt; b.</p>
+<p>You need to count and return the number of maximum integers in the matrix after performing all the operations.</p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">m = 3, n = 3</div><div class="line">operations = [[2,2],[3,3]]</div><div class="line">Output: 4</div><div class="line">Explanation:</div><div class="line">Initially, M =</div><div class="line">[[0, 0, 0],</div><div class="line"> [0, 0, 0],</div><div class="line"> [0, 0, 0]]</div><div class="line"></div><div class="line">After performing [2,2], M =</div><div class="line">[[1, 1, 0],</div><div class="line"> [1, 1, 0],</div><div class="line"> [0, 0, 0]]</div><div class="line"></div><div class="line">After performing [3,3], M =</div><div class="line">[[2, 2, 1],</div><div class="line"> [2, 2, 1],</div><div class="line"> [1, 1, 1]]</div><div class="line"></div><div class="line">So the maximum integer in M is 2, and there are four of it in M. So return 4.</div></pre></td></tr></table></figure></p>
+<p>Note:</p>
+<pre><code>The range of m and n is [1,40000].
+The range of a is [1,m], and the range of b is [1,n].
+The range of operations size won&apos;t exceed 10,000.
+</code></pre><h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>思想很巧妙，拥有最大值的数组一定是执行操作最多的。操作共享的最小范围就是row和col分别的最小值。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/17/2017-07-17-599-Minimum-Index-Sum-of-Two-Lists/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1631,159 +1782,6 @@ All the tilt values won&apos;t exceed the range of 32-bit integer.
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/15/2017-07-15-475-Heaters/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/15/2017-07-15-475-Heaters/" itemprop="url">475. Heaters</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-15T08:05:07-04:00">
-                2017-07-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Winter is coming! Your first job during the contest is to design a standard heater with fixed warm radius to warm all the houses.</p>
-<p>Now, you are given positions of houses and heaters on a horizontal line, find out minimum radius of heaters so that all houses could be covered by those heaters.</p>
-<p>So, your input will be the positions of houses and heaters seperately, and your expected output will be the minimum radius standard of heaters.</p>
-<p>Note:</p>
-<pre><code>Numbers of houses and heaters you are given are non-negative and will not exceed 25000.
-Positions of houses and heaters you are given are non-negative and will not exceed 10^9.
-As long as a house is in the heaters&apos; warm radius range, it can be warmed.
-All the heaters follow your radius standard and the warm radius will the same.
-</code></pre><p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: [1,2,3],[2]</div><div class="line">Output: 1</div><div class="line">Explanation: The only heater was placed in the position 2, and if we use the radius 1 standard, then all the houses can be warmed.</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: [1,2,3,4],[1,4]</div><div class="line">Output: 1</div><div class="line">Explanation: The two heater was placed in the position 1 and 4. We need to use radius 1 standard, then all the houses can be warmed.</div></pre></td></tr></table></figure></p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>Array的题目需要总结一下常见的思路。<br>一般看到array想想：是否需要排序？可以使用双指针？是否可以dp?<br>这题的思路是，要覆盖所有的房子，那么每一个房子要知道离他最近的heater在哪里。<br>我们找出所有房子对应的最近的heater的距离，然后再取最大的距离就是我们所求的最小的radius。<br>我们可以对heaters排序，然后找寻对于每一个house最近的heaters，这里有一点greedy的思想，就是如果i…j对于房子A不是最近的heater，那么对于一个排在房子A之后的房子B，他们也一定不是最近的heaters。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRadius</span><span class="params">(<span class="keyword">int</span>[] houses, <span class="keyword">int</span>[] heaters)</span> </span>&#123;</div><div class="line"></div><div class="line">        Arrays.sort(houses);</div><div class="line">        Arrays.sort(heaters);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, res = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> house: houses) &#123;</div><div class="line">            <span class="keyword">while</span> (i &lt; heaters.length - <span class="number">1</span> &amp;&amp; Math.abs(heaters[i] - house) &gt;= Math.abs(heaters[i + <span class="number">1</span>] - house)) &#123;</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line">            res = Math.max(res, Math.abs(heaters[i] - house));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1834,7 +1832,7 @@ All the heaters follow your radius standard and the warm radius will the same.
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">393</span>
+                <span class="site-state-item-count">394</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

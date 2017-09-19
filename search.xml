@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[137. Single Number II]]></title>
+    <url>%2F2017%2F09%2F18%2F137-Single-Number-II%2F</url>
+    <content type="text"><![CDATA[Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one. Note:Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 解法1： O(N) Time + O(1) Space主要的思路是对于每一位（32中的一位），如果一个数字出现三次的话，该位出现次数为1.如果统计每一个位数上的出现次数，再对3取余，那么剩下的每一个位子上的1就是只出现一次的数。这个思想也可以递推到其他的出现频率题上。 lang: java123456789101112131415161718192021222324class Solution &#123; public int singleNumber(int[] nums) &#123; if (nums == null || nums.length == 0) &#123; return 0; &#125; int ans = 0; for (int i = 0; i &lt; 32; i++) &#123; int count = 0; for (int num : nums) &#123; if (((num &gt;&gt; i) &amp; 1) == 1) &#123; count++; &#125; &#125; count = count % 3; if (count != 0) &#123; ans |= (1 &lt;&lt; i); &#125; &#125; return ans; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+        <tag>Bit Manipulation</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[134. Gas Station]]></title>
     <url>%2F2017%2F09%2F18%2F134-Gas-Station%2F</url>
     <content type="text"><![CDATA[There are N gas stations along a circular route, where the amount of gas at station i is gas[i]. You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations. Return the starting gas station’s index if you can travel around the circuit once, otherwise return -1. Note:The solution is guaranteed to be unique. 解法1： Greedylang: java12345678910111213141516171819202122232425class Solution &#123; public int canCompleteCircuit(int[] gas, int[] cost) &#123; if (gas == null || gas.length == 0 || cost == null || cost.length == 0) &#123; return -1; &#125; int sum = 0, total = 0, pos = -1; for (int i = 0; i &lt; gas.length; i++) &#123; sum += gas[i] - cost[i]; total += sum; if (sum &lt; 0) &#123; pos = i; sum = 0; // reset sum to be zero &#125; &#125; if (total &lt; 0) &#123; return -1; &#125; return pos + 1; &#125;&#125;]]></content>
@@ -4783,8 +4796,8 @@
         <tag>Leetcode</tag>
         <tag>Java</tag>
         <tag>C++</tag>
-        <tag>XOR</tag>
         <tag>Bit Manipulation</tag>
+        <tag>XOR</tag>
       </tags>
   </entry>
   <entry>

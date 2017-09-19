@@ -314,6 +314,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/03/2016-12-03-leetcode-solution-Intersection-of-Two-Arrays-II-350/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/03/2016-12-03-leetcode-solution-Intersection-of-Two-Arrays-II-350/" itemprop="url">leetcode解题: Intersection of Two Arrays II (350)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-03T22:42:48-05:00">
+                2016-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given two arrays, write a function to compute their intersection.</p>
+<p>Example:<br>Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2, 2].</p>
+<p>Note:<br>Each element in the result should appear as many times as it shows in both arrays.<br>The result can be in any order.<br>Follow up:<br>What if the given array is already sorted? How would you optimize your algorithm?<br>What if nums1’s size is small compared to nums2’s size? Which algorithm is better?<br>What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?</p>
+<h3 id="解法1：HashTable-O-N-Space-O-N-M-Time"><a href="#解法1：HashTable-O-N-Space-O-N-M-Time" class="headerlink" title="解法1：HashTable O(N) Space + O(N + M) Time"></a>解法1：HashTable O(N) Space + O(N + M) Time</h3><p>将其中一个构建hashtable，记录每个数字出现的次数。扫描第二个数组，每当找到一样的次数大于0的数字则加入res，加入结束以后需要将hashtable中出现次数-1<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; intersect(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; <span class="built_in">map</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num: nums1) &#123;</div><div class="line">            ++<span class="built_in">map</span>[num];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums2) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">map</span>[num] &gt; <span class="number">0</span>) &#123;</div><div class="line">                res.emplace_back(num);</div><div class="line">                --<span class="built_in">map</span>[num];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<h3 id="Follow-up："><a href="#Follow-up：" class="headerlink" title="Follow up："></a>Follow up：</h3><p>如果是已经排序了的数组，那么不需要用hashtable，可以用two pointers解决。简化到了O(N + M) TIME + O(1) Space<br>对于follow up的回答：这个<a href="http://buttercola.blogspot.com/2016/06/leetcode-intersection-of-two-arrays-ii.html" target="_blank" rel="external">blog</a>给了挺好的答案。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line">pubic：</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; intersect(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2) &#123;</div><div class="line">      <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">      <span class="keyword">int</span> ptr1 =<span class="number">0</span>, ptr2 = <span class="number">0</span>;</div><div class="line">      <span class="keyword">while</span> (ptr1 &lt; nums1.size() &amp;&amp; ptr2 &lt; nums2.size()) &#123;</div><div class="line">        <span class="keyword">if</span> (nums1[ptr1] &lt; nums2[ptr2]) &#123;</div><div class="line">          ++ptr1;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums1[ptr1] &gt; nums2[ptr2]) &#123;</div><div class="line">          ++ptr2;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        res.emplace_back(nums1[ptr1]);</div><div class="line">        ++ptr1;</div><div class="line">        ++ptr2;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/03/2016-12-03-leetcode-solution-Contains-Duplicate-217/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1631,155 +1778,6 @@ AB -&gt; 28
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/11/28/2016-11-28-leetcode-solution-Intersection-of-two-arrays-349/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/28/2016-11-28-leetcode-solution-Intersection-of-two-arrays-349/" itemprop="url">leetcode解题: Intersection of two arrays (349)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-28T21:21:19-05:00">
-                2016-11-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given two arrays, write a function to compute their intersection.</p>
-<p>Example:<br>Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].</p>
-<p>Note:<br>Each element in the result must be unique.<br>The result can be in any order.</p>
-<h3 id="解法1：Sort-Two-pointers-O-NlogN-Time-O-1-Space"><a href="#解法1：Sort-Two-pointers-O-NlogN-Time-O-1-Space" class="headerlink" title="解法1：Sort + Two pointers O(NlogN) Time + O(1) Space"></a>解法1：Sort + Two pointers O(NlogN) Time + O(1) Space</h3><p>先考虑将两个数组排序，然后只需要维护两个指针，对于一样的数值就放入返回数组中。同时要考虑去重的情况。这点上<a href="http://www.jiuzhang.com/solutions/intersection-of-two-arrays/" target="_blank" rel="external">九章的答案</a>做的比我更简洁。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; intersection(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2) &#123;</div><div class="line">        <span class="built_in">std</span>::sort(nums1.begin(), nums1.end());</div><div class="line">        <span class="built_in">std</span>::sort(nums2.begin(), nums2.end());</div><div class="line">        <span class="keyword">int</span> ptr1 = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> ptr2 = <span class="number">0</span>;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        <span class="keyword">while</span> (ptr1 &lt; nums1.size() &amp;&amp; ptr2 &lt; nums2.size()) &#123;</div><div class="line">            <span class="keyword">while</span> (ptr1 &gt; <span class="number">0</span> &amp;&amp; ptr1 &lt; nums1.size() &amp;&amp; nums1[ptr1] == nums1[ptr1<span class="number">-1</span>]) ++ptr1;</div><div class="line">            <span class="keyword">while</span> (ptr2 &gt; <span class="number">0</span> &amp;&amp; ptr2 &lt; nums2.size() &amp;&amp; nums2[ptr2] == nums2[ptr2 - <span class="number">1</span>]) ++ptr2;</div><div class="line">            <span class="keyword">if</span> (ptr1 == nums1.size()) <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">if</span> (ptr2 == nums2.size()) <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">if</span> (nums1[ptr1] &lt; nums2[ptr2]) &#123;</div><div class="line">                ++ptr1;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums1[ptr1] &gt; nums2[ptr2]) &#123;</div><div class="line">                ++ptr2;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                res.emplace_back(nums1[ptr1]);</div><div class="line">                ++ptr1;</div><div class="line">                ++ptr2;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-HashTable-O-N-Time-O-N-Space"><a href="#解法2：-HashTable-O-N-Time-O-N-Space" class="headerlink" title="解法2： HashTable O(N) Time + O(N) Space"></a>解法2： HashTable O(N) Time + O(N) Space</h3><p>先扫描第一个数组，建立hashtable，然后扫描第二个数组，同时维持一个结果的hashtable用来去重。<br>C++<br>用到了unordered_map’s iterate method.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt; <span class="built_in">map</span>; <span class="comment">// define a map</span></div><div class="line"><span class="built_in">map</span>.begin() 和 <span class="built_in">map</span>.end() <span class="keyword">return</span> iterator of the <span class="built_in">map</span>, can be used like</div><div class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> a = <span class="built_in">map</span>.begin(); a!= <span class="built_in">map</span>.end(); a++) &#123;&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; intersection(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2) &#123;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt; <span class="built_in">map</span>;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt; res;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num: nums1) &#123;</div><div class="line">            <span class="built_in">map</span>[num] = <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num: nums2) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">map</span>[num] &amp;&amp; !res[num])</div><div class="line">                res[num] = <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// iterate over map</span></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res_vector;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> iterator = res.begin(); iterator != res.end(); iterator++) &#123;</div><div class="line">            <span class="keyword">if</span> (iterator-&gt;second) &#123;</div><div class="line">                res_vector.emplace_back(iterator-&gt;first);</div><div class="line">            &#125;</div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> res_vector;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1830,7 +1828,7 @@ AB -&gt; 28
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">393</span>
+                <span class="site-state-item-count">394</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
