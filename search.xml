@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[134. Gas Station]]></title>
+    <url>%2F2017%2F09%2F18%2F134-Gas-Station%2F</url>
+    <content type="text"><![CDATA[There are N gas stations along a circular route, where the amount of gas at station i is gas[i]. You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations. Return the starting gas station’s index if you can travel around the circuit once, otherwise return -1. Note:The solution is guaranteed to be unique. 解法1： Greedylang: java12345678910111213141516171819202122232425class Solution &#123; public int canCompleteCircuit(int[] gas, int[] cost) &#123; if (gas == null || gas.length == 0 || cost == null || cost.length == 0) &#123; return -1; &#125; int sum = 0, total = 0, pos = -1; for (int i = 0; i &lt; gas.length; i++) &#123; sum += gas[i] - cost[i]; total += sum; if (sum &lt; 0) &#123; pos = i; sum = 0; // reset sum to be zero &#125; &#125; if (total &lt; 0) &#123; return -1; &#125; return pos + 1; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+        <tag>Greddy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[130. Surrounded Regions]]></title>
     <url>%2F2017%2F09%2F18%2F130-Surrounded-Regions%2F</url>
     <content type="text"><![CDATA[Given a 2D board containing ‘X’ and ‘O’ (the letter O), capture all regions surrounded by ‘X’. A region is captured by flipping all ‘O’s into ‘X’s in that surrounded region. For example,1234X X X XX O O XX X O XX O X X After running your function, the board should be:1234X X X XX X X XX X X XX O X X 解法1: DFS123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475class Solution &#123; int[][] ds = new int[][]&#123;&#123;-1,0&#125;,&#123;1,0&#125;,&#123;0,1&#125;,&#123;0,-1&#125;&#125;; public void solve(char[][] board) &#123; if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) &#123; return; &#125; int row = board.length; int col = board[0].length; for (int i = 0; i &lt; row; i++) &#123; if (board[i][0] == &apos;O&apos;) &#123; dfs(board, i, 0); &#125; if (board[i][col - 1] == &apos;O&apos;) &#123; dfs(board, i, col - 1); &#125; &#125; for (int j = 0; j &lt; col; j++) &#123; if (board[0][j] == &apos;O&apos;) &#123; dfs(board, 0, j); &#125; if (board[row - 1][j] == &apos;O&apos;) &#123; dfs(board, row - 1, j); &#125; &#125; // Need to convert all &apos;M&apos; into &apos;O&apos; for (int i = 0; i &lt; row; i++) &#123; for (int j = 0; j &lt; col; j++) &#123; if (board[i][j] == &apos;O&apos;) &#123; board[i][j] = &apos;X&apos;; &#125; else if (board[i][j] == &apos;M&apos;) &#123; board[i][j] = &apos;O&apos;; &#125; &#125; &#125; &#125;// private void dfs(char[][] board, int i, int j) &#123;// board[i][j] = &apos;M&apos;;// for (int[] d : ds) &#123;// int x = i + d[0];// int y = j + d[1];// if (x &gt;= 0 &amp;&amp; x &lt; board.length &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; board[0].length &amp;&amp; board[x][y] == &apos;O&apos;) &#123;// dfs(board, x, y);// &#125;// &#125;// &#125; private void dfs(char[][] board, int i, int j) &#123; if (i &lt; 0 || i &gt; board.length - 1 || j &lt;0 || j &gt; board[0].length - 1) return; if (board[i][j] == &apos;O&apos;) board[i][j] = &apos;M&apos;; if (i &gt; 1 &amp;&amp; board[i-1][j] == &apos;O&apos;) dfs(board, i-1, j); if (i &lt; board.length - 2 &amp;&amp; board[i+1][j] == &apos;O&apos;) dfs(board, i+1, j); if (j &gt; 1 &amp;&amp; board[i][j-1] == &apos;O&apos;) dfs(board, i, j-1); if (j &lt; board[i].length - 2 &amp;&amp; board[i][j+1] == &apos;O&apos; ) dfs(board, i, j+1); &#125;&#125; 解法2: Union Find1]]></content>
