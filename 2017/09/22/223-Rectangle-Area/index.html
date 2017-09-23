@@ -94,19 +94,19 @@
 
 
 
-<meta name="description" content="解法1：Find the total area covered by two rectilinear rectangles in a 2D plane. Each rectangle is defined by its bottom left corner and top right corner as shown in the figure. Assume that the total area">
+<meta name="description" content="Find the total area covered by two rectilinear rectangles in a 2D plane. Each rectangle is defined by its bottom left corner and top right corner as shown in the figure. Assume that the total area is">
 <meta name="keywords" content="Leetcode,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="223. Rectangle Area">
 <meta property="og:url" content="http://bigteemo.github.io/2017/09/22/223-Rectangle-Area/index.html">
 <meta property="og:site_name" content="大提莫">
-<meta property="og:description" content="解法1：Find the total area covered by two rectilinear rectangles in a 2D plane. Each rectangle is defined by its bottom left corner and top right corner as shown in the figure. Assume that the total area">
+<meta property="og:description" content="Find the total area covered by two rectilinear rectangles in a 2D plane. Each rectangle is defined by its bottom left corner and top right corner as shown in the figure. Assume that the total area is">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://leetcode.com/static/images/problemset/rectangle_area.png">
-<meta property="og:updated_time" content="2017-09-23T02:38:28.043Z">
+<meta property="og:updated_time" content="2017-09-23T02:39:20.352Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="223. Rectangle Area">
-<meta name="twitter:description" content="解法1：Find the total area covered by two rectilinear rectangles in a 2D plane. Each rectangle is defined by its bottom left corner and top right corner as shown in the figure. Assume that the total area">
+<meta name="twitter:description" content="Find the total area covered by two rectilinear rectangles in a 2D plane. Each rectangle is defined by its bottom left corner and top right corner as shown in the figure. Assume that the total area is">
 <meta name="twitter:image" content="https://leetcode.com/static/images/problemset/rectangle_area.png">
 
 
@@ -408,10 +408,10 @@
       
 
       
-        <h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>Find the total area covered by two rectilinear rectangles in a 2D plane.</p>
+        <p>Find the total area covered by two rectilinear rectangles in a 2D plane.</p>
 <p>Each rectangle is defined by its bottom left corner and top right corner as shown in the figure.</p>
 <p><img src="https://leetcode.com/static/images/problemset/rectangle_area.png" alt="rectangle area"><br>Assume that the total area is never beyond the maximum possible value of int.</p>
-<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) &#123;</div><div class="line"></div><div class="line">        int left = (C - A) * (D - B);</div><div class="line">        int right = (G - E) * (H - F);</div><div class="line"></div><div class="line">        // on the left or right side</div><div class="line">        if (E &gt;= C || G &lt;= A) &#123;</div><div class="line">            return left + right;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // above or below</div><div class="line">        if (F &gt;= D || H &lt;= B ) &#123;</div><div class="line">            return left + right;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // overlap</div><div class="line">        int ldx = Math.max(A, E);</div><div class="line">        int ldy = Math.max(B, F);</div><div class="line">        int rux = Math.min(C, G);</div><div class="line">        int ruy = Math.min(D, H);</div><div class="line"></div><div class="line">        int cross = (rux - ldx) * (ruy - ldy);</div><div class="line"></div><div class="line">        return left + right - cross;        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) &#123;</div><div class="line"></div><div class="line">        int left = (C - A) * (D - B);</div><div class="line">        int right = (G - E) * (H - F);</div><div class="line"></div><div class="line">        // on the left or right side</div><div class="line">        if (E &gt;= C || G &lt;= A) &#123;</div><div class="line">            return left + right;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // above or below</div><div class="line">        if (F &gt;= D || H &lt;= B ) &#123;</div><div class="line">            return left + right;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // overlap</div><div class="line">        int ldx = Math.max(A, E);</div><div class="line">        int ldy = Math.max(B, F);</div><div class="line">        int rux = Math.min(C, G);</div><div class="line">        int ruy = Math.min(D, H);</div><div class="line"></div><div class="line">        int cross = (rux - ldx) * (ruy - ldy);</div><div class="line"></div><div class="line">        return left + right - cross;        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
