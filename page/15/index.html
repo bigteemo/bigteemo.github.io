@@ -314,6 +314,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/24/2017-06-24-245-Shortest-Word-Distance-III/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/24/2017-06-24-245-Shortest-Word-Distance-III/" itemprop="url">245. Shortest Word Distance III</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-24T08:56:45-04:00">
+                2017-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>This is a follow up of Shortest Word Distance. The only difference is now word1 could be the same as word2.</p>
+<p>Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list.</p>
+<p>word1 and word2 may be the same and they represent two individual words in the list.</p>
+<p>For example,<br>Assume that words = [“practice”, “makes”, “perfect”, “coding”, “makes”].</p>
+<p>Given word1 = “makes”, word2 = “coding”, return 1.<br>Given word1 = “makes”, word2 = “makes”, return 3.</p>
+<p>Note:<br>You may assume word1 and word2 are both in the list.</p>
+<h3 id="解法1：双指针"><a href="#解法1：双指针" class="headerlink" title="解法1：双指针"></a>解法1：双指针</h3><p>区别就是当word1和word2相同的时候，退化成只需要一个指针就可以了。在这种情况下，先判断之前是否出现过这个单词，如果出现过计算下当前的距离，然后更新上一次出现的位置。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">shortestWordDistance</span><span class="params">(String[] words, String word1, String word2)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (words.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> left = -<span class="number">1</span>, right = -<span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> res = Integer.MAX_VALUE;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; words.length; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (words[i].equals(word1) &amp;&amp; word1.equals(word2)) &#123;</div><div class="line">                <span class="keyword">if</span> (left != -<span class="number">1</span>) &#123;</div><div class="line">                    res = Math.min(res, i - left);    </div><div class="line">                &#125;</div><div class="line">                left = i;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (words[i].equals(word1)) &#123;</div><div class="line">                left = i;</div><div class="line">                <span class="keyword">if</span> (right != -<span class="number">1</span>) &#123;</div><div class="line">                    res = Math.min(res, left - right);</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (words[i].equals(word2)) &#123;</div><div class="line">                right = i;</div><div class="line">                <span class="keyword">if</span> (left != -<span class="number">1</span>) &#123;</div><div class="line">                    res = Math.min(res, right - left);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/23/2017-06-23-259-3Sum-Smaller/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1627,155 +1776,6 @@ The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/21/2017-06-21-575-Distribute-Candies/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/21/2017-06-21-575-Distribute-Candies/" itemprop="url">575. Distribute Candies</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-21T23:03:29-04:00">
-                2017-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an integer array with even length, where different numbers in this array represent different kinds of candies. Each number means one candy of the corresponding kind. You need to distribute these candies equally in number to brother and sister. Return the maximum number of kinds of candies the sister could gain.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Input: candies = [1,1,2,2,3,3]</div><div class="line">Output: 3</div><div class="line">Explanation:</div><div class="line">There are three different kinds of candies (1, 2 and 3), and two candies for each kind.</div><div class="line">Optimal distribution: The sister has candies [1,2,3] and the brother has candies [1,2,3], too.</div><div class="line">The sister has three different kinds of candies.</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Input: candies = [1,1,2,3]</div><div class="line">Output: 2</div><div class="line">Explanation: For example, the sister has candies [2,3] and the brother has candies [1,1].</div><div class="line">The sister has two different kinds of candies, the brother has only one kind of candies.</div></pre></td></tr></table></figure></p>
-<p>Note:</p>
-<pre><code>The length of the given array is in range [2, 10,000], and will be even.
-The number in given array is in range [-100,000, 100,000].
-</code></pre><h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>有一类问题的思路是这样的：如果求最大或者最小值，先考虑一下理论上可能可以取到的值。然后再以此为突破口看看是否有思路。<br>这题就是这样，先想到要取n/2个数，那么最大的种类也就是n/2，不可能再大了。那么如果数组里的类别比n/2小，那么最大的值就是数组里的数的种类数。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">distributeCandies</span><span class="params">(<span class="keyword">int</span>[] candies)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (candies == <span class="keyword">null</span> || candies.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> candy: candies) &#123;</div><div class="line">            set.add(candy);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> Math.min(set.size(), candies.length / <span class="number">2</span>);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1826,7 +1826,7 @@ The number in given array is in range [-100,000, 100,000].
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">394</span>
+                <span class="site-state-item-count">395</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1848,7 +1848,7 @@ The number in given array is in range [-100,000, 100,000].
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
