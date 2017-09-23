@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[223. Rectangle Area]]></title>
+    <url>%2F2017%2F09%2F22%2F223-Rectangle-Area%2F</url>
+    <content type="text"><![CDATA[解法1：Find the total area covered by two rectilinear rectangles in a 2D plane. Each rectangle is defined by its bottom left corner and top right corner as shown in the figure. Assume that the total area is never beyond the maximum possible value of int. lang: java123456789101112131415161718192021222324252627class Solution &#123; public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) &#123; int left = (C - A) * (D - B); int right = (G - E) * (H - F); // on the left or right side if (E &gt;= C || G &lt;= A) &#123; return left + right; &#125; // above or below if (F &gt;= D || H &lt;= B ) &#123; return left + right; &#125; // overlap int ldx = Math.max(A, E); int ldy = Math.max(B, F); int rux = Math.min(C, G); int ruy = Math.min(D, H); int cross = (rux - ldx) * (ruy - ldy); return left + right - cross; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[220. Contains Duplicate III]]></title>
     <url>%2F2017%2F09%2F22%2F220-Contains-Duplicate-III%2F</url>
     <content type="text"><![CDATA[Given an array of integers, find out whether there are two distinct indices i and j in the array such that the absolute difference between nums[i] and nums[j] is at most t and the absolute difference between i and j is at most k. 解法1： TreeSet, O(nlog(k, n))这里用到一个比较特殊的数据结构treeset。实际上这是一个self-balancing binary search tree, 他的基本操作都是O(logN)的。而且他还有两个额外的功能很有用set.ceiling(T)和set.floor(T)ceiling返回的是大于等于T的最小的元素，而floor返回的是小于等于T的最大元素。那么我们维护一个大小为k的set，这样就满足了一个条件。那第二个条件满足的条件就是对于每一个num，找出他的ceiling和floor，看是否在范围内即可。lang: java1234567891011121314151617181920212223242526class Solution &#123; public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) &#123; if (nums == null || nums.length == 0) &#123; return false; &#125; TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;(); for (int i = 0; i &lt; nums.length; i++) &#123; int current = nums[i]; Integer ceiling = set.ceiling(current); Integer floor = set.floor(current); if (ceiling != null &amp;&amp; ceiling &lt;= current + t) &#123; return true; &#125; if (floor != null &amp;&amp; current &lt;= floor + t) &#123; return true; &#125; set.add(current); if (set.size() &gt; k) &#123; set.remove(nums[i - k]); &#125; &#125; return false; &#125;&#125; 解法2： O(N) using Bucketlang: java1234567891011121314151617181920212223242526272829303132333435class Solution &#123; private long getBucketId(long num, long w) &#123; return num &lt; 0 ? (num + 1) / w - 1 : num / w; &#125; public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) &#123; if (t &lt; 0 ) return false; if (nums == null || nums.length == 0) &#123; return false; &#125; long w = (long)t + 1; Map&lt;Long, Long&gt; map = new HashMap&lt;&gt;(); for (int i = 0; i &lt; nums.length; i++) &#123; long id = getBucketId((long)nums[i], w); if (map.containsKey(id)) &#123; return true; &#125; if (map.containsKey(id - 1) &amp;&amp; Math.abs(map.get(id - 1) - nums[i]) &lt; w) &#123; return true; &#125; if (map.containsKey(id + 1) &amp;&amp; Math.abs(map.get(id + 1) - nums[i]) &lt; w) &#123; return true; &#125; map.put(id, (long)nums[i]); if (i &gt;= k) &#123; map.remove(getBucketId(nums[i - k], w)); &#125; &#125; return false; &#125;&#125;]]></content>

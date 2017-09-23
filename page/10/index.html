@@ -314,6 +314,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/11/2017-07-11-340-Longest-Substring-with-At-Most-k-Distinct-Characters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/11/2017-07-11-340-Longest-Substring-with-At-Most-k-Distinct-Characters/" itemprop="url">340. Longest Substring with At Most k Distinct Characters</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T20:57:20-04:00">
+                2017-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a string, find the length of the longest substring T that contains at most k distinct characters.</p>
+<p>For example, Given s = “eceba” and k = 2,</p>
+<p>T is “ece” which its length is 3.</p>
+<h3 id="解法1：O-N"><a href="#解法1：O-N" class="headerlink" title="解法1：O(N)"></a>解法1：O(N)</h3><p>滑动窗口的解法。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstringKDistinct</span><span class="params">(String s, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line"></div><div class="line">        HashMap&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>, start = <span class="number">0</span>, end = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (end &lt; s.length()) &#123;</div><div class="line">            <span class="keyword">char</span> current = s.charAt(end);</div><div class="line">            map.put(current, map.getOrDefault(current, <span class="number">0</span>) + <span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span> (map.get(current) == <span class="number">1</span>) &#123;</div><div class="line">                count++;</div><div class="line">            &#125;</div><div class="line">            end++;  <span class="comment">// move 1 position forward</span></div><div class="line">            <span class="keyword">while</span> (count &gt; k) &#123;</div><div class="line">                <span class="keyword">char</span> prev = s.charAt(start);</div><div class="line">                map.put(prev, map.get(prev) - <span class="number">1</span>);</div><div class="line">                <span class="keyword">if</span> (map.get(prev) == <span class="number">0</span>) &#123;</div><div class="line">                    count--;</div><div class="line">                &#125;</div><div class="line">                start++;</div><div class="line">            &#125;</div><div class="line">            res = Math.max(res, end - start);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/11/2017-07-11-159-Longest-Substring-with-At-Most-Two-Distinct-Characters/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1645,169 +1791,6 @@ The total length of all the strings will not over 1,000.
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/06/2017-07-06-609-Find-Duplicate-File-in-System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/06/2017-07-06-609-Find-Duplicate-File-in-System/" itemprop="url">609. Find Duplicate File in System</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T22:21:04-04:00">
-                2017-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a list of directory info including directory path, and all the files with contents in this directory, you need to find out all the groups of duplicate files in the file system in terms of their paths.</p>
-<p>A group of duplicate files consists of at least two files that have exactly the same content.</p>
-<p>A single directory info string in the input list has the following format:</p>
-<p>“root/d1/d2/…/dm f1.txt(f1_content) f2.txt(f2_content) … fn.txt(fn_content)”</p>
-<p>It means there are n files (f1.txt, f2.txt … fn.txt with content f1_content, f2_content … fn_content, respectively) in directory root/d1/d2/…/dm. Note that n &gt;= 1 and m &gt;= 0. If m = 0, it means the directory is just the root directory.</p>
-<p>The output is a list of group of duplicate file paths. For each group, it contains all the file paths of the files that have the same content. A file path is a string that has the following format:</p>
-<p>“directory_path/file_name.txt”</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">[&quot;root/a 1.txt(abcd) 2.txt(efgh)&quot;, &quot;root/c 3.txt(abcd)&quot;, &quot;root/c/d 4.txt(efgh)&quot;, &quot;root 4.txt(efgh)&quot;]</div><div class="line">Output:  </div><div class="line">[[&quot;root/a/2.txt&quot;,&quot;root/c/d/4.txt&quot;,&quot;root/4.txt&quot;],[&quot;root/a/1.txt&quot;,&quot;root/c/3.txt&quot;]]</div></pre></td></tr></table></figure></p>
-<p>Note:</p>
-<pre><code>No order is required for the final output.
-You may assume the directory name, file name and file content only has letters and digits, and the length of file content is in the range of [1,50].
-The number of files given is in the range of [1,20000].
-You may assume no files or directories share the same name in the same directory.
-You may assume each given directory info represents a unique directory. Directory path and file info are separated by a single blank space.
-</code></pre><p>Follow-up beyond contest:</p>
-<pre><code>Imagine you are given a real file system, how will you search files? DFS or BFS?
-If the file content is very large (GB level), how will you modify your solution?
-If you can only read the file by 1kb each time, how will you modify your solution?
-What is the time complexity of your modified solution? What is the most time-consuming part and memory consuming part of it? How to optimize?
-How to make sure the duplicated files you find are not false positive?
-</code></pre><h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>没有难点，就是按部就班的把这个paths转换成为hashmap, 以content作为key.<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; findDuplicate(String[] paths) &#123;</div><div class="line"></div><div class="line">        HashMap&lt;String, List&lt;String&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (String path : paths) &#123;</div><div class="line">            String[] temp = path.split(<span class="string">" "</span>);</div><div class="line">            String path_root = temp[<span class="number">0</span>] + <span class="string">"/"</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; temp.length; i++) &#123;</div><div class="line">                <span class="comment">// seperate contents from string</span></div><div class="line">                <span class="keyword">int</span> leftBracket = temp[i].indexOf(<span class="string">"("</span>);</div><div class="line">                String fileName = temp[i].substring(<span class="number">0</span>, leftBracket);</div><div class="line">                String content = temp[i].substring(leftBracket + <span class="number">1</span>, temp[i].length() - <span class="number">1</span>);  <span class="comment">// get rid of the last bracket in the string</span></div><div class="line">                String fullFileName = path_root + fileName;</div><div class="line">                <span class="keyword">if</span> (map.containsKey(content)) &#123;</div><div class="line">                    map.get(content).add(fullFileName);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    List&lt;String&gt; files = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">                    files.add(fullFileName);</div><div class="line">                    map.put(content, files);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (String key : map.keySet()) &#123;</div><div class="line">            List&lt;String&gt; files = map.get(key);</div><div class="line">            <span class="keyword">if</span> (files.size() &gt; <span class="number">1</span>) &#123;</div><div class="line">                res.add(files);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1858,7 +1841,7 @@ How to make sure the duplicated files you find are not false positive?
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">395</span>
+                <span class="site-state-item-count">396</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
