@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[241. Different Ways to Add Parentheses]]></title>
+    <url>%2F2017%2F09%2F23%2F241-Different-Ways-to-Add-Parentheses%2F</url>
+    <content type="text"><![CDATA[Given a string of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. The valid operators are +, - and *. Example 112345Input: &quot;2-1-1&quot;.((2-1)-1) = 0(2-(1-1)) = 2Output: [0, 2] Example 212345678Input: &quot;2*3-4*5&quot;(2*(3-(4*5))) = -34((2*3)-(4*5)) = -14((2*(3-4))*5) = -10(2*((3-4)*5)) = -10(((2*3)-4)*5) = 10Output: [-34, -14, -10, -10, 10] 解法1：用Divide &amp; Conquer的思想，按照每一个运算符号分成左右两边。每边计算一下结果然后按照运算符号结合起来。当只有数字的时候所生成的res一定为空，这个时候就把数字加入res即可。 lang: java123456789101112131415161718192021222324252627282930313233343536class Solution &#123; public List&lt;Integer&gt; diffWaysToCompute(String input) &#123; List&lt;Integer&gt; res = new ArrayList&lt;&gt;(); for (int i = 0; i &lt; input.length(); i++) &#123; if (input.charAt(i) == &apos;+&apos; || input.charAt(i) == &apos;-&apos; || input.charAt(i) == &apos;*&apos;) &#123; String left = input.substring(0, i); String right = input.substring(i + 1); List&lt;Integer&gt; leftRes = diffWaysToCompute(left); List&lt;Integer&gt; rightRes = diffWaysToCompute(right); for (int l : leftRes) &#123; for (int r : rightRes) &#123; switch (input.charAt(i)) &#123; case &apos;+&apos; : res.add(l + r); break; case &apos;-&apos;: res.add(l - r); break; case &apos;*&apos;: res.add( l * r); break; &#125; &#125; &#125; &#125; &#125; if (res.size() == 0) &#123; res.add(Integer.parseInt(input)); &#125; return res; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[223. Rectangle Area]]></title>
     <url>%2F2017%2F09%2F22%2F223-Rectangle-Area%2F</url>
     <content type="text"><![CDATA[Find the total area covered by two rectilinear rectangles in a 2D plane. Each rectangle is defined by its bottom left corner and top right corner as shown in the figure. Assume that the total area is never beyond the maximum possible value of int. 解法1：lang: java123456789101112131415161718192021222324252627class Solution &#123; public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) &#123; int left = (C - A) * (D - B); int right = (G - E) * (H - F); // on the left or right side if (E &gt;= C || G &lt;= A) &#123; return left + right; &#125; // above or below if (F &gt;= D || H &lt;= B ) &#123; return left + right; &#125; // overlap int ldx = Math.max(A, E); int ldy = Math.max(B, F); int rux = Math.min(C, G); int ruy = Math.min(D, H); int cross = (rux - ldx) * (ruy - ldy); return left + right - cross; &#125;&#125;]]></content>
