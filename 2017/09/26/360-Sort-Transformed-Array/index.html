@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="大提莫">
 <meta property="og:description" content="Given a sorted array of integers nums and integer values a, b and c. Apply a function of the form f(x) = ax2 + bx + c to each element x in the array. The returned array must be in sorted order. Expect">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-27T03:07:49.722Z">
+<meta property="og:updated_time" content="2017-09-27T03:10:20.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="360. Sort Transformed Array">
 <meta name="twitter:description" content="Given a sorted array of integers nums and integer values a, b and c. Apply a function of the form f(x) = ax2 + bx + c to each element x in the array. The returned array must be in sorted order. Expect">
@@ -411,42 +411,7 @@
 <p>Expected time complexity: O(n)</p>
 <p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">nums = [-4, -2, 2, 4], a = 1, b = 3, c = 5,</div><div class="line"></div><div class="line">Result: [3, 9, 15, 33]</div><div class="line"></div><div class="line">nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5</div><div class="line"></div><div class="line">Result: [-23, -5, 1, 7]</div></pre></td></tr></table></figure></p>
 <h3 id="解法1：-Two-pointers-Math"><a href="#解法1：-Two-pointers-Math" class="headerlink" title="解法1： Two pointers + Math"></a>解法1： Two pointers + Math</h3><p>如果a是正数，那么在边缘的x所对应的数字是最大的，而最小值在中间。<br>如果a是负数，那么在边缘的x所对应的数字是最小的，最大值在中间。<br>可以改变要写入的位置来精简代码。</p>
-<p>class Solution {<br>    public int[] sortTransformedArray(int[] nums, int a, int b, int c) {</p>
-<pre><code>    int n = nums.length;
-    int[] res = new int[n];
-    int i = 0, j = n - 1;
-    int index = a &gt;= 0 ? n - 1 : 0;
-
-    while (i &lt;= j) {
-        int left = calc(nums[i], a, b, c);
-        int right = calc(nums[j], a, b, c);
-        if (a &gt;= 0) {
-            if (left &gt;= right) {
-                res[index--] = left;
-                i++;
-            } else {
-                res[index--] = right;
-                j--;
-            }
-        } else {
-            if (left &gt;= right) {
-                res[index++] = right;
-                j--;
-            } else {
-                res[index++] = left;
-                i++;
-            }
-        }
-    }
-
-    return res;        
-}
-
-private int calc(int num, int a, int b, int c) {
-    return a * num * num + b * num + c;
-}
-</code></pre><p>}</p>
-<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    public int[] sortTransformedArray(int[] nums, int a, int b, int c) &#123;</div><div class="line"></div><div class="line">        int n = nums.length;</div><div class="line">        int[] res = new int[n];</div><div class="line">        int i = 0, j = n - 1;</div><div class="line">        int index = a &gt;= 0 ? n - 1 : 0;</div><div class="line"></div><div class="line">        while (i &lt;= j) &#123;</div><div class="line">            int left = calc(nums[i], a, b, c);</div><div class="line">            int right = calc(nums[j], a, b, c);</div><div class="line">            if (a &gt;= 0) &#123;</div><div class="line">                if (left &gt;= right) &#123;</div><div class="line">                    res[index--] = left;</div><div class="line">                    i++;</div><div class="line">                &#125; else &#123;</div><div class="line">                    res[index--] = right;</div><div class="line">                    j--;</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                if (left &gt;= right) &#123;</div><div class="line">                    res[index++] = right;</div><div class="line">                    j--;</div><div class="line">                &#125; else &#123;</div><div class="line">                    res[index++] = left;</div><div class="line">                    i++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return res;        </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private int calc(int num, int a, int b, int c) &#123;</div><div class="line">        return a * num * num + b * num + c;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
