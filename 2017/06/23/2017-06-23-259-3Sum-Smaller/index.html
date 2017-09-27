@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Leetcode,Java,C++," />
+  <meta name="keywords" content="Leetcode,Java," />
 
 
 
@@ -95,14 +95,14 @@
 
 
 <meta name="description" content="Given an array of n integers nums and a target, find the number of index triplets i, j, k with 0 &amp;lt;= i &amp;lt; j &amp;lt; k &amp;lt; n that satisfy the condition nums[i] + nums[j] + nums[k] &amp;lt; target. For ex">
-<meta name="keywords" content="Leetcode,Java,C++">
+<meta name="keywords" content="Leetcode,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="259. 3Sum Smaller">
 <meta property="og:url" content="http://bigteemo.github.io/2017/06/23/2017-06-23-259-3Sum-Smaller/index.html">
 <meta property="og:site_name" content="大提莫">
 <meta property="og:description" content="Given an array of n integers nums and a target, find the number of index triplets i, j, k with 0 &amp;lt;= i &amp;lt; j &amp;lt; k &amp;lt; n that satisfy the condition nums[i] + nums[j] + nums[k] &amp;lt; target. For ex">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-03T14:47:14.494Z">
+<meta property="og:updated_time" content="2017-09-27T03:00:00.326Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="259. 3Sum Smaller">
 <meta name="twitter:description" content="Given an array of n integers nums and a target, find the number of index triplets i, j, k with 0 &amp;lt;= i &amp;lt; j &amp;lt; k &amp;lt; n that satisfy the condition nums[i] + nums[j] + nums[k] &amp;lt; target. For ex">
@@ -411,8 +411,8 @@
 <p>Return 2. Because there are two triplets which sums are less than 2:</p>
 <p>[-2, 0, 1]<br>[-2, 0, 3]</p>
 <p>Follow up:<br>Could you solve it in O(n2) runtime?</p>
-<h3 id="解法1：-O-N-2"><a href="#解法1：-O-N-2" class="headerlink" title="解法1： O(N^2)"></a>解法1： O(N^2)</h3><p>O(N^2)的解法和3Sum或者3Sum closest类似，但比较tricky的地方是，在用双指针left和right找到一个<target的数的时候，其实right 和left之间所有的数都满足要求（排序之后）。所以这个时候我们把right-left加入到res中，然后更新left即可。="" c++="" <figure="" class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></target的数的时候，其实right></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumSmaller</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (nums.length &lt; <span class="number">3</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Arrays.sort(nums);</div><div class="line">        <span class="keyword">int</span> n = nums.length;</div><div class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">2</span>; i++) &#123;</div><div class="line">            <span class="keyword">int</span> left = i + <span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> right = n - <span class="number">1</span>;</div><div class="line">            <span class="keyword">while</span> (left &lt; right) &#123;</div><div class="line">                <span class="keyword">int</span> sum = nums[i] + nums[left] + nums[right];</div><div class="line">                <span class="keyword">if</span> (sum &lt; target) &#123;</div><div class="line">                    cnt += right - left;    <span class="comment">// trick is here</span></div><div class="line">                    left++;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    right--;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> cnt;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法1：-O-N-2"><a href="#解法1：-O-N-2" class="headerlink" title="解法1： O(N^2)"></a>解法1： O(N^2)</h3><p>O(N^2)的解法和3Sum或者3Sum closest类似，但比较tricky的地方是，在用双指针left和right找到一个&lt;target的数的时候，其实right 和left之间所有的数都满足要求（排序之后）。所以这个时候我们把right-left加入到res中，然后更新left即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumSmaller</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (nums.length &lt; <span class="number">3</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Arrays.sort(nums);</div><div class="line">        <span class="keyword">int</span> n = nums.length;</div><div class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">2</span>; i++) &#123;</div><div class="line">            <span class="keyword">int</span> left = i + <span class="number">1</span>;</div><div class="line">            <span class="keyword">int</span> right = n - <span class="number">1</span>;</div><div class="line">            <span class="keyword">while</span> (left &lt; right) &#123;</div><div class="line">                <span class="keyword">int</span> sum = nums[i] + nums[left] + nums[right];</div><div class="line">                <span class="keyword">if</span> (sum &lt; target) &#123;</div><div class="line">                    cnt += right - left;    <span class="comment">// trick is here</span></div><div class="line">                    left++;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    right--;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> cnt;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -433,8 +433,6 @@
             <a href="/tags/Leetcode/" rel="tag"># Leetcode</a>
           
             <a href="/tags/Java/" rel="tag"># Java</a>
-          
-            <a href="/tags/C/" rel="tag"># C++</a>
           
         </div>
       
@@ -536,7 +534,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">402</span>
+                <span class="site-state-item-count">404</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

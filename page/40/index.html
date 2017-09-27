@@ -314,6 +314,368 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/16/2016-07-16-Quant-Finance-Prep-Regression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/16/2016-07-16-Quant-Finance-Prep-Regression/" itemprop="url">量化金融面试知识点: 线性回归(Linear Regression)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-16T18:28:14-04:00">
+                2016-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/量化分析知识点/" itemprop="url" rel="index">
+                    <span itemprop="name">量化分析知识点</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>现在公式暂时还不能正常显示，由于是这个<a href="https://github.com/akfish/hexo-inject/issues/1" target="_blank" rel="external">issue</a><br>等作者修好了我再来更新吧</p>
+<h2 id="Assumptions"><a href="#Assumptions" class="headerlink" title="Assumptions"></a>Assumptions</h2><ul>
+<li>linearity of the conditional probability</li>
+<li>Strict exogeneity: Erros are uncorrelated with indepedent variables (X)<ul>
+<li>If violated, it is called endogeneity</li>
+</ul>
+</li>
+<li>No multicollinearity: All regressor variables are linearly independent</li>
+<li>Variance of erros should be constant: it is called homoscedasticity.<ul>
+<li>If violated, it is called heteroscedasticity</li>
+</ul>
+</li>
+<li>Errors have No serial correlation/autocorrelation</li>
+<li>Errors are normally distributed </li>
+<li>Errors are independent and identically distributed</li>
+</ul>
+<h2 id="Estimation-Model"><a href="#Estimation-Model" class="headerlink" title="Estimation Model"></a>Estimation Model</h2><ul>
+<li>coefficients: $$\beta = (X^TX)^(-1)(X^TY)$$</li>
+<li>variance of coefficients: Var(\beta|X) = ^(\sigma<em>err^2)/</em>((n - 1)s_x^2)<ul>
+<li>More variance in the noise means \beta is more variable</li>
+<li>Larger sample variance means smaller variance of coefficients. It is because it’s much easier to estimate the coefficients</li>
+<li>Higher sampling frequency reduce variance</li>
+</ul>
+</li>
+</ul>
+<h2 id="Variance-Sum-of-Squares-and-R-2"><a href="#Variance-Sum-of-Squares-and-R-2" class="headerlink" title="Variance, Sum of Squares and R^2"></a>Variance, Sum of Squares and R^2</h2><ul>
+<li><p>TSS: total sum of squares<br>TSS = SUM of (Y_i - \overline{Y})^2<br>It is the total variance in oberserved dependent variable</p>
+</li>
+<li><p>Regression SS:<br>RSS = SUM of (Y_fit - \overline{Y})^2<br>total variance in fitted observed dependent variables</p>
+</li>
+<li><p>Residual error SS:<br>RESS = SUM of (Y_i - Y_fit)^2</p>
+</li>
+<li><p>R^2<br>R^2 = 1 - ^(RESS/_TSS)<br>R^2 is the sample covariance between Y and Y_fit</p>
+<ul>
+<li>Special case: Single X variable<br>R^2 measures the sample covariance between Y and X</li>
+</ul>
+</li>
+<li><p>Adjusted R^2<br>R^2 increases with number of parameters<br>Adjusted R^2 is adjusted by the degree of freedom<br>adj-R^2 = 1 - ^RSS<em>(n - p - 1)^(-1)/_(TSS</em>(n - 1)^(-1))</p>
+</li>
+<li><p>Durbin-Watson Test<br>Test if there is serial correlation in residuals/autocorrelation<br>If the p-value from the test is low, it indicates they are probably autocorrelation in noise</p>
+</li>
+<li><p>ACF<br>ACF graph is used to look for potential serial correlation at a number of lags</p>
+</li>
+</ul>
+<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><ul>
+<li><p>Test if multiple coefficients are significant (not zero)<br>F-test</p>
+<ul>
+<li>This can be used to compare two models that one of the model has a subset of variables</li>
+</ul>
+</li>
+<li><p>Model Selection Criteria</p>
+<ul>
+<li>AIC &amp; BIC<br>The smaller the error variance, the smaller AIC/BIC but it is penalized by number of variables</li>
+<li>R^2</li>
+</ul>
+</li>
+<li><p>Variance inflation factor (VIF)</p>
+<ul>
+<li>Measures how much the variance increases by including other predictor variables (test for multicollinearity)</li>
+<li>Calculate by runnning regression of X_j on X_1 … X<em>n<br>and get R^2: VIF = ^1/</em>(1 - R^2)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Violation-of-Assumptions"><a href="#Violation-of-Assumptions" class="headerlink" title="Violation of Assumptions"></a>Violation of Assumptions</h2><ul>
+<li>Multicollinearity<br>If two or more variables are strongly correlated, it brings in multicollinearity problem<ul>
+<li>the standard error of coefficients increases</li>
+<li>It’s harder to seperate effects for correlated variables</li>
+<li>Estimated coefficients are highly sensitive to whether the correlated variables exists</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/13/2016-07-13-leetcode-solution-edit-distance-72/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/13/2016-07-13-leetcode-solution-edit-distance-72/" itemprop="url">leetcode解题: Edit Distance (72)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-13T15:46:49-04:00">
+                2016-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)</p>
+<p>You have the following 3 operations permitted on a word:</p>
+<p>a) Insert a character<br>b) Delete a character<br>c) Replace a character</p>
+<h3 id="解法：DP-with-O-N-2-Time-and-O-N-2-Space"><a href="#解法：DP-with-O-N-2-Time-and-O-N-2-Space" class="headerlink" title="解法：DP with O(N^2) Time and O(N^2) Space"></a>解法：DP with O(N^2) Time and O(N^2) Space</h3><p>双字符串统计min的问题，容易想到用DP解决。<br>假设dp[i][j] 表示前i个字符和前j个字符的子串，convert substr1 to substr2的minimum steps.<br>那么对于初始条件我们容易得到：</p>
+<ul>
+<li>dp[0][j] = j</li>
+<li>dp[i][0] = i<br>这里表示的是，如果其中一个是空字符，那么你要么插入j个字符或者删除j个字符，任何一种情况都是j个操作<br>当考虑状态方程的时候，要考虑i和j两位置上的字符是否相等，分两种情况:<br>1 charAt(i) == charAt(j)<br>  当最后比较的字符相同时，有三种情况/操作可能出现<br>  1 可能最小值来自于i - 1和j - 1的匹配，<br>  2 或者是i - 1转为j的匹配，那么就要加上1表示从i字符串删除一位变为i - 1字符串的操作。<br>  3 也可能是把i匹配为j - 1的字符串，然后最后加上第j个字符(insert操作）<br>  dp[i][j] = Min(dp[i - 1][j - 1], dp[i - 1][j] + 1, dp[i][j - 1] + 1)</li>
+</ul>
+<p>2 charAt(i) != charAt(j)<br>    相类似于上面一种情况，唯一不同的是，dp[i - 1][j - 1]要加上1表示把第i位转化为第j位的操作<br>    dp[i][j] = Min(dp[i - 1][j - 1] + 1, dp[i - 1][j] + 1, dp[i][j - 1] + 1）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(String word1, String word2)</span> </span>&#123;</div><div class="line">		</div><div class="line">	<span class="comment">// input validation</span></div><div class="line">	<span class="keyword">if</span> (word1 == <span class="keyword">null</span> &amp;&amp; word2 == <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (word1 == <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">return</span> word2.length();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (word2 == <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">return</span> word1.length();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// DP</span></div><div class="line">	</div><div class="line">	<span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[word1.length() + <span class="number">1</span>][word2.length() + <span class="number">1</span>];</div><div class="line">	</div><div class="line">	<span class="comment">// initialize</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= word1.length(); i++) &#123;</div><div class="line">		dp[i][<span class="number">0</span>] = i;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= word2.length(); j++) &#123;</div><div class="line">		dp[<span class="number">0</span>][j] = j;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= word1.length(); i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= word2.length(); j++) &#123;</div><div class="line">			<span class="keyword">if</span> (word1.charAt(i - <span class="number">1</span>) == word2.charAt(j - <span class="number">1</span>)) &#123;</div><div class="line">				<span class="comment">// make sure you get the index right, since we added 1 to the array, we need to subtract 1 </span></div><div class="line">				<span class="comment">// to get the index positions</span></div><div class="line">				dp[i][j] = Math.min(dp[i - <span class="number">1</span>][j - <span class="number">1</span>], Math.min(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]) + <span class="number">1</span>);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				dp[i][j] = Math.min(dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>, Math.min(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]) + <span class="number">1</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> dp[word1.length()][word2.length()];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/13/2016-07-13-leetcode-solution-unique-binary-search-trees/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1459,301 +1821,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/07/2016-07-07-leetcode-solution-Best-Time-to-Buy-and-Sell-Stock/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/07/2016-07-07-leetcode-solution-Best-Time-to-Buy-and-Sell-Stock/" itemprop="url">leetcode解题: Best Time to Buy and Sell Stock （121)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-07T22:30:10-04:00">
-                2016-07-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Say you have an array for which the ith element is the price of a given stock on day i.</p>
-<p>If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
-<p>Example 1:<br>Input: [7, 1, 5, 3, 6, 4]<br>Output: 5</p>
-<p>max. difference = 6-1 = 5 (not 7-1 = 6, as selling price needs to be larger than buying price)<br>Example 2:<br>Input: [7, 6, 4, 3, 1]<br>Output: 0</p>
-<p>In this case, no transaction is done, i.e. max profit = 0.</p>
-<h3 id="解法1：DP-with-O-N-空间"><a href="#解法1：DP-with-O-N-空间" class="headerlink" title="解法1：DP with O(N) 空间"></a>解法1：DP with O(N) 空间</h3><p>从左往右维护一个最小的price,那么转换方程就可以写成dp[i] = Math.max(dp[i - 1], price[i] - min),<br>其中dp[i]表示的是前i个数中如果只能交易一次的最大利润，不一定要以i结尾。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span>[] profit = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length];</div><div class="line">	<span class="keyword">int</span> min = prices[<span class="number">0</span>];</div><div class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</div><div class="line">		profit[i] = Math.max(profit[i - <span class="number">1</span>], prices[i] - min);</div><div class="line">		min = Math.min(min, prices[i]);</div><div class="line">		res = Math.max(res, profit[i]);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2：DP-with-O-1-空间"><a href="#解法2：DP-with-O-1-空间" class="headerlink" title="解法2：DP with O(1) 空间"></a>解法2：DP with O(1) 空间</h3><p>从左往右维护当前的最小值，并且计算每一个累积和和最小值的差，取最大的作为结果.<br>这题用DP的思路是dp[i] = max(dp[i - 1], A[i] - min)， 所以就是也要维护一个min，实际上并不需要维护dp数组，只要不停更新min就可以了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> minPrice = prices[<span class="number">0</span>]; </div><div class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.length; i++) &#123;</div><div class="line">		res = Math.max(prices[i] - minPrice, res);</div><div class="line">		minPrice = Math.min(minPrice, prices[i]);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/07/2016-07-07-leetcode-solution-Maximum-Subarray/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/07/2016-07-07-leetcode-solution-Maximum-Subarray/" itemprop="url">leetcode解题: Maximum Subarray (53)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-07T18:04:53-04:00">
-                2016-07-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.</p>
-<p>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],<br>the contiguous subarray [4,−1,2,1] has the largest sum = 6.<br><a href="https://leetcode.com/problems/maximum-subarray/" target="_blank" rel="external">Practice</a></p>
-<h3 id="解法1：DP-with-O-N-空间"><a href="#解法1：DP-with-O-N-空间" class="headerlink" title="解法1：DP with O(N) 空间"></a>解法1：DP with O(N) 空间</h3><p>用经典的DP思想可以解决，dp数组存的是以i结尾的前i个数字的max subarray，那么可以得到这样的递推关系<br>dp[i] = Max(dp[i - 1] + A[i], A[i])<br>意思就是说以i结尾的最大的子数组和要么是自己，要么是前一个子数组和加上自己。可以写出如下的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">	dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</div><div class="line">	<span class="keyword">int</span> max = dp[<span class="number">0</span>];</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</div><div class="line">		dp[i] = Math.max(nums[i], dp[i - <span class="number">1</span>] + nums[i]);</div><div class="line">		max = Math.max(dp[i], max);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> max;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法1优化-DP-with-O-1-空间"><a href="#解法1优化-DP-with-O-1-空间" class="headerlink" title="解法1优化: DP with O(1) 空间"></a>解法1优化: DP with O(1) 空间</h3><p>观察上面的解法可以发现，实际上我们不需要维护一个数组来记录每一个点的最大和。<br>我们可以只维护一个变量sum,来记录从0到i的和。如果sum一旦小于0，那么对下一个dp数值的计算一定用不上sum,所以此时可以设置为0. 代码如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> max = Integer.MIN_VALUE;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">		sum += nums[i];</div><div class="line">		max = Math.max(sum, max);</div><div class="line">		<span class="keyword">if</span> (sum &lt; <span class="number">0</span>) &#123;</div><div class="line">			sum = <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	<span class="keyword">return</span> max;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2-前缀和数组的思路，O-N-time-O-1-space"><a href="#解法2-前缀和数组的思路，O-N-time-O-1-space" class="headerlink" title="解法2: 前缀和数组的思路，O(N) time + O(1) space"></a>解法2: 前缀和数组的思路，O(N) time + O(1) space</h3><p>基本思想是：如果把数组中每一个元素都加起来，我们可以得到一个累积的和，那么这个问题实际上就变成了<br>best time to buy and sell stock I的问题，从左至右寻找最小的mininum sum,然后将当前的sum和minSum相减再和全局的最大值比较得出结果。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> min = <span class="number">0</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> profit = nums[<span class="number">0</span>];</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">		profit = Math.max(sum + nums[i] - min, profit);</div><div class="line">		sum += nums[i];</div><div class="line">		min = Math.min(sum, min);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> profit;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法3：用Divide-amp-Conquer思想：O-NlogN"><a href="#解法3：用Divide-amp-Conquer思想：O-NlogN" class="headerlink" title="解法3：用Divide &amp; Conquer思想：O(NlogN)"></a>解法3：用Divide &amp; Conquer思想：O(NlogN)</h3><p>具体的思路是把原来的array一分为二，那么最大的子数组和一定是在1.左面的数组，2.右面的数组，3.跨越左面和右面的数组<br>左面和右面用递归的方式计算。跨越中点的数组一定包含mid point,往右面扫描找出最大的，往左面扫描找出最大的，最后比较三个数得出结果。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">	<span class="keyword">return</span> helper(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (left &gt;= right) &#123;</div><div class="line">		<span class="keyword">return</span> A[left];</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// Divide into left and right array</span></div><div class="line">	<span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</div><div class="line">	<span class="keyword">int</span> lmax = helper(A, left, mid - <span class="number">1</span>);</div><div class="line">	<span class="keyword">int</span> rmax = helper(A, mid + <span class="number">1</span>, right);</div><div class="line">	</div><div class="line">	<span class="comment">// Merge and Conquer</span></div><div class="line">	<span class="keyword">int</span> mmax = A[mid];</div><div class="line">	<span class="keyword">int</span> temp = mmax;</div><div class="line">	<span class="comment">// Scan to left</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = mid - <span class="number">1</span>; i &gt;= left; i--) &#123;</div><div class="line">		temp += A[i];</div><div class="line">		mmax = Math.max(mmax, temp);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// Scan to right</span></div><div class="line">	temp = mmax;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = mid + <span class="number">1</span>; i &lt;= right; i++) &#123;</div><div class="line">		temp += A[i];</div><div class="line">		mmax = Math.max(mmax, temp);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> Math.max(mmax, Math.max(lmax, rmax));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1804,7 +1871,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">402</span>
+                <span class="site-state-item-count">404</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
