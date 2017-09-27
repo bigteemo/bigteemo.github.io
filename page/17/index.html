@@ -314,6 +314,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/20/2017-06-20-289-Game-of-Life/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/20/2017-06-20-289-Game-of-Life/" itemprop="url">289. Game of Life</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T22:00:59-04:00">
+                2017-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>According to the Wikipedia’s article: “The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970.”</p>
+<p>Given a board with m by n cells, each cell has an initial state live (1) or dead (0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules (taken from the above Wikipedia article):</p>
+<p>   Any live cell with fewer than two live neighbors dies, as if caused by under-population.<br>   Any live cell with two or three live neighbors lives on to the next generation.<br>   Any live cell with more than three live neighbors dies, as if by over-population..<br>   Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</p>
+<p>Write a function to compute the next state (after one update) of the board given its current state.</p>
+<p>Follow up:</p>
+<p>   Could you solve it in-place? Remember that the board needs to be updated at the same time: You cannot update some cells first and then use their updated values to update other cells.<br>   In this question, we represent the board using a 2D array. In principle, the board is infinite, which would cause problems when the active area encroaches the border of the array. How would you address these problems?</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>这题的关键点在于要想到用状态机来存储过去的历史。如果一位上仅用0,1表示的话，那么只能表示两个状态。如果我们用2 bits（也就是0,1,2,3）来表示的话可以表示4个状态。<br>这里我们有<br>0 -&gt; 0 : 0<br>1 -&gt; 1 : 1<br>1 -&gt; 0 : 2<br>0 -&gt; 1 : 3<br>然后逐个扫描，根据规则update每一个元素。要注意的是判断live cell的时候要check两个数值，一个是1，一个是2。这个地方很容易错。<br>最后我们对结果数组对2取对数就可以了。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public void gameOfLife(int[][] board) &#123;</div><div class="line"></div><div class="line">        if (board.length == 0 || board[0].length == 0) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        int m = board.length, n = board[0].length;</div><div class="line"></div><div class="line">        // define directions</div><div class="line">        int[][] directions = new int[][]&#123;&#123;0,-1&#125;,&#123;-1,-1&#125;,&#123;-1,0&#125;,&#123;-1,1&#125;,&#123;0,1&#125;,&#123;1,1&#125;,&#123;1,0&#125;,&#123;1,-1&#125;&#125;;</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; m; i++) &#123;</div><div class="line">            for (int j = 0; j &lt; n; j++) &#123;</div><div class="line">                int cnt = 0;</div><div class="line">                for (int k = 0; k &lt; directions.length; k++) &#123;</div><div class="line">                    int row = i + directions[k][0];</div><div class="line">                    int col = j + directions[k][1];</div><div class="line">                    if (row &gt;= 0 &amp;&amp; row &lt; m &amp;&amp; col &gt;= 0 &amp;&amp; col &lt; n &amp;&amp; (board[row][col] == 1 || board[row][col] == 2)) &#123;</div><div class="line">                        cnt++;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                if (board[i][j] == 1 &amp;&amp; (cnt &lt; 2 || cnt &gt; 3)) &#123;</div><div class="line">                    board[i][j] = 2;</div><div class="line">                &#125; else if (board[i][j] == 0 &amp;&amp; cnt == 3) &#123;</div><div class="line">                    board[i][j] = 3;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; m; i++) &#123;</div><div class="line">            for (int j = 0; j &lt; n; j++) &#123;</div><div class="line">                board[i][j] %= 2;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/20/2017-06-20-229-Majority-Element-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1616,158 +1765,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/06/2017-06-06-leetcode-solutions-Can-Place-Flowers-605/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/06/2017-06-06-leetcode-solutions-Can-Place-Flowers-605/" itemprop="url">leetcode解题: Can Place Flowers (605)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-06T23:08:50-04:00">
-                2017-06-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Suppose you have a long flowerbed in which some of the plots are planted and some are not. However, flowers cannot be planted in adjacent plots - they would compete for water and both would die.</p>
-<p>Given a flowerbed (represented as an array containing 0 and 1, where 0 means empty and 1 means not empty), and a number n, return if n new flowers can be planted in it without violating the no-adjacent-flowers rule.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: flowerbed = [1,0,0,0,1], n = 1</div><div class="line">Output: True</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: flowerbed = [1,0,0,0,1], n = 2</div><div class="line">Output: False</div></pre></td></tr></table></figure></p>
-<p>Note:<br>The input array won’t violate no-adjacent-flowers rule.<br>The input array size is in the range of [1, 20000].<br>n is a non-negative integer which won’t exceed the input array size.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canPlaceFlowers</span><span class="params">(<span class="keyword">int</span>[] flowerbed, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (flowerbed == <span class="keyword">null</span> || flowerbed.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;        </div><div class="line">        </div><div class="line">        <span class="comment">// traverse from left to right</span></div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> size = flowerbed.length;</div><div class="line">        </div><div class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (i &lt; size &amp;&amp; flowerbed[i] == <span class="number">1</span>) &#123;</div><div class="line">                i += <span class="number">2</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i &gt;= size) &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">// check left &amp; right </span></div><div class="line">                <span class="keyword">if</span> ((i == <span class="number">0</span> || flowerbed[i - <span class="number">1</span>] == <span class="number">0</span>) &amp;&amp; (i == size - <span class="number">1</span> || flowerbed[i + <span class="number">1</span>] == <span class="number">0</span>)) &#123;</div><div class="line">                    flowerbed[i] = <span class="number">1</span>;</div><div class="line">                    n--;</div><div class="line">                    i += <span class="number">2</span>;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    i += <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> n == <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1813,7 +1815,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">400</span>
+                <span class="site-state-item-count">401</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1835,7 +1837,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-count">67</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -314,6 +314,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/05/2017-03-05-leetcode-solution-The-Maze-490/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/05/2017-03-05-leetcode-solution-The-Maze-490/" itemprop="url">leetcode solution: The Maze (490)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-05T20:27:10-05:00">
+                2017-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by rolling up, down, left or right, but it won’t stop rolling until hitting a wall. When the ball stops, it could choose the next direction.</p>
+<p>Given the ball’s start position, the destination and the maze, determine whether the ball could stop at the destination.</p>
+<p>The maze is represented by a binary 2D array. 1 means the wall and 0 means the empty space. You may assume that the borders of the maze are all walls. The start and destination coordinates are represented by row and column indexes.</p>
+<p>Example 1</p>
+<p>Input 1: a maze represented by a 2D array<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0 0 1 0 0</div><div class="line">0 0 0 0 0</div><div class="line">0 0 0 1 0</div><div class="line">1 1 0 1 1</div><div class="line">0 0 0 0 0</div></pre></td></tr></table></figure></p>
+<p>Input 2: start coordinate (rowStart, colStart) = (0, 4)<br>Input 3: destination coordinate (rowDest, colDest) = (4, 4)<br><img src="https://leetcode.com/static/images/problemset/maze_1_example_1.png" alt="alt text"><br>Output: true<br>Explanation: One possible way is : left -&gt; down -&gt; left -&gt; down -&gt; right -&gt; down -&gt; right.</p>
+<p>Example 2</p>
+<p>Input 1: a maze represented by a 2D array<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0 0 1 0 0</div><div class="line">0 0 0 0 0</div><div class="line">0 0 0 1 0</div><div class="line">1 1 0 1 1</div><div class="line">0 0 0 0 0</div></pre></td></tr></table></figure></p>
+<p>Input 2: start coordinate (rowStart, colStart) = (0, 4)<br>Input 3: destination coordinate (rowDest, colDest) = (3, 2)<br><img src="https://leetcode.com/static/images/problemset/maze_1_example_2.png" alt="alt text"><br>Output: false<br>Explanation: There is no way for the ball to stop at the destination.</p>
+<p>Note:<br>There is only one ball and one destination in the maze.<br>Both the ball and the destination exist on an empty space, and they will not be at the same position initially.<br>The given maze does not contain border (like the red rectangle in the example pictures), but you could assume the border of the maze are all walls.<br>The maze contains at least 2 empty spaces, and both the width and height of the maze won’t exceed 100.</p>
+<h3 id="解法1：DFS-Memorization"><a href="#解法1：DFS-Memorization" class="headerlink" title="解法1：DFS + Memorization"></a>解法1：DFS + Memorization</h3><p>这题和一般的地图题或者是有一题岛屿的题目类似，都可以用DFS来解决。这里的难点或者是区别在，球会一直往一个方向滚直到撞到了墙。所以在设计dfs程序的时候要考虑这个问题，可以用一个while循环解决。另外，对于已经访问过的点，不需要额外的申请一个空间来存储，只需要把已经访问过的node对应的maze的值设为-1就可。<br>对于dfs的优化呢，可以用一个dp矩阵来记录每一个扫描过的初始节点是否有解来剪掉一些枝</p>
+<p>Java<br>
+public class Solution {
+    public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+        
+        if (maze.length == 0 || maze[0].length == 0) {
+            return true;
+        }
+        
+        int[][] dp = new int[maze.length][maze[0].length];
+        for (int[] row: dp) {
+            Arrays.fill(row, -1);
+        }
+        return dfs(maze, start[0], start[1], destination, dp);
+        
+    }
+    
+    private boolean dfs(int[][] maze, int i, int j, int[] destination, int[][] dp) {
+        if (i == destination[0] && j == destination[1]) {
+            return true;
+        }
+        
+        if (dp[i][j]!= -1) {
+            return dp[i][j] == 1 ? true: false;
+        }
+        boolean res = false;
+        int[][] directions = {{0,-1},{-1,0},{0,1},{1,0}};
+        maze[i][j] = -1;  
+        for (int[] dir: directions) {
+            int x = i, y = j;
+            int xinc = dir[0];
+            int yinc = dir[1];
+            while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] != 1) {
+                x += xinc;
+                y += yinc;
+            }
+            x -= xinc;
+            y -= yinc;
+            if (maze[x][y] != -1) {
+                res = res || dfs(maze, x,y, destination, dp);
+            }
+        }
+        
+        dp[i][j] = res? 1: 0;
+        maze[i][j] = 0;
+        return res;
+    }
+
+}
+</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/05/2017-03-05-leetcode-solution-Clone-Graph-133/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1639,167 +1840,11 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/16/2017-02-16-leetcode-solution-Find-Minimum-in-Rotated-Sorted-Array-153/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/16/2017-02-16-leetcode-solution-Find-Minimum-in-Rotated-Sorted-Array-153/" itemprop="url">leetcode解题: Find Minimum in Rotated Sorted Array (153)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T20:24:01-05:00">
-                2017-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</p>
-<p>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).</p>
-<p>Find the minimum element.</p>
-<p>You may assume no duplicate exists in the array.</p>
-<h3 id="解法1：Binary-Search"><a href="#解法1：Binary-Search" class="headerlink" title="解法1：Binary Search"></a>解法1：Binary Search</h3><p>这也是一题经典的binary search的题目。 难点在于怎么判断最小值是在mid的左面还是右面，以此来缩小范围。<br>当搜索的范围[start, end]确定了之后，mid的取值可以有几种情况</p>
-<ul>
-<li>start &lt; end, 那么最小值在start和mid之间</li>
-<li>start &gt; end, 那么最小值的位置取决于mid和start，end的关系<ul>
-<li>如果mid &lt; end, 那么最小值一定在start和mid之间</li>
-<li>如果mid &gt; end, 那么pivot点一定在mid和end之间。<br>按照这个思路写程序就很简单了。<br>C++<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (nums.size() == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> start = <span class="number">0</span>, end = nums.size() - <span class="number">1</span>;</div><div class="line">		<span class="keyword">while</span> (start + <span class="number">1</span> &lt; end) &#123;</div><div class="line">			<span class="keyword">int</span> mid = start + (end - start) / <span class="number">2</span>;</div><div class="line">			<span class="keyword">if</span> (nums[start] &lt; nums[end]) &#123;</div><div class="line">				end = mid;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">if</span> (nums[mid] &lt; nums[end]) &#123;</div><div class="line">					end = mid;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					start = mid;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (nums[start] &lt; nums[end]) &#123;</div><div class="line">			<span class="keyword">return</span> nums[start];</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> nums[end];</div><div class="line">		&#125; </div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1845,7 +1890,7 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">400</span>
+                <span class="site-state-item-count">401</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1867,7 +1912,7 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-count">67</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
