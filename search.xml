@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[251. Flatten 2D Vector]]></title>
+    <url>%2F2017%2F09%2F26%2F251-Flatten-2D-Vector%2F</url>
+    <content type="text"><![CDATA[Implement an iterator to flatten a 2d vector. For example,Given 2d vector = [ [1,2], [3], [4,5,6]]By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,2,3,4,5,6]. Follow up:As an added challenge, try to code it using only iterators in C++ or iterators in Java. 解法1： Non-Iterator, List + Pointer用一个list来存储原来的数据。同时维护两个指针，一个指向当前的子list，另一个指向该list中的位置。在hasNext函数中，判断是否还有数据查看elemenPointer是不是在list尾巴，同时检查是否还有下一个list。 lang: java12345678910111213141516171819202122232425262728293031323334public class Vector2D implements Iterator&lt;Integer&gt; &#123; List&lt;List&lt;Integer&gt;&gt; data; int listPos; int elemPos; public Vector2D(List&lt;List&lt;Integer&gt;&gt; vec2d) &#123; this.data = vec2d; listPos = 0; elemPos = 0; &#125; @Override public Integer next() &#123; return data.get(listPos).get(elemPos++); &#125; @Override public boolean hasNext() &#123; while (listPos &lt; data.size()) &#123; if (elemPos &lt; data.get(listPos).size()) &#123; return true; &#125; else &#123; listPos++; elemPos = 0; &#125; &#125; return false; &#125;&#125;/** * Your Vector2D object will be instantiated and called as such: * Vector2D i = new Vector2D(vec2d); * while (i.hasNext()) v[f()] = i.next(); */ 解法2： Iterator用一个queue来存储每一个list对应的iterator。同时维护一个iterator指向当前的iterator。hasNext就需要判断当前是否还有iterator同时这个iterator是否有下一个元素。 lang: java1234567891011121314151617181920212223242526272829303132333435public class Vector2D implements Iterator&lt;Integer&gt; &#123; Queue&lt;Iterator&lt;Integer&gt;&gt; queue; Iterator&lt;Integer&gt; current = null; public Vector2D(List&lt;List&lt;Integer&gt;&gt; vec2d) &#123; queue = new LinkedList&lt;&gt;(); for (List&lt;Integer&gt; list : vec2d) &#123; queue.offer(list.iterator()); &#125; current = queue.poll(); &#125; @Override public Integer next() &#123; return current.next(); &#125; @Override public boolean hasNext() &#123; while (current == null || !current.hasNext()) &#123; if (!queue.isEmpty()) &#123; current = queue.poll(); &#125; else &#123; return false; &#125; &#125; return true; &#125;&#125;/** * Your Vector2D object will be instantiated and called as such: * Vector2D i = new Vector2D(vec2d); * while (i.hasNext()) v[f()] = i.next(); */]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[249. Group Shifted Strings]]></title>
+    <url>%2F2017%2F09%2F26%2F249-Group-Shifted-Strings%2F</url>
+    <content type="text"><![CDATA[Given a string, we can “shift” each of its letter to its successive letter, for example: “abc” -&gt; “bcd”. We can keep “shifting” which forms the sequence:1&quot;abc&quot; -&gt; &quot;bcd&quot; -&gt; ... -&gt; &quot;xyz&quot; Given a list of strings which contains only lowercase alphabets, group all strings that belong to the same shifting sequence. For example, given: [“abc”, “bcd”, “acef”, “xyz”, “az”, “ba”, “a”, “z”],A solution is:123456[ [&quot;abc&quot;,&quot;bcd&quot;,&quot;xyz&quot;], [&quot;az&quot;,&quot;ba&quot;], [&quot;acef&quot;], [&quot;a&quot;,&quot;z&quot;]] 解法1： HashMap基本的思路是要构造一个hash function，使得属于一个sequence的字符串可以group到一起。一个思路是把每一个字符转换成对于与第一个字符的位置。这里要处理的是负数的情况，比如ba,az，这里用到的trick是用(diff + 26) % 26 来转换成正整数。同时要注意的是需要分隔开不同的数字，因为对于012不能区分是0-12还是0-1-2.lang: java1234567891011121314151617181920212223242526272829303132class Solution &#123; public List&lt;List&lt;String&gt;&gt; groupStrings(String[] strings) &#123; List&lt;List&lt;String&gt;&gt; res = new ArrayList&lt;&gt;(); if (strings == null || strings.length == 0) &#123; return res; &#125; // Design a hash function Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;(); for (String str : strings) &#123; // construct the hash key StringBuilder sb = new StringBuilder(); for (int i = 0; i &lt; str.length(); i++) &#123; sb.append(Integer.toString((str.charAt(i) - str.charAt(0) + 26) % 26)); sb.append(&quot;.&quot;); &#125; String key = sb.toString(); if (!map.containsKey(key)) &#123; map.put(key, new ArrayList&lt;String&gt;()); &#125; map.get(key).add(str); &#125; for (String key : map.keySet()) &#123; res.add(map.get(key)); &#125; return res; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[247. Strobogrammatic Number II]]></title>
+    <url>%2F2017%2F09%2F26%2F247-Strobogrammatic-Number-II%2F</url>
+    <content type="text"><![CDATA[A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down). Find all strobogrammatic numbers that are of length = n. For example,Given n = 2, return [“11”,”69”,”88”,”96”]. 解法1： Recursion承接I的思路，当数字长度大于1的时候，都需要配对存在。要注意的是00配对只可能存在内层中，所以在递归的时候需要用一个变量记录原来n的长度。这样当不是最外层的时候就可以把0加上了。 lang: java1234567891011121314151617181920212223class Solution &#123; public List&lt;String&gt; findStrobogrammatic(int n) &#123; return helper(n, n); &#125; private List&lt;String&gt; helper(int n, int m) &#123; if (n == 0) return new ArrayList&lt;String&gt;(Arrays.asList(&quot;&quot;)); if (n == 1) return new ArrayList&lt;String&gt;(Arrays.asList(&quot;0&quot;,&quot;1&quot;,&quot;8&quot;)); List&lt;String&gt; next = helper(n - 2, m); List&lt;String&gt; res = new ArrayList&lt;&gt;(); for (String str : next) &#123; if (n != m) res.add(&quot;0&quot; + str + &quot;0&quot;); res.add(&quot;1&quot; + str + &quot;1&quot;); res.add(&quot;6&quot; + str + &quot;9&quot;); res.add(&quot;8&quot; + str + &quot;8&quot;); res.add(&quot;9&quot; + str + &quot;6&quot;); &#125; return res; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[241. Different Ways to Add Parentheses]]></title>
     <url>%2F2017%2F09%2F23%2F241-Different-Ways-to-Add-Parentheses%2F</url>
     <content type="text"><![CDATA[Given a string of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. The valid operators are +, - and *. Example 112345Input: &quot;2-1-1&quot;.((2-1)-1) = 0(2-(1-1)) = 2Output: [0, 2] Example 212345678Input: &quot;2*3-4*5&quot;(2*(3-(4*5))) = -34((2*3)-(4*5)) = -14((2*(3-4))*5) = -10(2*((3-4)*5)) = -10(((2*3)-4)*5) = 10Output: [-34, -14, -10, -10, 10] 解法1：用Divide &amp; Conquer的思想，按照每一个运算符号分成左右两边。每边计算一下结果然后按照运算符号结合起来。当只有数字的时候所生成的res一定为空，这个时候就把数字加入res即可。 lang: java123456789101112131415161718192021222324252627282930313233343536class Solution &#123; public List&lt;Integer&gt; diffWaysToCompute(String input) &#123; List&lt;Integer&gt; res = new ArrayList&lt;&gt;(); for (int i = 0; i &lt; input.length(); i++) &#123; if (input.charAt(i) == &apos;+&apos; || input.charAt(i) == &apos;-&apos; || input.charAt(i) == &apos;*&apos;) &#123; String left = input.substring(0, i); String right = input.substring(i + 1); List&lt;Integer&gt; leftRes = diffWaysToCompute(left); List&lt;Integer&gt; rightRes = diffWaysToCompute(right); for (int l : leftRes) &#123; for (int r : rightRes) &#123; switch (input.charAt(i)) &#123; case &apos;+&apos; : res.add(l + r); break; case &apos;-&apos;: res.add(l - r); break; case &apos;*&apos;: res.add( l * r); break; &#125; &#125; &#125; &#125; &#125; if (res.size() == 0) &#123; res.add(Integer.parseInt(input)); &#125; return res; &#125;&#125;]]></content>
