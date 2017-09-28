@@ -314,6 +314,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/09/2017-02-09-leetcode-solution-Verify-Preorder-Serialization-of-a-Binary-Tree-331/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/09/2017-02-09-leetcode-solution-Verify-Preorder-Serialization-of-a-Binary-Tree-331/" itemprop="url">leetcode解题: Verify Preorder Serialization of a Binary Tree (331)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-09T13:37:46-05:00">
+                2017-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>One way to serialize a binary tree is to use pre-order traversal. When we encounter a non-null node, we record the node’s value. If it is a null node, we record using a sentinel value such as #.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">     _9_</div><div class="line">    /   \</div><div class="line">   3     2</div><div class="line">  / \   / \</div><div class="line"> 4   1  #  6</div><div class="line">/ \ / \   / \</div><div class="line"># # # #   # #</div></pre></td></tr></table></figure></p>
+<p>For example, the above binary tree can be serialized to the string “9,3,4,#,#,1,#,#,2,#,6,#,#”, where # represents a null node.</p>
+<p>Given a string of comma separated values, verify whether it is a correct preorder traversal serialization of a binary tree. Find an algorithm without reconstructing the tree.</p>
+<p>Each comma separated value in the string must be either an integer or a character ‘#’ representing null pointer.</p>
+<p>You may assume that the input format is always valid, for example it could never contain two consecutive commas such as “1,,3”.</p>
+<p>Example 1:<br><code>&quot;9,3,4,#,#,1,#,#,2,#,6,#,#&quot;</code><br>Return <code>true</code></p>
+<p>Example 2:<br><code>&quot;1,#&quot;</code><br>Return <code>false</code></p>
+<p>Example 3:<br><code>&quot;9,#,#,1&quot;</code><br>Return <code>false</code></p>
+<h3 id="解法1：-剪叶子的思路"><a href="#解法1：-剪叶子的思路" class="headerlink" title="解法1： 剪叶子的思路"></a>解法1： 剪叶子的思路</h3><p>每当遇到两个连续的”#”的时候,并且前一个字符不是”#”的时候,可以判断这是一个叶子.如果我们把每一个叶子剪掉并且替换成”#”的话,我们实际上在不停的从下往上的砍叶子直到砍完为止.<br>这样的思路对于binary tree在其他题目中似乎也见过.那么对于一个valid的binary tree,最后一定是能砍光的. 以此可以得出如下的算法.<br><code>C++</code><br>注意的是这里用vector当成一个stack用,因为我们需要access前面的2个元素,用vector效率较高.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidSerialization</span><span class="params">(<span class="built_in">string</span> preorder)</span> </span>&#123;</div><div class="line">        <span class="built_in">std</span>::<span class="function"><span class="built_in">istringstream</span> <span class="title">ss</span><span class="params">(preorder)</span></span>;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; s;</div><div class="line">        <span class="built_in">string</span> item;</div><div class="line">        <span class="keyword">while</span> (getline(ss, item, <span class="string">','</span>)) &#123;</div><div class="line">            s.push_back(item);</div><div class="line">            <span class="keyword">while</span> (s.size() &gt;= <span class="number">3</span> &amp;&amp; item == <span class="string">"#"</span> &amp;&amp; s[s.size() - <span class="number">2</span>] == <span class="string">"#"</span> &amp;&amp; s[s.size() <span class="number">-3</span>] != <span class="string">"#"</span>) &#123;</div><div class="line">                s.pop_back();</div><div class="line">                s.pop_back();</div><div class="line">                s.pop_back();</div><div class="line">                s.push_back(item);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> s.size() == <span class="number">1</span> &amp;&amp; s[<span class="number">0</span>] == <span class="string">"#"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<h3 id="解法2-outbound-inbound"><a href="#解法2-outbound-inbound" class="headerlink" title="解法2: outbound - inbound"></a>解法2: outbound - inbound</h3><p>这个解法的核心是. 首先把所有的NULL NODE看成是valid node. 每一个node的inbound/outbound的connection可以统计如下:</p>
+<ol>
+<li>每一个非NULL节点都有两个outbound和一个inbound (除了root)</li>
+<li>每一个NULL节点都有一个inbound和0个outbound</li>
+<li>一个valid的树如果计算所有的outbound和inbound的差,一定是等于0的,并且从root到任意一节点, outbound - inbound都一定不是负数.<br>有了这个结论之后, code写起来很直白.<br><code>C++</code><figure class="highlight plain"><figcaption><span>lang: cpp</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">    bool isValidSerialization(string preorder) &#123;</div><div class="line">        std::istringstream ss(preorder);</div><div class="line">        string item;</div><div class="line">        int diff = 1;</div><div class="line">        while (getline(ss, item, &apos;,&apos;)) &#123;</div><div class="line">            if (--diff &lt; 0) return false;</div><div class="line">            if (item != &quot;#&quot;) diff += 2;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        return diff == 0;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/04/2017-02-04-leetcode-Solution-132-Pattern-456/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1625,152 +1783,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/21/2017-01-21-leetcode-solution-Combination-Sum-II-40/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/21/2017-01-21-leetcode-solution-Combination-Sum-II-40/" itemprop="url">leetcode解题: Combination Sum II (40)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-21T09:03:49-05:00">
-                2017-01-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.</p>
-<p>Each number in C may only be used once in the combination.</p>
-<p>Note:<br>All numbers (including target) will be positive integers.<br>The solution set must not contain duplicate combinations.<br>For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8,<br>A solution set is:<br>[<br>  [1, 7],<br>  [1, 2, 5],<br>  [2, 6],<br>  [1, 1, 6]<br>]</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>这题和<a href="http://bigteemo.github.io/2017/01/21/leetcode-solution-Combination-Sum-39/">Combination Sum</a>的唯一区别是每一个数字只能使用一次，那么每一次挑选的时候无论是否有解都往前进一格就可以了。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; combinationSum2(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candidates, <span class="keyword">int</span> target) &#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; current;</div><div class="line">    sort(candidates.begin(),candidates.end());</div><div class="line">    backTracking(candidates.begin(),current,res,candidates,target);</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">backTracking</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; current,<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; res, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candidates, <span class="keyword">int</span> target)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(!target) res.push_back(current);</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(target&gt;<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">for</span>(;n!=candidates.end()&amp;&amp;*n&lt;=target;++n)&#123;</div><div class="line">            current.push_back(*n);</div><div class="line">            backTracking(n+<span class="number">1</span>,current,res,candidates,target-*n);</div><div class="line">            current.pop_back();</div><div class="line">            <span class="keyword">while</span>(n+<span class="number">1</span>!=candidates.end()&amp;&amp;*(n+<span class="number">1</span>)==*n) ++n;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1821,7 +1833,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">404</span>
+                <span class="site-state-item-count">405</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

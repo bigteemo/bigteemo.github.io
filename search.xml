@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[362. Design Hit Counter]]></title>
+    <url>%2F2017%2F09%2F27%2F362-Design-Hit-Counter%2F</url>
+    <content type="text"><![CDATA[Design a hit counter which counts the number of hits received in the past 5 minutes. Each function accepts a timestamp parameter (in seconds granularity) and you may assume that calls are being made to the system in chronological order (ie, the timestamp is monotonically increasing). You may assume that the earliest timestamp starts at 1. It is possible that several hits arrive roughly at the same time. Example:HitCounter counter = new HitCounter(); // hit at timestamp 1.counter.hit(1); // hit at timestamp 2.counter.hit(2); // hit at timestamp 3.counter.hit(3); // get hits at timestamp 4, should return 3.counter.getHits(4); // hit at timestamp 300.counter.hit(300); // get hits at timestamp 300, should return 4.counter.getHits(300); // get hits at timestamp 301, should return 3.counter.getHits(301);Follow up:What if the number of hits per second could be very large? Does your design scale? 解法1： Deque用一个deque来记录5分钟以内的hit。而当查询gitHit的时候，把deque前面的超出范围的node全部弹出就可以了。如果getHit比较少的话，可以在hit的函数里放上弹出的操作。class HitCounter { /** Initialize your data structure here. */ Deque&lt;Integer&gt; deque; public HitCounter() { deque = new LinkedList&lt;&gt;(); } /** Record a hit. @param timestamp - The current timestamp (in seconds granularity). */ public void hit(int timestamp) { deque.offerLast(timestamp); } /** Return the number of hits in the past 5 minutes. @param timestamp - The current timestamp (in seconds granularity). */ public int getHits(int timestamp) { while (!deque.isEmpty() &amp;&amp; timestamp - deque.peekFirst() &gt;= 300) { deque.pollFirst(); } return deque.size(); } } /** Your HitCounter object will be instantiated and called as such: HitCounter obj = new HitCounter(); obj.hit(timestamp); int param_2 = obj.getHits(timestamp);*/ lang: java12]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[360. Sort Transformed Array]]></title>
     <url>%2F2017%2F09%2F26%2F360-Sort-Transformed-Array%2F</url>
     <content type="text"><![CDATA[Given a sorted array of integers nums and integer values a, b and c. Apply a function of the form f(x) = ax2 + bx + c to each element x in the array. The returned array must be in sorted order. Expected time complexity: O(n) Example:1234567nums = [-4, -2, 2, 4], a = 1, b = 3, c = 5,Result: [3, 9, 15, 33]nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5Result: [-23, -5, 1, 7] 解法1： Two pointers + Math如果a是正数，那么在边缘的x所对应的数字是最大的，而最小值在中间。如果a是负数，那么在边缘的x所对应的数字是最小的，最大值在中间。可以改变要写入的位置来精简代码。 lang: java12345678910111213141516171819202122232425262728293031323334353637class Solution &#123; public int[] sortTransformedArray(int[] nums, int a, int b, int c) &#123; int n = nums.length; int[] res = new int[n]; int i = 0, j = n - 1; int index = a &gt;= 0 ? n - 1 : 0; while (i &lt;= j) &#123; int left = calc(nums[i], a, b, c); int right = calc(nums[j], a, b, c); if (a &gt;= 0) &#123; if (left &gt;= right) &#123; res[index--] = left; i++; &#125; else &#123; res[index--] = right; j--; &#125; &#125; else &#123; if (left &gt;= right) &#123; res[index++] = right; j--; &#125; else &#123; res[index++] = left; i++; &#125; &#125; &#125; return res; &#125; private int calc(int num, int a, int b, int c) &#123; return a * num * num + b * num + c; &#125;&#125;]]></content>
