@@ -314,6 +314,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/20/2017-02-20-leetcode-solution-Partition-Equal-Subset-Sum-416/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/20/2017-02-20-leetcode-solution-Partition-Equal-Subset-Sum-416/" itemprop="url">leetcode解题: Partition Equal Subset Sum (416)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-20T11:46:37-05:00">
+                2017-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.</p>
+<p>Note:<br>Each of the array element will not exceed 100.<br>The array size will not exceed 200.<br>Example 1:</p>
+<p>Input: [1, 5, 11, 5]</p>
+<p>Output: true</p>
+<p>Explanation: The array can be partitioned as [1, 5, 5] and [11].<br>Example 2:</p>
+<p>Input: [1, 2, 3, 5]</p>
+<p>Output: false</p>
+<p>Explanation: The array cannot be partitioned into equal sum subsets.</p>
+<h3 id="解法1：DP-O-N-M-M是要找的子数组的和的大小。"><a href="#解法1：DP-O-N-M-M是要找的子数组的和的大小。" class="headerlink" title="解法1：DP: O(N*M), M是要找的子数组的和的大小。"></a>解法1：DP: O(N*M), M是要找的子数组的和的大小。</h3><p>这题参考了<a href="http://www.cnblogs.com/grandyang/p/5951422.html" target="_blank" rel="external">这个</a>的解法， 这一类的dp的题目里，dp[i]的数组的下标往往表示的是能取得值。<br>这里呢，首先想到要能分成两个同等大小的数组，原数组的和一定必须是偶数，而且这样的话每一个子数组的和是sum/2<br>有了这个之后，dp[i]的定义就变成了原数组是否有一个子数组他的和是i。<br>进一步，我们可以遍历整个数组，对于每一个数x，我们从target开始往下update， dp[x] = dp[x] || dp[target - x]<br>就是说，如果dp[x]要存在的话，dp[target - x]一定也存在。</p>
+<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canPartition</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (nums.size() &lt;= <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> sum = accumulate(nums.begin(), nums.end(), <span class="number">0</span>); </div><div class="line">        <span class="keyword">if</span> (sum % <span class="number">2</span> != <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> target = sum / <span class="number">2</span>;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; dp(target + <span class="number">1</span>, <span class="literal">false</span>);</div><div class="line">        dp[<span class="number">0</span>] = <span class="literal">true</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); ++i) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = target; j &gt;= nums[i]; --j) &#123;</div><div class="line">                dp[j] = dp[j] || dp[j - nums[i]];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dp[target];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/20/2017-02-20-Leetcode-solution-Range-Sum-Query-2D-Immutable/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1642,156 +1794,6 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/09/2017-02-09-leetcode-solution-Sort-Colors-75/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/09/2017-02-09-leetcode-solution-Sort-Colors-75/" itemprop="url">leetcode解题: Sort Colors (75)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-09T15:20:15-05:00">
-                2017-02-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.</p>
-<p>Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.</p>
-<p>Note:<br>You are not suppose to use the library’s sort function for this problem.</p>
-<p>Follow up:<br>A rather straight forward solution is a two-pass algorithm using counting sort.<br>First, iterate the array counting number of 0’s, 1’s, and 2’s, then overwrite array with total number of 0’s, then 1’s and followed by 2’s.</p>
-<p>Could you come up with an one-pass algorithm using only constant space?</p>
-<h3 id="解法1：-Bucket-sort-counting-sort-O-N-Time-with-two-passes"><a href="#解法1：-Bucket-sort-counting-sort-O-N-Time-with-two-passes" class="headerlink" title="解法1： Bucket sort/counting sort, O(N) Time with two passes"></a>解法1： Bucket sort/counting sort, O(N) Time with two passes</h3><p>Bucket sort, 统计0,1,2的个数然后再逐个写入<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="comment">// bucket sort</span></div><div class="line">        <span class="keyword">int</span> red = <span class="number">0</span>, white = <span class="number">0</span>, blue = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (nums[i] == <span class="number">0</span>) &#123;</div><div class="line">                red++;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[i] == <span class="number">1</span>) &#123;</div><div class="line">                white++;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                blue++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= red; j++) &#123;</div><div class="line">            nums[i++] = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= white; j++) &#123;</div><div class="line">            nums[i++] = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= blue; j++) &#123;</div><div class="line">            nums[i++] = <span class="number">2</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-One-pass-O-N"><a href="#解法2：-One-pass-O-N" class="headerlink" title="解法2： One pass O(N)"></a>解法2： One pass O(N)</h3><p>类似于双指针的思路,这里用了一个low记录0的位置,用了一个high记录2的位置,然后从左往右扫描. 如果是0或者2就知道该插入在什么地方,如果是1那么就往前移动.<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (nums.size() &lt;= <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> low = <span class="number">0</span>, high = nums.size() <span class="number">-1</span>;</div><div class="line">        <span class="keyword">int</span> mid = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (mid &lt; nums.size() &amp;&amp; mid &lt;= high) &#123;</div><div class="line">            <span class="keyword">if</span> (nums[mid] == <span class="number">0</span>) &#123;</div><div class="line">                swap(nums, low, mid);</div><div class="line">                ++low;</div><div class="line">                ++mid;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] == <span class="number">2</span>) &#123;</div><div class="line">                swap(nums, high, mid);</div><div class="line">                --high;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                ++mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> temp = nums[i];</div><div class="line">        nums[i] = nums[j];</div><div class="line">        nums[j] =temp;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>###解法3: One pass O(N) ###<br>用两个指针记录zero和one插入的位置。<br>对于每一个新数字，先插入最大的数字。因为如果是其他数字的话在之后的操作中会被覆盖。<br>然后从大到小的判断当前数字为哪一个。如果是1那么只移动one的位置并插入。<br>如果是zero，那么需要先移动one并且赋值，然后移动zero再赋值。如果zero插入的位置原本是一个1，那么被覆盖的1就被one的指针找回了。<br>Java<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> zero = <span class="number">-1</span>;</div><div class="line">        <span class="keyword">int</span> one = <span class="number">-1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; nums.length; ++k) &#123;</div><div class="line">            <span class="keyword">int</span> v = nums[k];</div><div class="line">            nums[k] = <span class="number">2</span>;    <span class="comment">// no matter what, set this to 2</span></div><div class="line">            <span class="keyword">if</span> (v == <span class="number">0</span>) &#123;</div><div class="line">                nums[++one] = <span class="number">1</span>;</div><div class="line">                nums[++zero] = <span class="number">0</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (v == <span class="number">1</span>) &#123;</div><div class="line">                nums[++one] = <span class="number">1</span>;    <span class="comment">// advance one</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1842,7 +1844,7 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">408</span>
+                <span class="site-state-item-count">409</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -314,6 +314,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/11/2017-07-11-300-Longest-Increasing-Subsequence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/11/2017-07-11-300-Longest-Increasing-Subsequence/" itemprop="url">300. Longest Increasing Subsequence</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T21:13:20-04:00">
+                2017-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an unsorted array of integers, find the length of longest increasing subsequence.</p>
+<p>For example,<br>Given [10, 9, 2, 5, 3, 7, 101, 18],<br>The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4. Note that there may be more than one LIS combination, it is only necessary for you to return the length.</p>
+<p>Your algorithm should run in O(n2) complexity.</p>
+<p>Follow up: Could you improve it to O(n log n) time complexity?</p>
+<h3 id="解法1：O-N-2"><a href="#解法1：O-N-2" class="headerlink" title="解法1：O(N^2)"></a>解法1：O(N^2)</h3><p>经典dp,　dp[i]是到第ｉ个数字的最大递增subsequence, 那么dp[i] = Max(dp[k1], dp[k2], dp[k3]…) + 1, nums[i] &gt; nums[kn]</p>
+<p>C+,<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> res = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</div><div class="line">            dp[i] = <span class="number">1</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</div><div class="line">                <span class="keyword">if</span> (nums[i] &gt; nums[j]) &#123;</div><div class="line">                    dp[i] = Math.max(dp[i], dp[j] + <span class="number">1</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            res = Math.max(res, dp[i]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2：O-NlogN"><a href="#解法2：O-NlogN" class="headerlink" title="解法2：O(NlogN)"></a>解法2：O(NlogN)</h3><p>解释参考leetcode 的答案解释：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">In this approach, we scan the array from left to right. We also make use of a dpdpdp array initialized with all 0&apos;s. This dpdpdp array is meant to store the increasing subsequence formed by including the currently encountered element. While traversing the numsnumsnums array, we keep on filling the dpdpdp array with the elements encountered so far. For the element corresponding to the jthj^&#123;th&#125;j​th​​ index (nums[j]nums[j]nums[j]), we determine its correct position in the dpdpdp array(say ithi^&#123;th&#125;i​th​​ index) by making use of Binary Search(which can be used since the dpdpdp array is storing increasing subsequence) and also insert it at the correct position. An important point to be noted is that for Binary Search, we consider only that portion of the dpdpdp array in which we have made the updations by inserting some elements at their correct positions(which remains always sorted). Thus, only the elements upto the ithi^&#123;th&#125;i​th​​ index in the dpdpdp array can determine the position of the current element in it. Since, the element enters its correct position(iii) in an ascending order in the dpdpdp array, the subsequence formed so far in it is surely an increasing subsequence. Whenever this position index iii becomes equal to the length of the LIS formed so far(lenlenlen), it means, we need to update the lenlenlen as len=len+1len = len + 1len=len+1.</div><div class="line"></div><div class="line">Note: dpdpdp array does not result in longest increasing subsequence, but length of dpdpdp array will give you length of LIS.</div><div class="line"></div><div class="line">Consider the example:</div><div class="line"></div><div class="line">input: [0, 8, 4, 12, 2]</div><div class="line"></div><div class="line">dp: [0]</div><div class="line"></div><div class="line">dp: [0, 8]</div><div class="line"></div><div class="line">dp: [0, 4]</div><div class="line"></div><div class="line">dp: [0, 4, 12]</div><div class="line"></div><div class="line">dp: [0 , 2, 12] which is not the longest increasing subsequence, but length of dpdpdp array results in length of Longest Increasing Subsequence.</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int lengthOfLIS(int[] nums) &#123;</div><div class="line">        int[] dp = new int[nums.length];</div><div class="line">        int len = 0;</div><div class="line">        for (int num : nums) &#123;</div><div class="line">            int i = Arrays.binarySearch(dp, 0, len, num);</div><div class="line">            if (i &lt; 0) &#123;</div><div class="line">                i = -(i + 1);</div><div class="line">            &#125;</div><div class="line">            dp[i] = num;</div><div class="line">            if (i == len) &#123;</div><div class="line">                len++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return len;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/11/2017-07-11-351-Android-Unlock-Patterns/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1635,156 +1785,6 @@ CDATA_CONTENT may contain any characters. The function of cdata is to forbid the
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/09/2017-07-09-522-Longest-Uncommon-Subsequence-II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/09/2017-07-09-522-Longest-Uncommon-Subsequence-II/" itemprop="url">522. Longest Uncommon Subsequence II</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-09T08:43:12-04:00">
-                2017-07-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a list of strings, you need to find the longest uncommon subsequence among them. The longest uncommon subsequence is defined as the longest subsequence of one of these strings and this subsequence should not be any subsequence of the other strings.</p>
-<p>A subsequence is a sequence that can be derived from one sequence by deleting some characters without changing the order of the remaining elements. Trivially, any string is a subsequence of itself and an empty string is a subsequence of any string.</p>
-<p>The input will be a list of strings, and the output needs to be the length of the longest uncommon subsequence. If the longest uncommon subsequence doesn’t exist, return -1.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: &quot;aba&quot;, &quot;cdc&quot;, &quot;eae&quot;</div><div class="line">Output: 3</div></pre></td></tr></table></figure></p>
-<p>Note:</p>
-<p>   All the given strings’ lengths will not exceed 10.<br>   The length of the given list will be in the range of [2, 50].</p>
-<h3 id="解法1：O-N-2-X"><a href="#解法1：O-N-2-X" class="headerlink" title="解法1：O(N^2 * X)"></a>解法1：O(N^2 * X)</h3><p>x is the average length of strings. N is the number of strings<br>这题的关键在于substring的定义要注意，和平时遇到的substring定义不同。<br>这里的substring是可以提取不连续的字符组成。<br>分析一下可以发现，如果存在答案的话，那么uncommon subsequence 一定是其中某一个string，那么就把每一个string和其他的相比，看是否为其他的substring，如果不是，那么更新最大值。</p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findLUSlength</span><span class="params">(String[] strs)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> res = -<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strs.length; i++) &#123;</div><div class="line">            <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; strs.length; j++) &#123;</div><div class="line">                <span class="keyword">if</span> (j != i) &#123;</div><div class="line">                    <span class="keyword">if</span> (isSubString(strs[i], strs[j])) &#123;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (j == strs.length) &#123;</div><div class="line">                res = Math.max(res, strs[i].length());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSubString</span><span class="params">(String x, String y)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// By definition, the substring can be derived by deleting some characters</span></div><div class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; y.length() &amp;&amp; j &lt; x.length(); i++)</div><div class="line">            <span class="keyword">if</span> (x.charAt(j) == y.charAt(i))</div><div class="line">                j++;</div><div class="line">        <span class="keyword">return</span> j == x.length();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1835,7 +1835,7 @@ CDATA_CONTENT may contain any characters. The function of cdata is to forbid the
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">408</span>
+                <span class="site-state-item-count">409</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

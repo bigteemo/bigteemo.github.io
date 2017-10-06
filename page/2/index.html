@@ -314,6 +314,151 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/249-Group-Shifted-Strings/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/26/249-Group-Shifted-Strings/" itemprop="url">249. Group Shifted Strings</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-26T22:12:20-04:00">
+                2017-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a string, we can “shift” each of its letter to its successive letter, for example: “abc” -&gt; “bcd”. We can keep “shifting” which forms the sequence:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;abc&quot; -&gt; &quot;bcd&quot; -&gt; ... -&gt; &quot;xyz&quot;</div></pre></td></tr></table></figure></p>
+<p>Given a list of strings which contains only lowercase alphabets, group all strings that belong to the same shifting sequence.</p>
+<p>For example, given: [“abc”, “bcd”, “acef”, “xyz”, “az”, “ba”, “a”, “z”],<br>A solution is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [&quot;abc&quot;,&quot;bcd&quot;,&quot;xyz&quot;],</div><div class="line">  [&quot;az&quot;,&quot;ba&quot;],</div><div class="line">  [&quot;acef&quot;],</div><div class="line">  [&quot;a&quot;,&quot;z&quot;]</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<h3 id="解法1：-HashMap"><a href="#解法1：-HashMap" class="headerlink" title="解法1： HashMap"></a>解法1： HashMap</h3><p>基本的思路是要构造一个hash function，使得属于一个sequence的字符串可以group到一起。一个思路是把每一个字符转换成对于与第一个字符的位置。<br>这里要处理的是负数的情况，比如<code>ba</code>,<code>az</code>，这里用到的trick是用(diff + 26) % 26 来转换成正整数。<br>同时要注意的是需要分隔开不同的数字，因为对于012不能区分是0-12还是0-1-2.<br><figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    public List&lt;List&lt;String&gt;&gt; groupStrings(String[] strings) &#123;</div><div class="line">        List&lt;List&lt;String&gt;&gt; res = new ArrayList&lt;&gt;();</div><div class="line">        if (strings == null || strings.length == 0) &#123;</div><div class="line">            return res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // Design a hash function</div><div class="line">        Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();</div><div class="line">        for (String str : strings) &#123;</div><div class="line"></div><div class="line">            // construct the hash key</div><div class="line">            StringBuilder sb = new StringBuilder();</div><div class="line">            for (int i = 0; i &lt; str.length(); i++) &#123;</div><div class="line">                sb.append(Integer.toString((str.charAt(i) - str.charAt(0) + 26) % 26));</div><div class="line">                sb.append(&quot;.&quot;);</div><div class="line">            &#125;</div><div class="line">            String key = sb.toString();</div><div class="line">            if (!map.containsKey(key)) &#123;</div><div class="line">                map.put(key, new ArrayList&lt;String&gt;());</div><div class="line">            &#125;</div><div class="line">            map.get(key).add(str);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for (String key : map.keySet()) &#123;</div><div class="line">            res.add(map.get(key));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/247-Strobogrammatic-Number-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1612,151 +1757,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/08/17/2017-08-17-379-Design-Phone-Directory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/17/2017-08-17-379-Design-Phone-Directory/" itemprop="url">379. Design Phone Directory</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T15:59:21-04:00">
-                2017-08-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Design a Phone Directory which supports the following operations:</p>
-<p>get: Provide a number which is not assigned to anyone.<br>check: Check if a number is available or not.<br>release: Recycle or release a number.<br>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">// Init a phone directory containing a total of 3 numbers: 0, 1, and 2.</div><div class="line">PhoneDirectory directory = new PhoneDirectory(3);</div><div class="line"></div><div class="line">// It can return any available phone number. Here we assume it returns 0.</div><div class="line">directory.get();</div><div class="line"></div><div class="line">// Assume it returns 1.</div><div class="line">directory.get();</div><div class="line"></div><div class="line">// The number 2 is available, so return true.</div><div class="line">directory.check(2);</div><div class="line"></div><div class="line">// It returns 2, the only number that is left.</div><div class="line">directory.get();</div><div class="line"></div><div class="line">// The number 2 is no longer available, so return false.</div><div class="line">directory.check(2);</div><div class="line"></div><div class="line">// Release number 2 back to the pool.</div><div class="line">directory.release(2);</div><div class="line"></div><div class="line">// Number 2 is available again, return true.</div><div class="line">directory.check(2);</div></pre></td></tr></table></figure></p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>用一个hashset存储号码。get的时候用<code>directory.iterator().next()</code>来得到下一个数字。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhoneDirectory</span> </span>&#123;</div><div class="line"></div><div class="line">    HashSet&lt;Integer&gt; directory;</div><div class="line">    <span class="comment">/** Initialize your data structure here</span></div><div class="line"><span class="comment">        <span class="doctag">@param</span> maxNumbers - The maximum numbers that can be stored in the phone directory. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PhoneDirectory</span><span class="params">(<span class="keyword">int</span> maxNumbers)</span> </span>&#123;</div><div class="line">        directory = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maxNumbers; i++) &#123;</div><div class="line">            directory.add(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/** Provide a number which is not assigned to anyone.</span></div><div class="line"><span class="comment">        <span class="doctag">@return</span> - Return an available number. Return -1 if none is available. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (directory.size() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> key = directory.iterator().next();</div><div class="line">        directory.remove(key);</div><div class="line">        <span class="keyword">return</span> key;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/** Check if a number is available or not. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> directory.contains(number);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/** Recycle or release a number. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">release</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line"></div><div class="line">        directory.add(number);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your PhoneDirectory object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * PhoneDirectory obj = new PhoneDirectory(maxNumbers);</span></div><div class="line"><span class="comment"> * int param_1 = obj.get();</span></div><div class="line"><span class="comment"> * boolean param_2 = obj.check(number);</span></div><div class="line"><span class="comment"> * obj.release(number);</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1807,7 +1807,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">408</span>
+                <span class="site-state-item-count">409</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

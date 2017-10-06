@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[306. Additive Number]]></title>
+    <url>%2F2017%2F10%2F05%2F306-Additive-Number%2F</url>
+    <content type="text"><![CDATA[Additive number is a string whose digits can form additive sequence. A valid additive sequence should contain at least three numbers. Except for the first two numbers, each subsequent number in the sequence must be the sum of the preceding two. For example:“112358” is an additive number because the digits can form an additive sequence: 1, 1, 2, 3, 5, 8. 1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8“199100199” is also an additive number, the additive sequence is: 1, 99, 100, 199.1 + 99 = 100, 99 + 100 = 199Note: Numbers in the additive sequence cannot have leading zeros, so sequence 1, 2, 03 or 1, 02, 3 is invalid. Given a string containing only digits ‘0’-‘9’, write a function to determine if it’s an additive number. 解法1： Recursion思想比较简单，就是不停的尝试两个可能的number，然后看是否可以满足additive number的条件。用recursion就可以解决。要注意的是，第一个i的循环只需要到(n - 1) / 2就可以了，因为两个数相加最少也会和较长的数长度相等。假设第二个数字到位置j，那么第三个数字（两个数字之和的长度）就是n - j, n - j要满足的条件也就是j要满足的条件。 123456789101112131415161718192021222324252627282930313233class Solution &#123; public boolean isAdditiveNumber(String num) &#123; if (num == null || num.length() == 0) &#123; return false; &#125; int n = num.length(); for (int i = 1; i &lt;= (n - 1) / 2; i++) &#123; if (num.charAt(0) == '0' &amp;&amp; i &gt; 1) return false; for (int j = i + 1; n - j &gt;= Math.max(i, j - i); j++) &#123; if (num.charAt(i) == '0' &amp;&amp; j - i &gt; 1) break; long first = Long.parseLong(num.substring(0, i)); long second = Long.parseLong(num.substring(i, j)); String rest = num.substring(j); if (helper(rest, first, second)) return true; &#125; &#125; return false; &#125; public boolean helper(String num, long first, long second) &#123; if (num.length() == 0) return true; Long sum = first + second; String s = sum.toString(); if (!num.startsWith(s)) return false; return helper(num.substring(s.length()), second, sum); &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+        <tag>Recursion</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[15. 3Sum]]></title>
     <url>%2F2017%2F09%2F30%2F15-3Sum%2F</url>
     <content type="text"><![CDATA[Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero. Note: The solution set must not contain duplicate triplets.1234567For example, given array S = [-1, 0, 1, 2, -1, -4],A solution set is:[ [-1, 0, 1], [-1, -1, 2]] 解法1： Backtracking典型的backtracking + 去重的问题。主要的容易错的地方是怎么去重，当确定了其中一个数字的位置i之后，在变动left和right时，每当找到一个满足条件的解都要跳过之后所有和left或者right指向的相同的数字。12345678910111213141516171819202122232425262728293031323334class Solution &#123; public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) &#123; List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;(); if (nums == null || nums.length == 0) &#123; return res; &#125; Arrays.sort(nums); for (int i = 0; i &lt; nums.length - 2; i++) &#123; if (i != 0 &amp;&amp; nums[i] == nums[i -1]) continue; int left = i + 1, right = nums.length - 1; while (left &lt; right) &#123; if (nums[i] + nums[left] + nums[right] == 0) &#123; List&lt;Integer&gt; temp = new ArrayList&lt;&gt;(); temp.add(nums[i]); temp.add(nums[left]); temp.add(nums[right]); res.add(temp); left++; right--; while (left &lt; right &amp;&amp; nums[left - 1] == nums[left]) left++; while (left &lt; right &amp;&amp; nums[right + 1] == nums[right]) right--; &#125; else if (nums[i] + nums[left] + nums[right] &lt; 0) &#123; left++; &#125; else &#123; right--; &#125; &#125; &#125; return res; &#125;&#125;]]></content>
