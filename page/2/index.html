@@ -314,6 +314,301 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/253-Meeting-Rooms-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/26/253-Meeting-Rooms-II/" itemprop="url">253. Meeting Rooms II</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-26T22:24:06-04:00">
+                2017-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],…] (si &lt; ei), find the minimum number of conference rooms required.</p>
+<p>For example,<br>Given [[0, 30],[5, 10],[15, 20]],<br>return 2</p>
+<h3 id="解法1：-Sweep-Line-扫描线"><a href="#解法1：-Sweep-Line-扫描线" class="headerlink" title="解法1： Sweep Line / 扫描线"></a>解法1： Sweep Line / 扫描线</h3><p>扫描线的基础题。基本的思路是把所有的线段的两个断点都归类并且排序，然后碰到起点就+1，碰到终点就-1，按照时间的顺序遍历，相当于有一根线在从左面扫到右面。<br>实际在写code的时候可以有不同的写法，第一种是用了一种比较少用的数据结构，TreeMap。这个hashmap存储的是对于每一个时间点的计数，不同的是，对于起点计数+1，对于终点计数-1， 表现的就是如果一个会议结束了当前的room就释放出来不需要了，所以自然需要的room的个数-1。然后需要按照时间顺序遍历每一个时间点，把所有的room的变化加和，在加和的过程中保留下遇见过的最大值）。TreeMap的key是按照natural order排序的，所以很适合这个问题。</p>
+<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for an interval.</div><div class="line"> * public class Interval &#123;</div><div class="line"> *     int start;</div><div class="line"> *     int end;</div><div class="line"> *     Interval() &#123; start = 0; end = 0; &#125;</div><div class="line"> *     Interval(int s, int e) &#123; start = s; end = e; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">class Solution &#123;</div><div class="line">    public int minMeetingRooms(Interval[] intervals) &#123;</div><div class="line">        if (intervals == null || intervals.length == 0) &#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //</div><div class="line">        Map&lt;Integer, Integer&gt; map = new TreeMap&lt;&gt;();    // Treat start and end as the natural time point</div><div class="line">        // Takes O(logN) for each operation</div><div class="line">        for (Interval it : intervals) &#123;</div><div class="line">            map.put(it.start, map.getOrDefault(it.start, 0) + 1);</div><div class="line">            map.put(it.end, map.getOrDefault(it.end, 0) - 1);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        int rooms = 0;</div><div class="line">        int res = 0;</div><div class="line">        for (int timePoint : map.keySet()) &#123;</div><div class="line">            // timePoint is sorted in ascending order</div><div class="line">            rooms += map.get(timePoint);</div><div class="line">            res = Math.max(res, rooms);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<h3 id="解法2：-Sorting-Array"><a href="#解法2：-Sorting-Array" class="headerlink" title="解法2： Sorting Array"></a>解法2： Sorting Array</h3><p>同样的思路，不同的写法。也可以维护两个数组，start, end. 把对应的时间点放进去进行排序。然后用两个指针指向两个数组，当start &lt; end的时候需要的room+1， 反之则room-1. 然后在更新的过程中统计出现过的最大的room的个数。<br><figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for an interval.</div><div class="line"> * public class Interval &#123;</div><div class="line"> *     int start;</div><div class="line"> *     int end;</div><div class="line"> *     Interval() &#123; start = 0; end = 0; &#125;</div><div class="line"> *     Interval(int s, int e) &#123; start = s; end = e; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">class Solution &#123;</div><div class="line">    public int minMeetingRooms(Interval[] intervals) &#123;</div><div class="line"></div><div class="line">        int n = intervals.length;</div><div class="line">        int[] start = new int[n];</div><div class="line">        int[] end = new int[n];</div><div class="line">        for (int i = 0; i &lt; intervals.length; i++) &#123;</div><div class="line">            start[i] = intervals[i].start;</div><div class="line">            end[i] = intervals[i].end;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Arrays.sort(start);</div><div class="line">        Arrays.sort(end);</div><div class="line">        int endptr = 0;</div><div class="line">        int res = 0;</div><div class="line">        for (int i = 0; i &lt; n; i++) &#123;</div><div class="line">            if (start[i] &lt; end[endptr]) &#123;</div><div class="line">                res++;</div><div class="line">            &#125; else &#123;</div><div class="line">                endptr++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/251-Flatten-2D-Vector/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/26/251-Flatten-2D-Vector/" itemprop="url">251. Flatten 2D Vector</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-26T22:18:15-04:00">
+                2017-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Implement an iterator to flatten a 2d vector.</p>
+<p>For example,<br>Given 2d vector =</p>
+<p>[<br>  [1,2],<br>  [3],<br>  [4,5,6]<br>]<br>By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,2,3,4,5,6].</p>
+<p>Follow up:<br>As an added challenge, try to code it using only iterators in C++ or iterators in Java.</p>
+<h3 id="解法1：-Non-Iterator-List-Pointer"><a href="#解法1：-Non-Iterator-List-Pointer" class="headerlink" title="解法1： Non-Iterator, List + Pointer"></a>解法1： Non-Iterator, List + Pointer</h3><p>用一个list来存储原来的数据。同时维护两个指针，一个指向当前的子list，另一个指向该list中的位置。在hasNext函数中，判断是否还有数据查看elemenPointer是不是在list尾巴，同时检查是否还有下一个list。</p>
+<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public class Vector2D implements Iterator&lt;Integer&gt; &#123;</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; data;</div><div class="line">    int listPos;</div><div class="line">    int elemPos;</div><div class="line">    public Vector2D(List&lt;List&lt;Integer&gt;&gt; vec2d) &#123;</div><div class="line">        this.data = vec2d;</div><div class="line">        listPos = 0;</div><div class="line">        elemPos = 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Integer next() &#123;</div><div class="line">        return data.get(listPos).get(elemPos++);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean hasNext() &#123;</div><div class="line">        while (listPos &lt; data.size()) &#123;</div><div class="line">            if (elemPos &lt; data.get(listPos).size()) &#123;</div><div class="line">                return true;</div><div class="line">            &#125; else &#123;</div><div class="line">                listPos++;</div><div class="line">                elemPos = 0;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Your Vector2D object will be instantiated and called as such:</div><div class="line"> * Vector2D i = new Vector2D(vec2d);</div><div class="line"> * while (i.hasNext()) v[f()] = i.next();</div><div class="line"> */</div></pre></td></tr></table></figure>
+<h3 id="解法2：-Iterator"><a href="#解法2：-Iterator" class="headerlink" title="解法2： Iterator"></a>解法2： Iterator</h3><p>用一个queue来存储每一个list对应的iterator。同时维护一个iterator指向当前的iterator。hasNext就需要判断当前是否还有iterator同时这个iterator是否有下一个元素。</p>
+<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">public class Vector2D implements Iterator&lt;Integer&gt; &#123;</div><div class="line">    Queue&lt;Iterator&lt;Integer&gt;&gt; queue;</div><div class="line">    Iterator&lt;Integer&gt; current = null;</div><div class="line">    public Vector2D(List&lt;List&lt;Integer&gt;&gt; vec2d) &#123;</div><div class="line">        queue = new LinkedList&lt;&gt;();</div><div class="line">        for (List&lt;Integer&gt; list : vec2d) &#123;</div><div class="line">            queue.offer(list.iterator());</div><div class="line">        &#125;</div><div class="line">        current = queue.poll();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Integer next() &#123;</div><div class="line">        return current.next();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean hasNext() &#123;</div><div class="line"></div><div class="line">        while (current == null || !current.hasNext()) &#123;</div><div class="line">            if (!queue.isEmpty()) &#123;</div><div class="line">                current = queue.poll();</div><div class="line">            &#125; else &#123;</div><div class="line">                return false;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Your Vector2D object will be instantiated and called as such:</div><div class="line"> * Vector2D i = new Vector2D(vec2d);</div><div class="line"> * while (i.hasNext()) v[f()] = i.next();</div><div class="line"> */</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/249-Group-Shifted-Strings/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1465,303 +1760,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/10/Algorithm-Summary-Sliding-Window/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/10/Algorithm-Summary-Sliding-Window/" itemprop="url">题型总结: 滑动窗口 Sliding Window</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-10T13:39:37-04:00">
-                2017-09-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2><p>滑动窗口的问题可以解决一系列，有两个字符串，找一个字符串存在另一个字符串的某种性质的问题。<br>可以解决的问题参考同名<a href="http://bigteemo.github.io/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">tag</a>. 这里只是列举一下模板</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">SlidingWindow</span><span class="params">(String s, String p)</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// 先建立一个map来存储p中的每一个字符出现的次数,etc</span></div><div class="line">  Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">char</span> ch: p.toCharArray()) &#123;</div><div class="line">    map.put(ch, ...)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 然后用两个左右指针，右指针遍历字符串s。同时需要维护一个变量count,</span></div><div class="line">  <span class="comment">// 这个变量的作用在于知晓需要找的性质是否找到之类的问题。</span></div><div class="line"></div><div class="line">  <span class="keyword">int</span> start = <span class="number">0</span>, end = <span class="number">0</span>, count = <span class="number">0</span>;</div><div class="line"></div><div class="line">  <span class="keyword">while</span> (end &lt; s.length()) &#123;</div><div class="line">    <span class="keyword">char</span> right = s.charAt(end);</div><div class="line"></div><div class="line">    <span class="comment">// 更新map中对应的数值, 同时需要更新count</span></div><div class="line">    <span class="comment">// count更新的条件取决于不同的题目。比如可以是所有的字符都出现过了。</span></div><div class="line">    <span class="keyword">if</span> (map.containsKey(right)) &#123;</div><div class="line">      <span class="comment">// ...</span></div><div class="line">      <span class="keyword">if</span> (map.get(right) == <span class="number">0</span>) count--;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 查看寻找的条件是否已达到</span></div><div class="line">    <span class="keyword">while</span> (count == <span class="number">0</span>) &#123;</div><div class="line"></div><div class="line">      <span class="comment">// 更新要求的答案</span></div><div class="line"></div><div class="line">      <span class="comment">// 更新count</span></div><div class="line"></div><div class="line">      start++;</div><div class="line">    &#125;  </div><div class="line"></div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/08/17/2017-08-17-294-Flip-Game-II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/17/2017-08-17-294-Flip-Game-II/" itemprop="url">294. Flip Game II</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T21:12:51-04:00">
-                2017-08-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>You are playing the following Flip Game with your friend: Given a string that contains only these two characters: + and -, you and your friend take turns to flip two consecutive “++” into “–”. The game ends when a person can no longer make a move and therefore the other person will be the winner.</p>
-<p>Write a function to determine if the starting player can guarantee a win.</p>
-<p>For example, given s = “++++”, return true. The starting player can guarantee a win by flipping the middle “++” to become “+–+”.</p>
-<p>Follow up:<br>Derive your algorithm’s runtime complexity.</p>
-<h3 id="解法1：DFS-O-N"><a href="#解法1：DFS-O-N" class="headerlink" title="解法1：DFS O(N!!)"></a>解法1：DFS O(N!!)</h3><p>每次尝试一个可以flip的位置，然后进行下一轮，如果下一轮的人不能获胜，则证明first player可以赢。<br>Time Complexity 按照这个人说的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">For the time complexity, here is what I thought, let&apos;s say the length of the input string s is n, there are at most n - 1 ways to replace &quot;++&quot; to &quot;--&quot; (imagine s is all &quot;+++...&quot;), once we replace one &quot;++&quot;, there are at most (n - 2) - 1 ways to do the replacement, it&apos;s a little bit like solving the N-Queens problem, the time complexity is (n - 1) x (n - 3) x (n - 5) x ..., so it&apos;s O(n!!), double factorial.</div></pre></td></tr></table></figure></p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-DP"><a href="#解法2：-DP" class="headerlink" title="解法2： DP"></a>解法2： DP</h3><p>参考这篇：<a href="https://leetcode.com/problems/flip-game-ii/discuss/" target="_blank" rel="external">https://leetcode.com/problems/flip-game-ii/discuss/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1807,7 +1810,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">409</span>
+                <span class="site-state-item-count">411</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1829,7 +1832,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-count">69</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

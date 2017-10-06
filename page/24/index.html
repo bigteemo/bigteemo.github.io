@@ -314,6 +314,355 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/05/2017-03-05-leetcode-solution-The-Maze-490/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/05/2017-03-05-leetcode-solution-The-Maze-490/" itemprop="url">leetcode solution: The Maze (490)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-05T20:27:10-05:00">
+                2017-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by rolling up, down, left or right, but it won’t stop rolling until hitting a wall. When the ball stops, it could choose the next direction.</p>
+<p>Given the ball’s start position, the destination and the maze, determine whether the ball could stop at the destination.</p>
+<p>The maze is represented by a binary 2D array. 1 means the wall and 0 means the empty space. You may assume that the borders of the maze are all walls. The start and destination coordinates are represented by row and column indexes.</p>
+<p>Example 1</p>
+<p>Input 1: a maze represented by a 2D array<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0 0 1 0 0</div><div class="line">0 0 0 0 0</div><div class="line">0 0 0 1 0</div><div class="line">1 1 0 1 1</div><div class="line">0 0 0 0 0</div></pre></td></tr></table></figure></p>
+<p>Input 2: start coordinate (rowStart, colStart) = (0, 4)<br>Input 3: destination coordinate (rowDest, colDest) = (4, 4)<br><img src="https://leetcode.com/static/images/problemset/maze_1_example_1.png" alt="alt text"><br>Output: true<br>Explanation: One possible way is : left -&gt; down -&gt; left -&gt; down -&gt; right -&gt; down -&gt; right.</p>
+<p>Example 2</p>
+<p>Input 1: a maze represented by a 2D array<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0 0 1 0 0</div><div class="line">0 0 0 0 0</div><div class="line">0 0 0 1 0</div><div class="line">1 1 0 1 1</div><div class="line">0 0 0 0 0</div></pre></td></tr></table></figure></p>
+<p>Input 2: start coordinate (rowStart, colStart) = (0, 4)<br>Input 3: destination coordinate (rowDest, colDest) = (3, 2)<br><img src="https://leetcode.com/static/images/problemset/maze_1_example_2.png" alt="alt text"><br>Output: false<br>Explanation: There is no way for the ball to stop at the destination.</p>
+<p>Note:<br>There is only one ball and one destination in the maze.<br>Both the ball and the destination exist on an empty space, and they will not be at the same position initially.<br>The given maze does not contain border (like the red rectangle in the example pictures), but you could assume the border of the maze are all walls.<br>The maze contains at least 2 empty spaces, and both the width and height of the maze won’t exceed 100.</p>
+<h3 id="解法1：DFS-Memorization"><a href="#解法1：DFS-Memorization" class="headerlink" title="解法1：DFS + Memorization"></a>解法1：DFS + Memorization</h3><p>这题和一般的地图题或者是有一题岛屿的题目类似，都可以用DFS来解决。这里的难点或者是区别在，球会一直往一个方向滚直到撞到了墙。所以在设计dfs程序的时候要考虑这个问题，可以用一个while循环解决。另外，对于已经访问过的点，不需要额外的申请一个空间来存储，只需要把已经访问过的node对应的maze的值设为-1就可。<br>对于dfs的优化呢，可以用一个dp矩阵来记录每一个扫描过的初始节点是否有解来剪掉一些枝</p>
+<p>Java<br>
+public class Solution {
+    public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+        
+        if (maze.length == 0 || maze[0].length == 0) {
+            return true;
+        }
+        
+        int[][] dp = new int[maze.length][maze[0].length];
+        for (int[] row: dp) {
+            Arrays.fill(row, -1);
+        }
+        return dfs(maze, start[0], start[1], destination, dp);
+        
+    }
+    
+    private boolean dfs(int[][] maze, int i, int j, int[] destination, int[][] dp) {
+        if (i == destination[0] && j == destination[1]) {
+            return true;
+        }
+        
+        if (dp[i][j]!= -1) {
+            return dp[i][j] == 1 ? true: false;
+        }
+        boolean res = false;
+        int[][] directions = {{0,-1},{-1,0},{0,1},{1,0}};
+        maze[i][j] = -1;  
+        for (int[] dir: directions) {
+            int x = i, y = j;
+            int xinc = dir[0];
+            int yinc = dir[1];
+            while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] != 1) {
+                x += xinc;
+                y += yinc;
+            }
+            x -= xinc;
+            y -= yinc;
+            if (maze[x][y] != -1) {
+                res = res || dfs(maze, x,y, destination, dp);
+            }
+        }
+        
+        dp[i][j] = res? 1: 0;
+        maze[i][j] = 0;
+        return res;
+    }
+
+}
+</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/05/2017-03-05-leetcode-solution-Clone-Graph-133/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/05/2017-03-05-leetcode-solution-Clone-Graph-133/" itemprop="url">leetcode解题: Clone Graph (133)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-05T20:25:04-05:00">
+                2017-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.</p>
+<p>OJ’s undirected graph serialization:<br>Nodes are labeled uniquely.</p>
+<p>We use # as a separator for each node, and , as a separator for node label and each neighbor of the node.<br>As an example, consider the serialized graph {0,1,2#1,2#2,2}.</p>
+<p>The graph has a total of three nodes, and therefore contains three parts as separated by #.</p>
+<p>First node is labeled as 0. Connect node 0 to both nodes 1 and 2.<br>Second node is labeled as 1. Connect node 1 to node 2.<br>Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a self-cycle.<br>Visually, the graph looks like the following:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   1</div><div class="line">  / \</div><div class="line"> /   \</div><div class="line">0 --- 2</div><div class="line">     / \</div><div class="line">     \_/</div></pre></td></tr></table></figure></p>
+<h3 id="解法1：HashMap-DFS-O-N-Time-O-N-Space"><a href="#解法1：HashMap-DFS-O-N-Time-O-N-Space" class="headerlink" title="解法1：HashMap + DFS, O(N) Time + O(N) Space"></a>解法1：HashMap + DFS, O(N) Time + O(N) Space</h3><p>思路和有一题linkedlist有random pointer的一样，要分两步进行，一个是要遍历整个图（可选dfs或者bfs），另外要用一个hashmap来记录node和node之间的对应关系。</p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for undirected graph.</span></div><div class="line"><span class="comment"> * class UndirectedGraphNode &#123;</span></div><div class="line"><span class="comment"> *     int label;</span></div><div class="line"><span class="comment"> *     List&lt;UndirectedGraphNode&gt; neighbors;</span></div><div class="line"><span class="comment"> *     UndirectedGraphNode(int x) &#123; label = x; neighbors = new ArrayList&lt;UndirectedGraphNode&gt;(); &#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> UndirectedGraphNode <span class="title">cloneGraph</span><span class="params">(UndirectedGraphNode node)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> node;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt; map = <span class="keyword">new</span> HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt;();</div><div class="line">        dfs(node, map);</div><div class="line">        <span class="keyword">for</span> (UndirectedGraphNode old: map.keySet()) &#123;</div><div class="line">            <span class="keyword">if</span> (node.neighbors != <span class="keyword">null</span>) &#123;</div><div class="line">                List&lt;UndirectedGraphNode&gt; ns = <span class="keyword">new</span> ArrayList&lt;UndirectedGraphNode&gt;();</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; old.neighbors.size(); ++i) &#123;</div><div class="line">                    ns.add(map.get(old.neighbors.get(i)));</div><div class="line">                &#125;</div><div class="line">                map.get(old).neighbors = ns;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> map.get(node);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(UndirectedGraphNode node, HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt; map)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!map.containsKey(node)) &#123;</div><div class="line">            <span class="comment">// Delay the assignment of neighbors</span></div><div class="line">            UndirectedGraphNode cloned = <span class="keyword">new</span> UndirectedGraphNode(node.label);</div><div class="line">            map.put(node, cloned);</div><div class="line">            <span class="keyword">if</span> (node.neighbors!= <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; node.neighbors.size(); ++i) &#123;</div><div class="line">                    dfs(node.neighbors.get(i), map);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/20/2017-02-20-leetcode-solution-Partition-Equal-Subset-Sum-416/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -712,8 +1061,9 @@
 <p>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).<br>After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)<br>Example:</p>
 <p>prices = [1, 2, 3, 0, 2]<br>maxProfit = 3<br>transactions = [buy, sell, cooldown, buy, sell]</p>
 <h3 id="解法1：DP-O-N-Time-O-N-Space"><a href="#解法1：DP-O-N-Time-O-N-Space" class="headerlink" title="解法1：DP O(N) Time + O(N) Space"></a>解法1：DP O(N) Time + O(N) Space</h3><p>这题主要要想到用两个数组来记录每一天的两种状态。一个是第i天持有股票，一个是第i天未持有股票。<br>用sell和buy代表两个数组。buy就是第i天持有股票的投资组合的最大市值。sell就是第i天未持有股票时的投资组合的最大市值。<br>那么初始状态sell[0] = 0, buy[0] = -prices[0]这是表示如果第一天持有股票的话一定是买入操作，那么需要花去prices[0]的钱。<br>那么每一天投资组合的演化可以得出下面的关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">第i天未持股的最大市值要么是上一天1）持股2）未持股。</div><div class="line">如果未持股则市值不变，如果持股那么因为第i天一定要卖掉，</div><div class="line">所以如果上一天持股的话则今天的最大市值只能是buy[i-1]+Prices[i]</div><div class="line">sell[i] = max(sell[i - 1], buy[i - 1] + prices[i])</div><div class="line">同理，</div><div class="line">buy[i] = max(buy[i - 1], sell[i - 2] - prices[i])</div></pre></td></tr></table></figure></p>
-<p>依此写出如下程序，如果要求的话可以对空间进一步优化成O(1)<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (prices.size() &lt;= <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> n = prices.size();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; sell(n, <span class="number">0</span>);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; buy(n, <span class="number">0</span>);</div><div class="line">        </div><div class="line">        buy[<span class="number">0</span>] = -prices[<span class="number">0</span>];</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</div><div class="line">            sell[i] = max(sell[i - <span class="number">1</span>], buy[i - <span class="number">1</span>] + prices[i]);</div><div class="line">            buy[i] = max(buy[i - <span class="number">1</span>], (i &gt; <span class="number">1</span>? sell[i - <span class="number">2</span>]:<span class="number">0</span>) - prices[i]);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> sell[n - <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>依此写出如下程序，如果要求的话可以对空间进一步优化成O(1)<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (prices.size() &lt;= <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> n = prices.size();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; sell(n, <span class="number">0</span>);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; buy(n, <span class="number">0</span>);</div><div class="line"></div><div class="line">        buy[<span class="number">0</span>] = -prices[<span class="number">0</span>];</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</div><div class="line">            sell[i] = max(sell[i - <span class="number">1</span>], buy[i - <span class="number">1</span>] + prices[i]);</div><div class="line">            buy[i] = max(buy[i - <span class="number">1</span>], (i &gt; <span class="number">1</span>? sell[i - <span class="number">2</span>]:<span class="number">0</span>) - prices[i]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> sell[n - <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="解法1：-另外一种解释"><a href="#解法1：-另外一种解释" class="headerlink" title="解法1： 另外一种解释"></a>解法1： 另外一种解释</h3><p>以下的说明直接来自leetcode discussion<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">1. Define States</div><div class="line"></div><div class="line">To represent the decision at index i:</div><div class="line"></div><div class="line">buy[i]: Max profit till index i. The series of transaction is ending with a buy.</div><div class="line">sell[i]: Max profit till index i. The series of transaction is ending with a sell.</div><div class="line">To clarify:</div><div class="line"></div><div class="line">Till index i, the buy / sell action must happen and must be the last action. It may not happen at index i. It may happen at i - 1, i - 2, ... 0.</div><div class="line">In the end n - 1, return sell[n - 1]. Apparently we cannot finally end up with a buy. In that case, we would rather take a rest at n - 1.</div><div class="line">For special case no transaction at all, classify it as sell[i], so that in the end, we can still return sell[n - 1]. Thanks @alex153 @kennethliaoke @anshu2.</div><div class="line">2. Define Recursion</div><div class="line"></div><div class="line">buy[i]: To make a decision whether to buy at i, we either take a rest, by just using the old decision at i - 1, or sell at/before i - 2, then buy at i, We cannot sell at i - 1, then buy at i, because of cooldown.</div><div class="line">sell[i]: To make a decision whether to sell at i, we either take a rest, by just using the old decision at i - 1, or buy at/before i - 1, then sell at i.</div><div class="line">So we get the following formula:</div><div class="line"></div><div class="line">buy[i] = Math.max(buy[i - 1], sell[i - 2] - prices[i]);   </div><div class="line">sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i]);</div><div class="line">3. Optimize to O(1) Space</div><div class="line"></div><div class="line">DP solution only depending on i - 1 and i - 2 can be optimized using O(1) space.</div><div class="line"></div><div class="line">Let b2, b1, b0 represent buy[i - 2], buy[i - 1], buy[i]</div><div class="line">Let s2, s1, s0 represent sell[i - 2], sell[i - 1], sell[i]</div><div class="line">Then arrays turn into Fibonacci like recursion:</div><div class="line"></div><div class="line">b0 = Math.max(b1, s2 - prices[i]);</div><div class="line">s0 = Math.max(s1, b1 + prices[i]);</div><div class="line">4. Write Code in 5 Minutes</div><div class="line"></div><div class="line">First we define the initial states at i = 0:</div><div class="line"></div><div class="line">We can buy. The max profit at i = 0 ending with a buy is -prices[0].</div><div class="line">We cannot sell. The max profit at i = 0 ending with a sell is 0.</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(prices == <span class="keyword">null</span> || prices.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> b0 = -prices[<span class="number">0</span>], b1 = b0;</div><div class="line">    <span class="keyword">int</span> s0 = <span class="number">0</span>, s1 = <span class="number">0</span>, s2 = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</div><div class="line">    	b0 = Math.max(b1, s2 - prices[i]);</div><div class="line">    	s0 = Math.max(s1, b1 + prices[i]);</div><div class="line">    	b1 = b0; s2 = s1; s1 = s0;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> s0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1491,314 +1841,11 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/16/2017-02-16-leetcode-solution-Find-Minimum-in-Rotated-Sorted-Array-153/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/16/2017-02-16-leetcode-solution-Find-Minimum-in-Rotated-Sorted-Array-153/" itemprop="url">leetcode解题: Find Minimum in Rotated Sorted Array (153)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T20:24:01-05:00">
-                2017-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</p>
-<p>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).</p>
-<p>Find the minimum element.</p>
-<p>You may assume no duplicate exists in the array.</p>
-<h3 id="解法1：Binary-Search"><a href="#解法1：Binary-Search" class="headerlink" title="解法1：Binary Search"></a>解法1：Binary Search</h3><p>这也是一题经典的binary search的题目。 难点在于怎么判断最小值是在mid的左面还是右面，以此来缩小范围。<br>当搜索的范围[start, end]确定了之后，mid的取值可以有几种情况</p>
-<ul>
-<li>start &lt; end, 那么最小值在start和mid之间</li>
-<li>start &gt; end, 那么最小值的位置取决于mid和start，end的关系<ul>
-<li>如果mid &lt; end, 那么最小值一定在start和mid之间</li>
-<li>如果mid &gt; end, 那么pivot点一定在mid和end之间。<br>按照这个思路写程序就很简单了。<br>C++<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (nums.size() == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> start = <span class="number">0</span>, end = nums.size() - <span class="number">1</span>;</div><div class="line">		<span class="keyword">while</span> (start + <span class="number">1</span> &lt; end) &#123;</div><div class="line">			<span class="keyword">int</span> mid = start + (end - start) / <span class="number">2</span>;</div><div class="line">			<span class="keyword">if</span> (nums[start] &lt; nums[end]) &#123;</div><div class="line">				end = mid;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">if</span> (nums[mid] &lt; nums[end]) &#123;</div><div class="line">					end = mid;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					start = mid;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (nums[start] &lt; nums[end]) &#123;</div><div class="line">			<span class="keyword">return</span> nums[start];</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> nums[end];</div><div class="line">		&#125; </div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/16/2017-02-16-leetcode-solution-Search-for-a-Range-34/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/16/2017-02-16-leetcode-solution-Search-for-a-Range-34/" itemprop="url">leetcode解法: Search for a Range (34)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T20:20:38-05:00">
-                2017-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.</p>
-<p>Your algorithm’s runtime complexity must be in the order of O(log n).</p>
-<p>If the target is not found in the array, return [-1, -1].</p>
-<p>For example,<br>Given [5, 7, 7, 8, 8, 10] and target value 8,<br>return [3, 4].</p>
-<h3 id="解法1：Binary-Search-O-logN"><a href="#解法1：Binary-Search-O-logN" class="headerlink" title="解法1：Binary Search, O(logN)"></a>解法1：Binary Search, O(logN)</h3><p>看到在sorted array里找元素的问题，首先想到可以用binary search。 这里用两次binarysearch， 一次找到range的起始点，一次找到最后一个点。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; searchRange(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</div><div class="line">        <span class="keyword">if</span> (nums.size() == <span class="number">0</span>) <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;;</div><div class="line">		<span class="keyword">int</span> start = searchFirst(nums, target);</div><div class="line">		<span class="keyword">int</span> end = searchLast(nums, target);</div><div class="line">		<span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;start, end&#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">searchFirst</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">		<span class="keyword">int</span> start = <span class="number">0</span>, end = nums.size() - <span class="number">1</span>;</div><div class="line">		<span class="keyword">while</span> (start + <span class="number">1</span> &lt; end) &#123;</div><div class="line">			<span class="keyword">int</span> mid = start + (end - start) / <span class="number">2</span>;</div><div class="line">			<span class="keyword">if</span> (nums[mid] &lt; target) &#123;</div><div class="line">				start = mid;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				end = mid;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (nums[start] == target) &#123;</div><div class="line">			<span class="keyword">return</span> start;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[end] == target) &#123;</div><div class="line">			<span class="keyword">return</span> end;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">searchLast</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, end = nums.size() - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span> (start + <span class="number">1</span> &lt; end) &#123;</div><div class="line">            <span class="keyword">int</span> mid = start + (end - start) / <span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span> (nums[mid] &lt;= target) &#123;</div><div class="line">                start = mid;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (nums[end] == target) &#123;</div><div class="line">            <span class="keyword">return</span> end;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[start] == target) &#123;</div><div class="line">            <span class="keyword">return</span> start;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">        &#125;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1844,7 +1891,7 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">409</span>
+                <span class="site-state-item-count">411</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1866,7 +1913,7 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-count">69</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
