@@ -314,6 +314,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/254-Factor-Combinations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/26/254-Factor-Combinations/" itemprop="url">254. Factor Combinations</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-26T22:35:18-04:00">
+                2017-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Numbers can be regarded as product of its factors. For example,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">8 = 2 x 2 x 2;</div><div class="line">  = 2 x 4.</div></pre></td></tr></table></figure></p>
+<p>Write a function that takes an integer n and return all possible combinations of its factors.</p>
+<p>Note:<br>You may assume that n is always positive.<br>Factors should be greater than 1 and less than n.<br>Examples:<br>input: 1<br>output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[]</div></pre></td></tr></table></figure></p>
+<p>input: 37<br>output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[]</div></pre></td></tr></table></figure></p>
+<p>input: 12<br>output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [2, 6],</div><div class="line">  [2, 2, 3],</div><div class="line">  [3, 4]</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>input: 32<br>output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [2, 16],</div><div class="line">  [2, 2, 8],</div><div class="line">  [2, 2, 2, 4],</div><div class="line">  [2, 2, 2, 2, 2],</div><div class="line">  [2, 4, 4],</div><div class="line">  [4, 8]</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<h3 id="解法1：-Backtracking"><a href="#解法1：-Backtracking" class="headerlink" title="解法1： Backtracking"></a>解法1： Backtracking</h3><figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    public List&lt;List&lt;Integer&gt;&gt; getFactors(int n) &#123;</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();</div><div class="line">        List&lt;Integer&gt; current = new ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">        if (n &lt;= 2) return res;</div><div class="line"></div><div class="line">        helper(n, 2, current, res);</div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void helper(int n, int start, List&lt;Integer&gt; current, List&lt;List&lt;Integer&gt;&gt; res) &#123;</div><div class="line">        if (n &lt;= 0) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        if (n == 1) &#123;</div><div class="line">            if (current.size() &gt; 1) &#123;</div><div class="line">                res.add(new ArrayList&lt;Integer&gt;(current));</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for (int i = start; i &lt;= n; i++) &#123;</div><div class="line">            if (n % i == 0) &#123;</div><div class="line">                current.add(i);</div><div class="line">                helper(n / i, i, current, res);</div><div class="line">                current.remove(current.size() - 1);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/253-Meeting-Rooms-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1613,153 +1761,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/18/130-Surrounded-Regions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/18/130-Surrounded-Regions/" itemprop="url">130. Surrounded Regions</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T21:57:36-04:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a 2D board containing ‘X’ and ‘O’ (the letter O), capture all regions surrounded by ‘X’.</p>
-<p>A region is captured by flipping all ‘O’s into ‘X’s in that surrounded region.</p>
-<p>For example,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">X X X X</div><div class="line">X O O X</div><div class="line">X X O X</div><div class="line">X O X X</div></pre></td></tr></table></figure></p>
-<p>After running your function, the board should be:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">X X X X</div><div class="line">X X X X</div><div class="line">X X X X</div><div class="line">X O X X</div></pre></td></tr></table></figure></p>
-<h3 id="解法1-DFS"><a href="#解法1-DFS" class="headerlink" title="解法1: DFS"></a>解法1: DFS</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line"></div><div class="line">    int[][] ds = new int[][]&#123;&#123;-1,0&#125;,&#123;1,0&#125;,&#123;0,1&#125;,&#123;0,-1&#125;&#125;;</div><div class="line">    public void solve(char[][] board) &#123;</div><div class="line"></div><div class="line">        if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        int row = board.length;</div><div class="line">        int col = board[0].length;</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; row; i++) &#123;</div><div class="line">            if (board[i][0] == &apos;O&apos;) &#123;</div><div class="line">                dfs(board, i, 0);</div><div class="line">            &#125;</div><div class="line">            if (board[i][col - 1] == &apos;O&apos;) &#123;</div><div class="line">                dfs(board, i, col - 1);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for (int j = 0; j &lt; col; j++) &#123;</div><div class="line">            if (board[0][j] == &apos;O&apos;) &#123;</div><div class="line">                dfs(board, 0, j);</div><div class="line">            &#125;</div><div class="line">            if (board[row - 1][j] == &apos;O&apos;) &#123;</div><div class="line">                dfs(board, row - 1, j);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // Need to convert all &apos;M&apos; into &apos;O&apos;</div><div class="line">        for (int i = 0; i &lt; row; i++) &#123;</div><div class="line">            for (int j = 0; j &lt; col; j++) &#123;</div><div class="line">                if (board[i][j] == &apos;O&apos;) &#123;</div><div class="line">                    board[i][j] = &apos;X&apos;;</div><div class="line">                &#125; else if (board[i][j] == &apos;M&apos;) &#123;</div><div class="line">                    board[i][j] = &apos;O&apos;;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">//     private void dfs(char[][] board, int i, int j) &#123;</div><div class="line"></div><div class="line">//         board[i][j] = &apos;M&apos;;</div><div class="line"></div><div class="line">//         for (int[] d : ds) &#123;</div><div class="line">//             int x = i + d[0];</div><div class="line">//             int y = j + d[1];</div><div class="line">//             if (x &gt;= 0 &amp;&amp; x &lt; board.length &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; board[0].length &amp;&amp; board[x][y] == &apos;O&apos;) &#123;</div><div class="line">//                 dfs(board, x, y);</div><div class="line">//             &#125;</div><div class="line">//         &#125;</div><div class="line"></div><div class="line">//     &#125;</div><div class="line"></div><div class="line">    private void dfs(char[][] board, int i, int j) &#123;</div><div class="line">        if (i &lt; 0 || i &gt; board.length - 1 || j &lt;0 || j &gt; board[0].length - 1)</div><div class="line">            return;</div><div class="line">        if (board[i][j] == &apos;O&apos;)</div><div class="line">            board[i][j] = &apos;M&apos;;</div><div class="line">        if (i &gt; 1 &amp;&amp; board[i-1][j] == &apos;O&apos;)</div><div class="line">            dfs(board, i-1, j);</div><div class="line">        if (i &lt; board.length - 2 &amp;&amp; board[i+1][j] == &apos;O&apos;)</div><div class="line">            dfs(board, i+1, j);</div><div class="line">        if (j &gt; 1 &amp;&amp; board[i][j-1] == &apos;O&apos;)</div><div class="line">            dfs(board, i, j-1);</div><div class="line">        if (j &lt; board[i].length - 2 &amp;&amp; board[i][j+1] == &apos;O&apos; )</div><div class="line">            dfs(board, i, j+1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="解法2-BFS"><a href="#解法2-BFS" class="headerlink" title="解法2: BFS"></a>解法2: BFS</h3><p>这题DFS的解法非常容易出现stack overflow。 主要的原因是在判断对那个方向进行DFS的时候如果不避免边界上的点的话就会overflow，所以我们要跳过那些边界的点而只看纵深的点。如果用BFS的话情况会好不少，不过要写对也不容易。基本思路也是对于边界上的O点，使用BFS把所有相通的都标注一下。<br>不过在进行BFS的时候，每一个新的点push进queue的时候，立即把他标注成M，这样可以减少push的点。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span>[][] directions = <span class="keyword">new</span> <span class="keyword">int</span>[][]&#123;&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;&#125;;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (board == <span class="keyword">null</span> || board.length == <span class="number">0</span> || board[<span class="number">0</span>] == <span class="keyword">null</span> || board[<span class="number">0</span>].length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> m = board.length;</div><div class="line">        <span class="keyword">int</span> n = board[<span class="number">0</span>].length;</div><div class="line"></div><div class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (board[i][<span class="number">0</span>] == <span class="string">'O'</span>) &#123;</div><div class="line">                bfs(board, i, <span class="number">0</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (board[i][n - <span class="number">1</span>] == <span class="string">'O'</span>) &#123;</div><div class="line">                bfs(board, i, n - <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</div><div class="line">            <span class="keyword">if</span> (board[<span class="number">0</span>][j] == <span class="string">'O'</span>) &#123;</div><div class="line">                bfs(board, <span class="number">0</span>, j);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (board[m - <span class="number">1</span>][j] == <span class="string">'O'</span>) &#123;</div><div class="line">                bfs(board, m - <span class="number">1</span>, j);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</div><div class="line">                <span class="keyword">if</span> (board[i][j] == <span class="string">'O'</span>)&#123;</div><div class="line">                    board[i][j] = <span class="string">'X'</span>;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (board[i][j] == <span class="string">'M'</span>) &#123;</div><div class="line">                    board[i][j] = <span class="string">'O'</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">char</span>[][] board, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> m = board.length;</div><div class="line">        <span class="keyword">int</span> n = board[<span class="number">0</span>].length;</div><div class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        queue.offer(i * n + j);</div><div class="line">        board[i][j] = <span class="string">'M'</span>;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">            <span class="keyword">int</span> temp = queue.poll();</div><div class="line">            <span class="keyword">int</span> row = temp / n;</div><div class="line">            <span class="keyword">int</span> col = temp % n;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span>[] dir : directions) &#123;</div><div class="line">                <span class="keyword">int</span> x = row + dir[<span class="number">0</span>];</div><div class="line">                <span class="keyword">int</span> y = col + dir[<span class="number">1</span>];</div><div class="line">                <span class="keyword">if</span> (x &gt;= <span class="number">0</span> &amp;&amp; x &lt; m &amp;&amp; y &gt;= <span class="number">0</span> &amp;&amp; y &lt; n &amp;&amp; board[x][y] == <span class="string">'O'</span>) &#123;</div><div class="line">                    queue.offer(x * n + y);</div><div class="line">                    board[x][y] = <span class="string">'M'</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1810,7 +1811,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">411</span>
+                <span class="site-state-item-count">412</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
