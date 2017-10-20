@@ -314,6 +314,303 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/08/2017-03-08-leetcode-solution-Graph-Valid-Tree-261/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/08/2017-03-08-leetcode-solution-Graph-Valid-Tree-261/" itemprop="url">leetcode解题: Graph Valid Tree (261)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-08T21:05:36-05:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.</p>
+<p>For example:</p>
+<p>Given n = 5 and edges = [[0, 1], [0, 2], [0, 3], [1, 4]], return true.</p>
+<p>Given n = 5 and edges = [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]], return false.</p>
+<p>Hint:</p>
+<p>Given n = 5 and edges = [[0, 1], [1, 2], [3, 4]], what should your return? Is this case a valid tree?<br>According to the definition of tree on Wikipedia: “a tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.”<br>Note: you can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>此题用Union Find最简便，DFS 和 BFS 都可以。</p>
+<h3 id="解法1：-DFS"><a href="#解法1：-DFS" class="headerlink" title="解法1： DFS"></a>解法1： DFS</h3><p>按照题目意思，这是一个undirectedgraph判定是否是tree的问题，那么一个无向图要满足两个条件。一个是要全连通，另一个是要没有环。<br>基本思想是用DFS遍历，如果遍历到之前遇过的节点说明有环。遍历之后如果还有没有遍历过的节点那么就不是全通图。</p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validTree</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[][] edges)</span> </span>&#123;</div><div class="line">		<span class="comment">// Construct the graph using hashmap</span></div><div class="line">		<span class="comment">// Empty Tree</span></div><div class="line">		<span class="comment">// Need to satisfy two conditions, 1) all nodes are linked 2) no cycle in the list</span></div><div class="line">		<span class="keyword">if</span> ((edges.length == <span class="number">0</span> || edges[<span class="number">0</span>].length == <span class="number">0</span>)) &#123;</div><div class="line">		    <span class="keyword">return</span> n == <span class="number">1</span> || n == <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">		HashMap&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, List&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span>[] edge: edges) &#123;</div><div class="line">			<span class="keyword">if</span> (!map.containsKey(edge[<span class="number">0</span>])) &#123;</div><div class="line">				map.put(edge[<span class="number">0</span>], <span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (!map.containsKey(edge[<span class="number">1</span>])) &#123;</div><div class="line">				map.put(edge[<span class="number">1</span>], <span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">			&#125;</div><div class="line">			map.get(edge[<span class="number">0</span>]).add(edge[<span class="number">1</span>]);</div><div class="line">			map.get(edge[<span class="number">1</span>]).add(edge[<span class="number">0</span>]);</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">		List&lt;Boolean&gt; visited = <span class="keyword">new</span> ArrayList&lt;Boolean&gt;(n);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">		    visited.add(<span class="keyword">false</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">boolean</span> res = dfs(map, visited, <span class="number">0</span>, -<span class="number">1</span>);</div><div class="line">		<span class="keyword">if</span> (!res) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">boolean</span> node: visited) &#123;</div><div class="line">			<span class="keyword">if</span> (!node) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span><span class="params">(HashMap&lt;Integer, List&lt;Integer&gt;&gt; map, List&lt;Boolean&gt; visited, <span class="keyword">int</span> cur, <span class="keyword">int</span> prev)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (visited.get(cur)) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// prev records the node that link to the current dfs function call</span></div><div class="line">		visited.set(cur, <span class="keyword">true</span>);</div><div class="line">		List&lt;Integer&gt; connected = map.get(cur);</div><div class="line">		<span class="keyword">if</span> (connected == <span class="keyword">null</span>) &#123;</div><div class="line">		    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> node: connected) &#123;</div><div class="line">		    <span class="keyword">if</span> (node != prev) &#123;</div><div class="line">    			<span class="keyword">boolean</span> res = dfs(map, visited, node, cur);</div><div class="line">    			<span class="keyword">if</span> (!res) &#123;</div><div class="line">    				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    			&#125;</div><div class="line">		    &#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">			</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<h3 id="解法2：-BFS"><a href="#解法2：-BFS" class="headerlink" title="解法2： BFS"></a>解法2： BFS</h3><p>BFS 的思想和DFS的基本一致。要注意的是，在存储图的信息的时候，用一个Set比较方便。因为之后当我们在扫描一个节点连接的节点时，要删除对应节点中的edge（就是a连向b，那么b的相连node中一定有a，为了避免出现再遇到a，需要把对应的a从b相连的节点的list中删除，用set比较方便的解决此问题）<br>同时用一个set来维护已经访问过的节点。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validTree</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[][] edges)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (edges.length == <span class="number">0</span> || edges[<span class="number">0</span>].length == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> n == <span class="number">1</span> || n == <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		HashMap&lt;Integer, Set&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Set&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span>[] edge: edges) &#123;</div><div class="line">			<span class="keyword">if</span> (!map.containsKey(edge[<span class="number">0</span>])) &#123;</div><div class="line">				map.put(edge[<span class="number">0</span>], <span class="keyword">new</span> HashSet&lt;Integer&gt;());</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (!map.containsKey(edge[<span class="number">1</span>])) &#123;</div><div class="line">				map.put(edge[<span class="number">1</span>], <span class="keyword">new</span> HashSet&lt;Integer&gt;());</div><div class="line">			&#125;</div><div class="line">			map.get(edge[<span class="number">0</span>]).add(edge[<span class="number">1</span>]);</div><div class="line">			map.get(edge[<span class="number">1</span>]).add(edge[<span class="number">0</span>]);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		<span class="comment">// Start BFS</span></div><div class="line">		Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();   </div><div class="line">		Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</div><div class="line">		queue.offer(<span class="number">0</span>);</div><div class="line">		set.add(<span class="number">0</span>);</div><div class="line">		<span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">		    <span class="keyword">int</span> node = queue.poll();</div><div class="line">		    Set&lt;Integer&gt; elements = map.get(node);</div><div class="line">		    <span class="keyword">if</span> (elements != <span class="keyword">null</span>) &#123;</div><div class="line">		        <span class="keyword">for</span> (<span class="keyword">int</span> element: elements) &#123;</div><div class="line">		            <span class="keyword">if</span> (set.contains(element)) &#123;</div><div class="line">		                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		            &#125;</div><div class="line">		            queue.offer(element);</div><div class="line">		            set.add(element);</div><div class="line">		            map.get(element).remove(node);</div><div class="line">		        &#125;</div><div class="line">		    &#125;</div><div class="line">		    </div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		<span class="comment">// Check the length of Set</span></div><div class="line">		<span class="keyword">return</span> set.size() == n;</div><div class="line"></div><div class="line">	</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure></p>
+<h3 id="解法3：-Union-Find"><a href="#解法3：-Union-Find" class="headerlink" title="解法3： Union Find"></a>解法3： Union Find</h3><p>Union Find的算法就不详述了。Union Find很适合来解决Graph找circle的问题。 这里的思路是如果两个node同属于一个parent那么就有circle存在。<br>如果不属于同一个parent，那么就把他们union起来成为一个group.<br>要注意的是最后如果没有出现circle，要比较一下是否每一个node都连接起来了，用edges.length == n - 1就可以判断<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validTree</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[][] edges)</span> </span>&#123;</div><div class="line">        </div><div class="line">        </div><div class="line">        <span class="keyword">int</span>[] parents = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        Arrays.fill(parents, -<span class="number">1</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] edge: edges) &#123;</div><div class="line">            <span class="keyword">int</span> x = find(parents, edge[<span class="number">0</span>]);</div><div class="line">            <span class="keyword">int</span> y = find(parents, edge[<span class="number">1</span>]);</div><div class="line">            <span class="keyword">if</span> (x == y) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            parents[x] = y;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> edges.length == n - <span class="number">1</span>;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span>[] parents, <span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span> (parents[x] != -<span class="number">1</span>) x = parents[x];</div><div class="line">        <span class="keyword">return</span> x;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/05/2017-03-05-leetcode-solution-Reconstruct-Itinerary-332/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/05/2017-03-05-leetcode-solution-Reconstruct-Itinerary-332/" itemprop="url">leetcode solution: Reconstruct Itinerary (332)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-05T20:28:10-05:00">
+                2017-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK.</p>
+<p>Note:<br>If there are multiple valid itineraries, you should return the itinerary that has the smallest lexical order when read as a single string. For example, the itinerary [“JFK”, “LGA”] has a smaller lexical order than [“JFK”, “LGB”].<br>All airports are represented by three capital letters (IATA code).<br>You may assume all tickets form at least one valid itinerary.<br>Example 1:<br>tickets = [[“MUC”, “LHR”], [“JFK”, “MUC”], [“SFO”, “SJC”], [“LHR”, “SFO”]]<br>Return [“JFK”, “MUC”, “LHR”, “SFO”, “SJC”].<br>Example 2:<br>tickets = [[“JFK”,”SFO”],[“JFK”,”ATL”],[“SFO”,”ATL”],[“ATL”,”JFK”],[“ATL”,”SFO”]]<br>Return [“JFK”,”ATL”,”JFK”,”SFO”,”ATL”,”SFO”].<br>Another possible reconstruction is [“JFK”,”SFO”,”ATL”,”JFK”,”ATL”,”SFO”]. But it is larger in lexical order.</p>
+<h3 id="解法1：建图-DFS"><a href="#解法1：建图-DFS" class="headerlink" title="解法1：建图 + DFS"></a>解法1：建图 + DFS</h3><p>首先是建图的思想，这题看起来就要用DFS，可是没有图可以操作，对于这类的问题要想到用一个Hashmap来构造图的边的关系。<br>这里有一个小的trick是用到了PriorityQueue， 因为最后的结果是要排序后较小的，那么我们构建hashmap的时候就要把每一个start对应的destination排好序，我们就可以用PQ来存储。<br>而题目有一个隐含的条件就是一定有解，那么如果我们在搜索碰到一个没有对应destination的城市的时候，他一定是要求的最后一个string。<br>所以我们在写DFS的时候，要把res.add(cur)放在while语句之后。</p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">findItinerary</span><span class="params">(String[][] tickets)</span> </span>&#123;</div><div class="line">        </div><div class="line">        <span class="comment">// Construct the graph, using HashMap</span></div><div class="line">        HashMap&lt;String, PriorityQueue&lt;String&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;String, PriorityQueue&lt;String&gt;&gt;();</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (String[] pair: tickets) &#123;</div><div class="line">            <span class="keyword">if</span> (map.containsKey(pair[<span class="number">0</span>])) &#123;</div><div class="line">                map.get(pair[<span class="number">0</span>]).add(pair[<span class="number">1</span>]);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                map.put(pair[<span class="number">0</span>], <span class="keyword">new</span> PriorityQueue&lt;String&gt;());</div><div class="line">                map.get(pair[<span class="number">0</span>]).add(pair[<span class="number">1</span>]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">// DFS the map and construct the itinerary</span></div><div class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        dfs(map, <span class="string">"JFK"</span>, res);</div><div class="line">        Collections.reverse(res);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(HashMap&lt;String, PriorityQueue&lt;String&gt;&gt; map, String cur, List&lt;String&gt; res)</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span> (map.containsKey(cur) &amp;&amp; !map.get(cur).isEmpty()) &#123;</div><div class="line">            dfs(map, map.get(cur).poll(), res);</div><div class="line">        &#125;</div><div class="line">        res.add(cur);</div><div class="line"></div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/05/2017-03-05-leetcode-solution-Find-Bottom-Left-Tree-Value-513/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1543,304 +1840,6 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/16/2017-02-16-leetcode-solution-Counting-Bits-338/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/16/2017-02-16-leetcode-solution-Counting-Bits-338/" itemprop="url">leetcode解题: Counting Bits (338)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T20:41:18-05:00">
-                2017-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate the number of 1’s in their binary representation and return them as an array.</p>
-<p>Example:<br>For num = 5 you should return [0,1,1,2,1,2].</p>
-<p>Follow up:</p>
-<p>It is very easy to come up with a solution with run time O(n*sizeof(integer)). But can you do it in linear time O(n) /possibly in a single pass?<br>Space complexity should be O(n).<br>Can you do it like a boss? Do it without using any builtin function like __builtin_popcount in c++ or in any other language.<br>Hint:</p>
-<p>You should make use of what you have produced already.<br>Divide the numbers in ranges like [2-3], [4-7], [8-15] and so on. And try to generate new range from previous.<br>Or does the odd/even status of the number help you in calculating the number of 1s?</p>
-<h3 id="解法1：找规律，-O（N）"><a href="#解法1：找规律，-O（N）" class="headerlink" title="解法1：找规律， O（N）"></a>解法1：找规律， O（N）</h3><p>本题比较简单的解法也是从找规律而来<br>0 -&gt; 0<br>1 -&gt; 1<br>2 -&gt; 10 -&gt; 1<br>3 -&gt; 11 -&gt; 2<br>4 -&gt; 100 -&gt; 1<br>5 -&gt; 101 -&gt; 2<br>对于偶数i，他的1的个数是i/2的1的个数<br>杜宇奇数i，他的1的个数是i/的1的个数+1</p>
-<p>因为对于一个数除以2的操作就是一个右移操作，而偶数的最低位为0，奇数的最低位为1， 那么右移的时候偶数的1的个数不会变，奇数的1的个数会减少1. 由此写出程序。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; countBits(<span class="keyword">int</span> num) &#123;</div><div class="line">        <span class="keyword">if</span> (num == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;<span class="number">0</span>&#125;;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num == <span class="number">1</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res&#123;<span class="number">0</span>,<span class="number">1</span>&#125;;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= num; ++i) &#123;</div><div class="line">			<span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">				res.push_back(res[i/<span class="number">2</span>]);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				res.push_back(res[i/<span class="number">2</span>] + <span class="number">1</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/16/2017-02-16-leetcode-solution-Integer-Break-343/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/16/2017-02-16-leetcode-solution-Integer-Break-343/" itemprop="url">leetcode解题: Integer Break (343)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T20:38:25-05:00">
-                2017-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a positive integer n, break it into the sum of at least two positive integers and maximize the product of those integers. Return the maximum product you can get.</p>
-<p>For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).</p>
-<p>Note: You may assume that n is not less than 2 and not larger than 58.</p>
-<p>Hint:</p>
-<p>There is a simple O(n) solution to this problem.<br>You may check the breaking results of n ranging from 7 to 10 to discover the regularities.</p>
-<h3 id="解法1：找规律，-O-N"><a href="#解法1：找规律，-O-N" class="headerlink" title="解法1：找规律， O(N)"></a>解法1：找规律， O(N)</h3><p>如果把从2到10的结果写出来可以发现，最大的结果是每一个数先分解成3的和，然后和剩下的数的乘积最大。本题还有DP的解法，之后补上</p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">integerBreak</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">2</span> || n == <span class="number">3</span>) <span class="keyword">return</span> n - <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> res = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span> (n &gt; <span class="number">4</span>) &#123;</div><div class="line">            res *= <span class="number">3</span>;</div><div class="line">            n -= <span class="number">3</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res * n;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1891,7 +1890,7 @@ Output:</code>2<br>One possible longest palindromic subsequence is “bb”</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">412</span>
+                <span class="site-state-item-count">414</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
