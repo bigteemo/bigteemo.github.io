@@ -314,6 +314,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/27/362-Design-Hit-Counter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/27/362-Design-Hit-Counter/" itemprop="url">362. Design Hit Counter</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-27T22:51:29-04:00">
+                2017-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Design a hit counter which counts the number of hits received in the past 5 minutes.</p>
+<p>Each function accepts a timestamp parameter (in seconds granularity) and you may assume that calls are being made to the system in chronological order (ie, the timestamp is monotonically increasing). You may assume that the earliest timestamp starts at 1.</p>
+<p>It is possible that several hits arrive roughly at the same time.</p>
+<p>Example:<br>HitCounter counter = new HitCounter();</p>
+<p>// hit at timestamp 1.<br>counter.hit(1);</p>
+<p>// hit at timestamp 2.<br>counter.hit(2);</p>
+<p>// hit at timestamp 3.<br>counter.hit(3);</p>
+<p>// get hits at timestamp 4, should return 3.<br>counter.getHits(4);</p>
+<p>// hit at timestamp 300.<br>counter.hit(300);</p>
+<p>// get hits at timestamp 300, should return 4.<br>counter.getHits(300);</p>
+<p>// get hits at timestamp 301, should return 3.<br>counter.getHits(301);<br>Follow up:<br>What if the number of hits per second could be very large? Does your design scale?</p>
+<h3 id="解法1：-Deque"><a href="#解法1：-Deque" class="headerlink" title="解法1： Deque"></a>解法1： Deque</h3><p>用一个deque来记录5分钟以内的hit。而当查询gitHit的时候，把deque前面的超出范围的node全部弹出就可以了。<br>如果getHit比较少的话，可以在hit的函数里放上弹出的操作。<br>class HitCounter {</p>
+<pre><code>/** Initialize your data structure here. */
+Deque&lt;Integer&gt; deque;
+public HitCounter() {
+    deque = new LinkedList&lt;&gt;();
+}
+
+/** Record a hit.
+    @param timestamp - The current timestamp (in seconds granularity). */
+public void hit(int timestamp) {
+    deque.offerLast(timestamp);
+}
+
+/** Return the number of hits in the past 5 minutes.
+    @param timestamp - The current timestamp (in seconds granularity). */
+public int getHits(int timestamp) {
+    while (!deque.isEmpty() &amp;&amp; timestamp - deque.peekFirst() &gt;= 300) {
+        deque.pollFirst();
+    }
+    return deque.size();
+}
+</code></pre><p>}</p>
+<p>/**</p>
+<ul>
+<li>Your HitCounter object will be instantiated and called as such:</li>
+<li>HitCounter obj = new HitCounter();</li>
+<li>obj.hit(timestamp);</li>
+<li>int param_2 = obj.getHits(timestamp);<br>*/</li>
+</ul>
+<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/360-Sort-Transformed-Array/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1620,150 +1802,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/22/220-Contains-Duplicate-III/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/22/220-Contains-Duplicate-III/" itemprop="url">220. Contains Duplicate III</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-22T20:26:39-04:00">
-                2017-09-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array of integers, find out whether there are two distinct indices i and j in the array such that the absolute difference between nums[i] and nums[j] is at most t and the absolute difference between i and j is at most k.</p>
-<h3 id="解法1：-TreeSet-O-nlog-k-n"><a href="#解法1：-TreeSet-O-nlog-k-n" class="headerlink" title="解法1： TreeSet, O(nlog(k, n))"></a>解法1： TreeSet, O(nlog(k, n))</h3><p>这里用到一个比较特殊的数据结构treeset。<br>实际上这是一个self-balancing binary search tree, 他的基本操作都是O(logN)的。而且他还有两个额外的功能很有用<br>set.ceiling(T)和set.floor(T)<br>ceiling返回的是大于等于T的最小的元素，而floor返回的是小于等于T的最大元素。<br>那么我们维护一个大小为k的set，这样就满足了一个条件。<br>那第二个条件满足的条件就是对于每一个num，找出他的ceiling和floor，看是否在范围内即可。<br><figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) &#123;</div><div class="line">        if (nums == null || nums.length == 0) &#123;</div><div class="line">            return false;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;();</div><div class="line">        for (int i = 0; i &lt; nums.length; i++) &#123;</div><div class="line">            int current = nums[i];</div><div class="line">            Integer ceiling = set.ceiling(current);</div><div class="line">            Integer floor = set.floor(current);</div><div class="line">            if (ceiling != null &amp;&amp; ceiling &lt;= current + t) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">            if (floor != null &amp;&amp; current &lt;= floor + t) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">            set.add(current);</div><div class="line">            if (set.size() &gt; k) &#123;</div><div class="line">                set.remove(nums[i - k]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-O-N-using-Bucket"><a href="#解法2：-O-N-using-Bucket" class="headerlink" title="解法2： O(N) using Bucket"></a>解法2： O(N) using Bucket</h3><figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line"></div><div class="line">    private long getBucketId(long num, long w) &#123;</div><div class="line">        return num &lt; 0 ? (num + 1) / w - 1 : num / w;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) &#123;</div><div class="line">        if (t &lt; 0 ) return false;</div><div class="line">        if (nums == null || nums.length == 0) &#123;</div><div class="line">            return false;</div><div class="line">        &#125;    </div><div class="line">        long w = (long)t + 1;</div><div class="line">        Map&lt;Long, Long&gt; map = new HashMap&lt;&gt;();</div><div class="line">        for (int i = 0; i &lt; nums.length; i++) &#123;</div><div class="line">            long id = getBucketId((long)nums[i], w);</div><div class="line"></div><div class="line">            if (map.containsKey(id)) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if (map.containsKey(id - 1) &amp;&amp; Math.abs(map.get(id - 1) - nums[i]) &lt; w) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">            if (map.containsKey(id + 1) &amp;&amp; Math.abs(map.get(id + 1) - nums[i]) &lt; w) &#123;</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            map.put(id, (long)nums[i]);</div><div class="line">            if (i &gt;= k) &#123;</div><div class="line">                map.remove(getBucketId(nums[i - k], w));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1814,7 +1852,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">414</span>
+                <span class="site-state-item-count">415</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
