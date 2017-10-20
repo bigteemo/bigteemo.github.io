@@ -314,6 +314,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/27/2017-06-27-45-Jump-Game-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/27/2017-06-27-45-Jump-Game-II/" itemprop="url">45. Jump Game II</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T21:34:06-04:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an array of non-negative integers, you are initially positioned at the first index of the array.</p>
+<p>Each element in the array represents your maximum jump length at that position.</p>
+<p>Your goal is to reach the last index in the minimum number of jumps.</p>
+<p>For example:<br>Given array A = [2,3,1,1,4]</p>
+<p>The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)</p>
+<p>Note:<br>You can assume that you can always reach the last index.</p>
+<h3 id="解法1：Greedy-O-N-Time-O-1-Space"><a href="#解法1：Greedy-O-N-Time-O-1-Space" class="headerlink" title="解法1：Greedy O(N) Time O(1) Space"></a>解法1：Greedy O(N) Time O(1) Space</h3><p>这题可以作为复习Greedy Algorithm的一个很好的范例。最核心的思想和Jump Game一样，用一个变量维护上一步可以走到的最远距离。如果当前的距离比他远，则说明需要额外的一步。同时维护一个下一步可以走到的最远距离，便是在当前的最远距离和i + nums[i]中取最大值即可。</p>
+<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">jump</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (nums.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Greedy</span></div><div class="line">        <span class="keyword">int</span> cur = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> last = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> step = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (i &gt; last) &#123;</div><div class="line">                last = cur;</div><div class="line">                step++;</div><div class="line">                <span class="keyword">if</span> (last &gt;= nums.length) &#123;</div><div class="line">                    <span class="keyword">return</span> step;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            cur = Math.max(cur, i + nums[i]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> step;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2：Greedy-O-N-Time-O-N-Space-DP-thinking"><a href="#解法2：Greedy-O-N-Time-O-N-Space-DP-thinking" class="headerlink" title="解法2：Greedy O(N) Time O(N) Space, DP thinking"></a>解法2：Greedy O(N) Time O(N) Space, DP thinking</h3><p>用一个dp数组来存储每一个点所需要的最少步数。<br>然后从0开始扫描，找出当前点所能到的最远距离。然后从下一位置开始扫描，对于每一个可以到达的点都更新最少的步数，也就是dp[j] = dp[i] + 1。到此，j位置上的结果已经找出，不会再有比他步数更少的解了。<br>最后返回dp[n-1]即可。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">jump</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line"></div><div class="line">        <span class="comment">// dp pointer</span></div><div class="line">        <span class="keyword">int</span> j=<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.length; i++) &#123;</div><div class="line">            <span class="keyword">int</span> loc= nums[i] + i;</div><div class="line">            <span class="keyword">while</span> (j&lt;=loc &amp;&amp; j&lt;nums.length) &#123;</div><div class="line">                dp[j] = dp[i] + <span class="number">1</span>;</div><div class="line">                j++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> dp[dp.length-<span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/26/2017-06-26-533-Lonely-Pixel-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1647,154 +1799,6 @@ The integer n is in the range [0, 100].
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/24/2017-06-24-370-Range-Addition/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/24/2017-06-24-370-Range-Addition/" itemprop="url">370. Range Addition</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-24T09:22:02-04:00">
-                2017-06-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Assume you have an array of length n initialized with all 0’s and are given k update operations.</p>
-<p>Each operation is represented as a triplet: [startIndex, endIndex, inc] which increments each element of subarray A[startIndex … endIndex] (startIndex and endIndex inclusive) with inc.</p>
-<p>Return the modified array after all k operations were executed.</p>
-<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Given:</div><div class="line"></div><div class="line">    length = 5,</div><div class="line">    updates = [</div><div class="line">        [1,  3,  2],</div><div class="line">        [2,  4,  3],</div><div class="line">        [0,  2, -2]</div><div class="line">    ]</div><div class="line"></div><div class="line">Output:</div><div class="line"></div><div class="line">    [-2, 0, 3, 5, 3]</div></pre></td></tr></table></figure></p>
-<p>Explanation:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Initial state:</div><div class="line">[ 0, 0, 0, 0, 0 ]</div><div class="line"></div><div class="line">After applying operation [1, 3, 2]:</div><div class="line">[ 0, 2, 2, 2, 0 ]</div><div class="line"></div><div class="line">After applying operation [2, 4, 3]:</div><div class="line">[ 0, 2, 5, 5, 3 ]</div><div class="line"></div><div class="line">After applying operation [0, 2, -2]:</div><div class="line">[-2, 0, 3, 5, 3 ]</div></pre></td></tr></table></figure></p>
-<h3 id="解法1：-O-n-O-k"><a href="#解法1：-O-n-O-k" class="headerlink" title="解法1： O(n) + O(k)"></a>解法1： O(n) + O(k)</h3><p>这题如果用一般的办法会TLE。关键的点在于不用更新start和end之间所有的数。那么我们只更新start的数，意思是从这往后所有的数都要加上start对应的数字。同时需要在end+1的地方减去increment，意思是从这里往后所有的数要减去start对应的数字，以此来抵消多加的那一份。<br>最后我们在遍历一遍数组，做一个累加就得到了结果。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] getModifiedArray(<span class="keyword">int</span> length, <span class="keyword">int</span>[][] updates) &#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (length &lt;= <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[length];</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; updates.length; i++) &#123;</div><div class="line">            res[updates[i][<span class="number">0</span>]] += updates[i][<span class="number">2</span>];</div><div class="line">            <span class="keyword">if</span> (updates[i][<span class="number">1</span>] &lt; res.length - <span class="number">1</span>) &#123;</div><div class="line">                res[updates[i][<span class="number">1</span>] + <span class="number">1</span>] -= updates[i][<span class="number">2</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; res.length; i++) &#123;</div><div class="line">            res[i] += res[i - <span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1845,7 +1849,7 @@ The integer n is in the range [0, 100].
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">415</span>
+                <span class="site-state-item-count">416</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

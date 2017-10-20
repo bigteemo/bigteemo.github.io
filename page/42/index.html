@@ -314,6 +314,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/08/2016-07-08-leetcode-note-best-time-to-buy-and-sell-stock-III/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/08/2016-07-08-leetcode-note-best-time-to-buy-and-sell-stock-III/" itemprop="url">leetcode解题: best time to buy and sell stock III (123)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-08T10:41:56-04:00">
+                2016-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Say you have an array for which the ith element is the price of a given stock on day i.</p>
+<p>Design an algorithm to find the maximum profit. You may complete at most two transactions.</p>
+<p>Note:<br>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p>
+<h3 id="解法1：-Divide-amp-Conquer-O-N-2-Time-O-N-Space"><a href="#解法1：-Divide-amp-Conquer-O-N-2-Time-O-N-Space" class="headerlink" title="解法1： Divide &amp; Conquer O(N^2) Time + O(N) Space"></a>解法1： Divide &amp; Conquer O(N^2) Time + O(N) Space</h3><p>思路是利用I的解题方法，对于一个(i,j)范围的数组，可以用O(N)的时间和O(1)的空间算出最大的利润<br>那么可以将原数组分割为(0,i) + (i,length - 1)的两个数组，分别计算每个范围内的最大利润再相加。<br>一共有N种分割方法，所以总的时间复杂度是O(N^2)<br>这个解法lintcode可以AC,leetcode会TLE，所以需要改进这个解法，最好的是O(N) Time<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.length - <span class="number">1</span>; i++) &#123;</div><div class="line">		<span class="keyword">int</span> left = maxSingleTransition(prices, <span class="number">0</span>, i);</div><div class="line">		<span class="keyword">int</span> right = maxSingleTransition(prices, i, prices.length - <span class="number">1</span>);</div><div class="line">		<span class="keyword">int</span> sum = left + right;</div><div class="line">		res = Math.max(res, sum);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">maxSingleTransition</span><span class="params">(<span class="keyword">int</span>[] prices, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> min = prices[start];</div><div class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt;= end; i++) &#123;</div><div class="line">		res = Math.max(res, prices[i] - min);</div><div class="line">		min = Math.min(min, prices[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2：两次DP，O-N-Time-O-N-Space"><a href="#解法2：两次DP，O-N-Time-O-N-Space" class="headerlink" title="解法2：两次DP，O(N) Time + O(N) Space"></a>解法2：两次DP，O(N) Time + O(N) Space</h3><p>思路还是类似于第一种解法，但是做了优化。计算(0,i)的时候实际可以运用(0,i-1)的结果。同样，计算(i,length - 1)的时候可以<br>运用(i+1,length - 1)的结果。这就引出了用两个dp数组先记录下每一个区间的最大收益，然后再扫描一遍得到左右两个区间和的最大值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span>[] left = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length];</div><div class="line">	<span class="keyword">int</span>[] right = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length];</div><div class="line">	</div><div class="line">	<span class="comment">// Scan from left</span></div><div class="line">	<span class="keyword">int</span> min = prices[<span class="number">0</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</div><div class="line">		left[i] = Math.max(left[i - <span class="number">1</span>], prices[i] - min);</div><div class="line">		min = Math.min(min, prices[i]);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// Scan from right</span></div><div class="line">	<span class="keyword">int</span> max = prices[prices.length - <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = prices.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">		right[i] = Math.max(right[i + <span class="number">1</span>], max - prices[i]);</div><div class="line">		max = Math.max(max, prices[i]);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// search for the largest sum</span></div><div class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.length; i++) &#123;</div><div class="line">		res = Math.max(res, left[i] + right[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/08/2016-07-08-leetcode-note-best-time-to-buy-and-sell-stock-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1059,7 +1205,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">415</span>
+                <span class="site-state-item-count">416</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

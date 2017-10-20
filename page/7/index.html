@@ -314,6 +314,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/23/2017-07-23-549-Binary-Tree-Longest-Consecutive-Sequence-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/2017-07-23-549-Binary-Tree-Longest-Consecutive-Sequence-II/" itemprop="url">549. Binary Tree Longest Consecutive Sequence II</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T09:58:06-04:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a binary tree, you need to find the length of Longest Consecutive Path in Binary Tree.</p>
+<p>Especially, this path can be either increasing or decreasing. For example, [1,2,3,4] and [4,3,2,1] are both considered valid, but the path [1,2,4,3] is not valid. On the other hand, the path can be in the child-Parent-child order, where not necessarily be parent-child order.</p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">        1</div><div class="line">       / \</div><div class="line">      2   3</div><div class="line">Output: 2</div><div class="line">Explanation: The longest consecutive path is [1, 2] or [2, 1].</div></pre></td></tr></table></figure></p>
+<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">        2</div><div class="line">       / \</div><div class="line">      1   3</div><div class="line">Output: 3</div><div class="line">Explanation: The longest consecutive path is [1, 2, 3] or [3, 2, 1].</div></pre></td></tr></table></figure></p>
+<p>Note: All the values of tree nodes are in the range of [-1e7, 1e7].</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>要先想想思路<br>一个node，返回已他为起点的最长的decreasing和increasing<br>那通过root的最长的一个path一定是increase + decrease - 1, 减1是去掉一次root<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestConsecutive</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] temp = helper(root);</div><div class="line">        <span class="keyword">return</span> max;        </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] helper(TreeNode root) &#123;</div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> increase = <span class="number">1</span>, decrease = <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">int</span>[] left = helper(root.left);</div><div class="line">            <span class="keyword">if</span> (root.val == root.left.val + <span class="number">1</span>) &#123;</div><div class="line">                decrease = left[<span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val == root.left.val -<span class="number">1</span>) &#123;</div><div class="line">                increase = left[<span class="number">0</span>] + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">int</span>[] right = helper(root.right);</div><div class="line">            <span class="keyword">if</span> (root.val == root.right.val + <span class="number">1</span>) &#123;</div><div class="line">                decrease = Math.max(decrease, right[<span class="number">1</span>] + <span class="number">1</span>);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val == root.right.val -<span class="number">1</span>) &#123;</div><div class="line">                increase = Math.max(increase, right[<span class="number">0</span>] + <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        max = Math.max(max, decrease + increase -<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;increase, decrease&#125;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/23/2017-07-23-333-Largest-BST-Subtree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1639,155 +1787,6 @@ The size of given string array won&apos;t exceed 600.
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/23/2017-07-23-467-Unique-Substrings-in-Wraparound-String/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/2017-07-23-467-Unique-Substrings-in-Wraparound-String/" itemprop="url">467. Unique Substrings in Wraparound String</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T08:18:59-04:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Consider the string s to be the infinite wraparound string of “abcdefghijklmnopqrstuvwxyz”, so s will look like this: “…zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcd….”.</p>
-<p>Now we have another string p. Your job is to find out how many unique non-empty substrings of p are present in s. In particular, your input is the string p and you need to output the number of different non-empty substrings of p in the string s.</p>
-<p>Note: p consists of only lowercase English letters and the size of p might be over 10000.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Input: &quot;a&quot;</div><div class="line">Output: 1</div><div class="line"></div><div class="line">Explanation: Only the substring &quot;a&quot; of string &quot;a&quot; is in the string s.</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: &quot;cac&quot;</div><div class="line">Output: 2</div><div class="line">Explanation: There are two substrings &quot;a&quot;, &quot;c&quot; of string &quot;cac&quot; in the string s.</div></pre></td></tr></table></figure></p>
-<p>Example 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: &quot;zab&quot;</div><div class="line">Output: 6</div><div class="line">Explanation: There are six substrings &quot;z&quot;, &quot;a&quot;, &quot;b&quot;, &quot;za&quot;, &quot;ab&quot;, &quot;zab&quot; of string &quot;zab&quot; in the string s.</div></pre></td></tr></table></figure></p>
-<h3 id="解法1"><a href="#解法1" class="headerlink" title="解法1:"></a>解法1:</h3><p>又是维护一个running local optimal，然后再更新最终答案的题目。<br>这里是把p中以每一个字符结尾的最长子串加入到hashmap中。<br>之后再得出一个加和就可以了。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findSubstringInWraproundString</span><span class="params">(String p)</span> </span>&#123;</div><div class="line"></div><div class="line">        HashMap&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Character, Integer&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">int</span> maxLen = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; p.length(); i++) &#123;</div><div class="line">            <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; (p.charAt(i) - p.charAt(i -<span class="number">1</span>) == <span class="number">1</span> || p.charAt(i) - p.charAt(i - <span class="number">1</span>) == -<span class="number">25</span>)) &#123;</div><div class="line">                maxLen++;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                maxLen = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">            map.put(p.charAt(i), Math.max(map.getOrDefault(p.charAt(i), <span class="number">0</span>), maxLen));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> key : map.keySet()) &#123;</div><div class="line">            sum += map.get(key);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> sum;        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1838,7 +1837,7 @@ The size of given string array won&apos;t exceed 600.
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">415</span>
+                <span class="site-state-item-count">416</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

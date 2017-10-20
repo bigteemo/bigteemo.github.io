@@ -314,6 +314,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/12/2016-12-12-Leetcode-Solution-Add-Two-Numbers-II-445/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/12/2016-12-12-Leetcode-Solution-Add-Two-Numbers-II-445/" itemprop="url">Leetcode解题: Add Two Numbers II (445)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-12T21:05:49-05:00">
+                2016-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>You are given two linked lists representing two non-negative numbers. The most significant digit comes first and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
+<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
+<p>Follow up:<br>What if you cannot modify the input lists? In other words, reversing the lists is not allowed.</p>
+<p>Example:</p>
+<p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7</p>
+<h3 id="解法1：Reverse-两数相加"><a href="#解法1：Reverse-两数相加" class="headerlink" title="解法1：Reverse + 两数相加"></a>解法1：Reverse + 两数相加</h3><p>因为list的头是最高位，我们要相加是从最低位开始加，所以如果能先反转的话比较容易做。分别reverse再求和，最后把结果list再reverse一下就可以了。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for singly-linked list.</span></div><div class="line"><span class="comment"> * struct ListNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     ListNode *next;</span></div><div class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">addTwoNumbers</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (l1 == <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">return</span> l2;</div><div class="line">        &#125;   </div><div class="line"></div><div class="line">        <span class="keyword">if</span> (l2 == <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">return</span> l1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        l1 = reverse(l1);</div><div class="line">        l2 = reverse(l2);</div><div class="line"></div><div class="line">        <span class="comment">// normal algorithm</span></div><div class="line">        ListNode* dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode* tail = dummy;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (l1 != <span class="literal">NULL</span> &amp;&amp; l2 != <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">int</span> temp = l1-&gt;val + l2-&gt;val + carry;</div><div class="line">            <span class="keyword">int</span> digit = temp % <span class="number">10</span>;</div><div class="line">            carry = temp / <span class="number">10</span>;</div><div class="line">            ListNode* node = <span class="keyword">new</span> ListNode(digit);</div><div class="line">            tail-&gt;next = node;</div><div class="line">            tail = tail-&gt;next;</div><div class="line">            l1 = l1-&gt;next;</div><div class="line">            l2 = l2-&gt;next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (l1 != <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">int</span> temp = l1-&gt;val + carry;</div><div class="line">            ListNode* node = <span class="keyword">new</span> ListNode(temp % <span class="number">10</span>);</div><div class="line">            carry = temp / <span class="number">10</span>;</div><div class="line">            tail-&gt;next = node;</div><div class="line">            tail = tail-&gt;next;</div><div class="line">            l1 = l1-&gt;next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (l2 != <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">int</span> temp = l2-&gt;val + carry;</div><div class="line">            ListNode* node = <span class="keyword">new</span> ListNode(temp % <span class="number">10</span>);</div><div class="line">            carry = temp / <span class="number">10</span>;</div><div class="line">            tail-&gt;next = node;</div><div class="line">            tail = tail-&gt;next;</div><div class="line">            l2 = l2-&gt;next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (carry != <span class="number">0</span>) &#123;</div><div class="line">            ListNode* node = <span class="keyword">new</span> ListNode(carry);</div><div class="line">            tail-&gt;next = node;</div><div class="line">            tail = tail-&gt;next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// reverse back</span></div><div class="line">        ListNode* res = reverse(dummy-&gt;next);</div><div class="line">        <span class="keyword">delete</span> dummy;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">ListNode* <span class="title">reverse</span><span class="params">(ListNode* head)</span> </span>&#123;</div><div class="line">        ListNode* prev = <span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">while</span> (head != <span class="literal">NULL</span>) &#123;</div><div class="line">            ListNode* temp = head-&gt;next;</div><div class="line">            head-&gt;next = prev;</div><div class="line">            prev = head;</div><div class="line">            head = temp;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> prev;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<h3 id="解法2：-Follow-up-O-N-Time-and-Space"><a href="#解法2：-Follow-up-O-N-Time-and-Space" class="headerlink" title="解法2： Follow up O(N) Time and Space"></a>解法2： Follow up O(N) Time and Space</h3><p>从list的最后加，如果不能反转，需要想到有一种数据结构是可以从后往前存储的，那就是stack。<br>用两个stack保存每一个队列的node，然后往回加。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for singly-linked list.</span></div><div class="line"><span class="comment"> * struct ListNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     ListNode *next;</span></div><div class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">addTwoNumbers</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="built_in">stack</span>&lt;ListNode*&gt; left;</div><div class="line">        <span class="built_in">stack</span>&lt;ListNode*&gt; right;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (l1 != <span class="literal">NULL</span>) &#123;</div><div class="line">            left.push(l1);</div><div class="line">            l1 = l1-&gt;next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (l2 != <span class="literal">NULL</span>) &#123;</div><div class="line">            right.push(l2);</div><div class="line">            l2 = l2-&gt;next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</div><div class="line"></div><div class="line">        ListNode* res = <span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">while</span> (!left.empty() &amp;&amp; !right.empty()) &#123;</div><div class="line">            ListNode* leftnode = left.top();</div><div class="line">            ListNode* rightnode = right.top();</div><div class="line">            <span class="keyword">int</span> temp = leftnode-&gt;val + rightnode-&gt;val + carry;</div><div class="line">            <span class="keyword">int</span> digit = temp % <span class="number">10</span>;</div><div class="line">            carry = temp / <span class="number">10</span>;</div><div class="line">            ListNode* node = <span class="keyword">new</span> ListNode(digit);</div><div class="line">            node-&gt;next = res;</div><div class="line">            res = node;</div><div class="line">            left.pop();</div><div class="line">            right.pop();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!left.empty()) &#123;</div><div class="line">            ListNode* leftnode = left.top();</div><div class="line">            <span class="keyword">int</span> temp = leftnode-&gt;val + carry;</div><div class="line">            <span class="keyword">int</span> digit = temp % <span class="number">10</span>;</div><div class="line">            carry = temp / <span class="number">10</span>;</div><div class="line">            ListNode* node = <span class="keyword">new</span> ListNode(digit);</div><div class="line">            node-&gt;next = res;</div><div class="line">            res = node;</div><div class="line">            left.pop();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!right.empty()) &#123;</div><div class="line">            ListNode* rightnode = right.top();</div><div class="line">            <span class="keyword">int</span> temp = rightnode-&gt;val + carry;</div><div class="line">            <span class="keyword">int</span> digit = temp % <span class="number">10</span>;</div><div class="line">            carry = temp / <span class="number">10</span>;</div><div class="line">            ListNode* node = <span class="keyword">new</span> ListNode(digit);</div><div class="line">            node-&gt;next = res;</div><div class="line">            res = node;</div><div class="line">            right.pop();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (carry != <span class="number">0</span>) &#123;</div><div class="line">            ListNode* node = <span class="keyword">new</span> ListNode(carry);</div><div class="line">            node-&gt;next = res;</div><div class="line">            res = node;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/06/2016-12-06-leetcode-solution-Remove-Duplicates-from-Sorted-List-83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1634,150 +1783,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/03/2016-12-03-leetcode-solution-Power-of-Two-231/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/03/2016-12-03-leetcode-solution-Power-of-Two-231/" itemprop="url">leetcode解题: Power of Two (231)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-03T23:13:51-05:00">
-                2016-12-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an integer, write a function to determine if it is a power of two.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>经典的算法，如果是pot，那么只有最高位为1，如果将此数减1之后再和原来的数取AND，结果一定为0.<br>要注意的是要规避：1. 负数 2. 0<br>这两种情况都不是power of two<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPowerOfTwo</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> (n &amp; ( n - <span class="number">1</span>)) == <span class="number">0</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1828,7 +1833,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">415</span>
+                <span class="site-state-item-count">416</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
