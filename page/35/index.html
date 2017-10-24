@@ -314,6 +314,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/16/2016-12-16-leetcode-solution-Insertion-Sort-List-147/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/16/2016-12-16-leetcode-solution-Insertion-Sort-List-147/" itemprop="url">leetcode解题: Insertion Sort List (147)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-16T21:03:52-05:00">
+                2016-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Sort a linked list using insertion sort.</p>
+<h3 id="解法1：Dummy-Node-Insertion-Sort-O-N-2"><a href="#解法1：Dummy-Node-Insertion-Sort-O-N-2" class="headerlink" title="解法1：Dummy Node, Insertion Sort O(N^2)"></a>解法1：Dummy Node, Insertion Sort O(N^2)</h3><p>这题一开始想不太清楚，但知道应该用dummy node。实际上，dummy node可以作为一个空的list，用一个指针（head）来记录当前想要插入的node，每一个node在dummy指向的list中找到位置后插入。<br>这样想就比较清晰了。用到的指针有</p>
+<ol>
+<li>cur 记录当前插入的node的指针</li>
+<li>p 用来遍历已经排序好的dummy指向的那个list</li>
+<li>head 用来遍历原list直到end</li>
+</ol>
+<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for singly-linked list.</span></div><div class="line"><span class="comment"> * struct ListNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     ListNode *next;</span></div><div class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">insertionSortList</span><span class="params">(ListNode* head)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (head == <span class="literal">NULL</span> || head-&gt;next == <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">return</span> head;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        ListNode* dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="comment">// For each node, attach to dummy linked list</span></div><div class="line">        <span class="keyword">while</span> (head != <span class="literal">NULL</span>) &#123;</div><div class="line">            ListNode* cur = head;</div><div class="line">            head = head-&gt;next;</div><div class="line"></div><div class="line">            ListNode* p = dummy;</div><div class="line">            <span class="keyword">while</span> (p-&gt;next &amp;&amp; p-&gt;next-&gt;val &lt;= cur-&gt;val) &#123;</div><div class="line">                p = p-&gt;next;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            cur-&gt;next = p-&gt;next;</div><div class="line">            p-&gt;next = cur;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        head = dummy-&gt;next;</div><div class="line">        <span class="keyword">delete</span> dummy;</div><div class="line">        <span class="keyword">return</span> head;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/15/2016-12-15-leetcode-solution-Linked-List-Cycle-141/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1635,155 +1785,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/12/2016-12-12-Leetcode-solution-happy-number-202/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/12/2016-12-12-Leetcode-solution-happy-number-202/" itemprop="url">Leetcode解题: happy number (202)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-12T22:05:24-05:00">
-                2016-12-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Write an algorithm to determine if a number is “happy”.</p>
-<p>A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.</p>
-<p>Example: 19 is a happy number</p>
-<p>12 + 92 = 82<br>82 + 22 = 68<br>62 + 82 = 100<br>12 + 02 + 02 = 1</p>
-<h3 id="解法1：hashmap"><a href="#解法1：hashmap" class="headerlink" title="解法1：hashmap"></a>解法1：hashmap</h3><p>这里需要判断重复的情况，想到用hashmap来存储已经计算过的值。对每一个未访问过的数值，计算位数的平方和。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isHappy</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt; <span class="built_in">map</span>;</div><div class="line">        <span class="keyword">while</span> (n != <span class="number">1</span>) &#123;</div><div class="line">            <span class="built_in">map</span>[n] = <span class="literal">true</span>;</div><div class="line">            <span class="keyword">int</span> temp = digitSquareSum(n);</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">map</span>[temp]) &#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125;</div><div class="line">            n = temp;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">digitSquareSum</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">0</span> || n == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> n;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (n != <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">int</span> digit = n % <span class="number">10</span>;</div><div class="line">            sum += digit * digit;</div><div class="line">            n /= <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<h3 id="解法2：观察规律"><a href="#解法2：观察规律" class="headerlink" title="解法2：观察规律"></a>解法2：观察规律</h3><p>看到别人的解法里有这么一个巧妙的方法：可以试试几个会出现loop的数，最后都会出现4。结论是：所有最终会有4的都不是happy number，这样我们就可以把额外的空间要求去除了。<br>例子如下：<br>1^2 + 1^2 = 2<br>2^2 = 4<br>4^2 = 16<br>1^2 + 6^2 = 37<br>3^2 + 7^2 = 58<br>5^2 + 8^2 = 89<br>8^2 + 9^2 = 145<br>1^2 + 4^2 + 5^2 = 42<br>4^2 + 2^2 = 20<br>2^2 + 0^2 = 4</p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isHappy</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span> (n != <span class="number">1</span> &amp;&amp; n != <span class="number">4</span>) &#123;</div><div class="line">            <span class="keyword">int</span> t = <span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span> (n) &#123;</div><div class="line">                t += (n % <span class="number">10</span>) * (n % <span class="number">10</span>);</div><div class="line">                n /= <span class="number">10</span>;</div><div class="line">            &#125;</div><div class="line">            n = t;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> n == <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1834,7 +1835,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">417</span>
+                <span class="site-state-item-count">418</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

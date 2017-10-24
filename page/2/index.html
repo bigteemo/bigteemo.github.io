@@ -314,6 +314,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/30/15-3Sum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/30/15-3Sum/" itemprop="url">15. 3Sum</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-30T14:53:29-04:00">
+                2017-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+<p>Note: The solution set must not contain duplicate triplets.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">For example, given array S = [-1, 0, 1, 2, -1, -4],</div><div class="line"></div><div class="line">A solution set is:</div><div class="line">[</div><div class="line">  [-1, 0, 1],</div><div class="line">  [-1, -1, 2]</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<h3 id="解法1：-Backtracking"><a href="#解法1：-Backtracking" class="headerlink" title="解法1： Backtracking"></a>解法1： Backtracking</h3><p>典型的backtracking + 去重的问题。<br>主要的容易错的地方是怎么去重，当确定了其中一个数字的位置i之后，在变动left和right时，每当找到一个满足条件的解都要跳过之后所有和left或者right指向的相同的数字。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Arrays.sort(nums);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">2</span>; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (i != <span class="number">0</span> &amp;&amp; nums[i] == nums[i -<span class="number">1</span>]) <span class="keyword">continue</span>;</div><div class="line">            <span class="keyword">int</span> left = i + <span class="number">1</span>, right = nums.length - <span class="number">1</span>;</div><div class="line">            <span class="keyword">while</span> (left &lt; right) &#123;</div><div class="line">                <span class="keyword">if</span> (nums[i] + nums[left] + nums[right] == <span class="number">0</span>) &#123;</div><div class="line">                    List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">                    temp.add(nums[i]);</div><div class="line">                    temp.add(nums[left]);</div><div class="line">                    temp.add(nums[right]);</div><div class="line">                    res.add(temp);</div><div class="line">                    left++;</div><div class="line">                    right--;</div><div class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[left - <span class="number">1</span>] == nums[left]) left++;</div><div class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[right + <span class="number">1</span>] == nums[right]) right--;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[i] + nums[left] + nums[right] &lt; <span class="number">0</span>) &#123;</div><div class="line">                    left++;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    right--;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/28/286-Walls-and-Gates/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1655,152 +1799,6 @@ public int getHits(int timestamp) {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/26/247-Strobogrammatic-Number-II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/26/247-Strobogrammatic-Number-II/" itemprop="url">247. Strobogrammatic Number II</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-26T22:07:10-04:00">
-                2017-09-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).</p>
-<p>Find all strobogrammatic numbers that are of length = n.</p>
-<p>For example,<br>Given n = 2, return [“11”,”69”,”88”,”96”].</p>
-<h3 id="解法1：-Recursion"><a href="#解法1：-Recursion" class="headerlink" title="解法1： Recursion"></a>解法1： Recursion</h3><p>承接I的思路，当数字长度大于1的时候，都需要配对存在。<br>要注意的是00配对只可能存在内层中，所以在递归的时候需要用一个变量记录原来n的长度。这样当不是最外层的时候就可以把0加上了。</p>
-<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    public List&lt;String&gt; findStrobogrammatic(int n) &#123;</div><div class="line">        return helper(n, n);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private List&lt;String&gt; helper(int n, int m) &#123;</div><div class="line">        if (n == 0) return new ArrayList&lt;String&gt;(Arrays.asList(&quot;&quot;));</div><div class="line">        if (n == 1) return new ArrayList&lt;String&gt;(Arrays.asList(&quot;0&quot;,&quot;1&quot;,&quot;8&quot;));</div><div class="line"></div><div class="line">        List&lt;String&gt; next = helper(n - 2, m);</div><div class="line">        List&lt;String&gt; res = new ArrayList&lt;&gt;();</div><div class="line">        for (String str : next) &#123;</div><div class="line">            if (n != m) res.add(&quot;0&quot; + str + &quot;0&quot;);</div><div class="line">            res.add(&quot;1&quot; + str + &quot;1&quot;);</div><div class="line">            res.add(&quot;6&quot; + str + &quot;9&quot;);</div><div class="line">            res.add(&quot;8&quot; + str + &quot;8&quot;);</div><div class="line">            res.add(&quot;9&quot; + str + &quot;6&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1851,7 +1849,7 @@ public int getHits(int timestamp) {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">417</span>
+                <span class="site-state-item-count">418</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

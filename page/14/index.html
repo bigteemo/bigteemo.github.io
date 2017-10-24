@@ -314,6 +314,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/05/2017-07-05-544-Output-Contest-Matches/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/2017-07-05-544-Output-Contest-Matches/" itemprop="url">544. Output Contest Matches</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T22:51:16-04:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you’re given n teams, you need to output their final contest matches in the form of a string.</p>
+<p>The n teams are given in the form of positive integers from 1 to n, which represents their initial rank. (Rank 1 is the strongest team and Rank n is the weakest team.) We’ll use parentheses(‘(‘, ‘)’) and commas(‘,’) to represent the contest team pairing - parentheses(‘(‘ , ‘)’) for pairing and commas(‘,’) for partition. During the pairing process in each round, you always need to follow the strategy of making the rather strong one pair with the rather weak one.</p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input: 2</div><div class="line">Output: (1,2)</div><div class="line">Explanation:</div><div class="line">Initially, we have the team 1 and the team 2, placed like: 1,2.</div><div class="line">Then we pair the team (1,2) together with &apos;(&apos;, &apos;)&apos; and &apos;,&apos;, which is the final answer.</div></pre></td></tr></table></figure></p>
+<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Input: 4</div><div class="line">Output: ((1,4),(2,3))</div><div class="line">Explanation:</div><div class="line">In the first round, we pair the team 1 and 4, the team 2 and 3 together, as we need to make the strong team and weak team together.</div><div class="line">And we got (1,4),(2,3).</div><div class="line">In the second round, the winners of (1,4) and (2,3) need to play again to generate the final winner, so you need to add the paratheses outside them.</div><div class="line">And we got the final answer ((1,4),(2,3)).</div></pre></td></tr></table></figure></p>
+<p>Example 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Input: 8</div><div class="line">Output: (((1,8),(4,5)),((2,7),(3,6)))</div><div class="line">Explanation:</div><div class="line">First round: (1,8),(2,7),(3,6),(4,5)</div><div class="line">Second round: ((1,8),(4,5)),((2,7),(3,6))</div><div class="line">Third round: (((1,8),(4,5)),((2,7),(3,6)))</div><div class="line">Since the third round will generate the final winner, you need to output the answer (((1,8),(4,5)),((2,7),(3,6))).</div></pre></td></tr></table></figure></p>
+<p>Note:<br>The n is in range [2, 212].<br>We ensure that the input n can be converted into the form 2k, where k is a positive integer.</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>题目一开始没理解。主要的思路就是每次缩短1/2，把排名第一的组合和排名最后的组合放在一起。<br>用递归或者是iteration都可以做。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">findContestMatch</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line"></div><div class="line">        List&lt;String&gt; matches = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">            matches.add(<span class="string">""</span> + i);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (matches.size() != <span class="number">1</span>) &#123;</div><div class="line">            List&lt;String&gt; round = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matches.size() / <span class="number">2</span>; i++) &#123;</div><div class="line">                round.add(<span class="string">"("</span> + matches.get(i) + <span class="string">","</span> + matches.get(matches.size() - <span class="number">1</span> -i) + <span class="string">")"</span>);</div><div class="line">            &#125;</div><div class="line">            matches = round;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> matches.get(<span class="number">0</span>);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/05/2017-07-05-635-Design-Log-Storage-System/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1639,153 +1788,6 @@ Reduce them to a single space in the reversed string.
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/02/2017-07-02-606-Construct-String-from-Binary-Tree/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/02/2017-07-02-606-Construct-String-from-Binary-Tree/" itemprop="url">606. Construct String from Binary Tree</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-02T11:17:59-04:00">
-                2017-07-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>You need to construct a string consists of parenthesis and integers from a binary tree with the preorder traversing way.</p>
-<p>The null node needs to be represented by empty parenthesis pair “()”. And you need to omit all the empty parenthesis pairs that don’t affect the one-to-one mapping relationship between the string and the original binary tree.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Input: Binary tree: [1,2,3,4]</div><div class="line">       1</div><div class="line">     /   \</div><div class="line">    2     3</div><div class="line">   /    </div><div class="line">  4     </div><div class="line"></div><div class="line">Output: &quot;1(2(4))(3)&quot;</div><div class="line"></div><div class="line">Explanation: Originallay it needs to be &quot;1(2(4)())(3()())&quot;,</div><div class="line">but you need to omit all the unnecessary empty parenthesis pairs.</div><div class="line">And it will be &quot;1(2(4))(3)&quot;.</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Input: Binary tree: [1,2,3,null,4]</div><div class="line">       1</div><div class="line">     /   \</div><div class="line">    2     3</div><div class="line">     \  </div><div class="line">      4</div><div class="line"></div><div class="line">Output: &quot;1(2()(4))(3)&quot;</div><div class="line"></div><div class="line">Explanation: Almost the same as the first example,</div><div class="line">except we can&apos;t omit the first parenthesis pair to break the one-to-one mapping relationship between the input and the output.</div></pre></td></tr></table></figure></p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">tree2str</span><span class="params">(TreeNode t)</span> </span>&#123;</div><div class="line"></div><div class="line">        StringBuilder builder = <span class="keyword">new</span> StringBuilder();        </div><div class="line">        helper(builder, t);</div><div class="line">        <span class="keyword">return</span> builder.toString();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(StringBuilder builder, TreeNode t)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (t != <span class="keyword">null</span>) &#123;</div><div class="line">            builder.append(Integer.toString(t.val));</div><div class="line">            <span class="keyword">if</span> (t.left != <span class="keyword">null</span> || t.right != <span class="keyword">null</span>) &#123;</div><div class="line">                builder.append(<span class="string">"("</span>);</div><div class="line">                helper(builder, t.left);</div><div class="line">                builder.append(<span class="string">")"</span>);</div><div class="line">                <span class="keyword">if</span> (t.right != <span class="keyword">null</span>) &#123;</div><div class="line">                    builder.append(<span class="string">"("</span>);</div><div class="line">                    helper(builder, t.right);</div><div class="line">                    builder.append(<span class="string">")"</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1836,7 +1838,7 @@ Reduce them to a single space in the reversed string.
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">417</span>
+                <span class="site-state-item-count">418</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
