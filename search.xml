@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[373. Find K Pairs with Smallest Sums]]></title>
+    <url>%2F2017%2F10%2F23%2F373-Find-K-Pairs-with-Smallest-Sums%2F</url>
+    <content type="text"><![CDATA[You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k. Define a pair (u,v) which consists of one element from the first array and one element from the second array. Find the k pairs (u1,v1),(u2,v2) …(uk,vk) with the smallest sums. Example 1:123456Given nums1 = [1,7,11], nums2 = [2,4,6], k = 3Return: [1,2],[1,4],[1,6]The first 3 pairs are returned from the sequence:[1,2],[1,4],[1,6],[7,2],[7,4],[11,2],[7,6],[11,4],[11,6] Example 2:123456Given nums1 = [1,1,2], nums2 = [1,2,3], k = 2Return: [1,1],[1,1]The first 2 pairs are returned from the sequence:[1,1],[1,1],[1,2],[2,1],[1,2],[2,2],[1,3],[1,3],[2,3] Example 3:123456Given nums1 = [1,2], nums2 = [3], k = 3Return: [1,3],[2,3]All possible pairs are returned from the sequence:[1,3],[2,3] 解法1：discussion中的解法。要用到sorted这个条件可以简化不少程序。由于两个都是sorted，那么第一个array中任何一个数字和第二个数组搭配时，最小的和一定是和第二个数组的第一个元素的配搭。这样我们可以先把这个组合加入heap中，每次poll出来的时候就把对应的第二个数组的配搭往上挪一个。 12345678910111213141516171819202122class Solution &#123; public List&lt;int[]&gt; kSmallestPairs(int[] nums1, int[] nums2, int k) &#123; List&lt;int[]&gt; res = new ArrayList&lt;&gt;(); PriorityQueue&lt;int[]&gt; queue = new PriorityQueue&lt;int[]&gt;((a,b) -&gt; (a[0] + a[1] - b[0] - b[1])); if (nums1.length == 0 || nums2.length == 0 || k == 0) &#123; return res; &#125; for (int i = 0; i &lt; nums1.length; i++) &#123; queue.offer(new int[]&#123;nums1[i], nums2[0], 0&#125;); &#125; while (k-- &gt; 0 &amp;&amp; !queue.isEmpty()) &#123; int[] cur = queue.poll(); res.add(new int[]&#123;cur[0], cur[1]&#125;); int ptr = cur[2]; if (ptr == nums2.length - 1) continue; queue.offer(new int[]&#123;cur[0], nums2[ptr + 1], ptr + 1&#125;); &#125; return res; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[365. Water and Jug Problem]]></title>
     <url>%2F2017%2F10%2F23%2F365-Water-and-Jug-Problem%2F</url>
     <content type="text"><![CDATA[You are given two jugs with capacities x and y litres. There is an infinite amount of water supply available. You need to determine whether it is possible to measure exactly z litres using these two jugs. If z liters of water is measurable, you must have z liters of water contained within one or both buckets by the end. Operations allowed: Fill any of the jugs completely with water.Empty any of the jugs.Pour water from one jug into another till the other jug is completely full or the first jug itself is empty.Example 1: (From the famous “Die Hard” example)12Input: x = 3, y = 5, z = 4Output: True Example 2:12Input: x = 2, y = 6, z = 5Output: False 解法1：这里实际是一个数学定理，稍微看一下就可以了。1234567891011121314151617181920class Solution &#123; public boolean canMeasureWater(int x, int y, int z) &#123; if (x + y &lt; z) return false; if (x == z || y == z || x + y == z) return true; return z % gcd(x, y) == 0; &#125; private int gcd(int a, int b) &#123; while (b != 0) &#123; int temp = b; b = a % b; a = temp; &#125; return a; &#125;&#125;]]></content>
