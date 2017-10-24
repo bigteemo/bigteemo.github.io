@@ -314,6 +314,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/23/241-Different-Ways-to-Add-Parentheses/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/23/241-Different-Ways-to-Add-Parentheses/" itemprop="url">241. Different Ways to Add Parentheses</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-23T15:49:35-04:00">
+                2017-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a string of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. The valid operators are +, - and *.</p>
+<p>Example 1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input: &quot;2-1-1&quot;.</div><div class="line"></div><div class="line">((2-1)-1) = 0</div><div class="line">(2-(1-1)) = 2</div><div class="line">Output: [0, 2]</div></pre></td></tr></table></figure></p>
+<p>Example 2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Input: &quot;2*3-4*5&quot;</div><div class="line"></div><div class="line">(2*(3-(4*5))) = -34</div><div class="line">((2*3)-(4*5)) = -14</div><div class="line">((2*(3-4))*5) = -10</div><div class="line">(2*((3-4)*5)) = -10</div><div class="line">(((2*3)-4)*5) = 10</div><div class="line">Output: [-34, -14, -10, -10, 10]</div></pre></td></tr></table></figure></p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>用Divide &amp; Conquer的思想，按照每一个运算符号分成左右两边。每边计算一下结果然后按照运算符号结合起来。当只有数字的时候所生成的res一定为空，这个时候就把数字加入res即可。</p>
+<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    public List&lt;Integer&gt; diffWaysToCompute(String input) &#123;</div><div class="line">        List&lt;Integer&gt; res = new ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; input.length(); i++) &#123;</div><div class="line">            if (input.charAt(i) == &apos;+&apos; || input.charAt(i) == &apos;-&apos; || input.charAt(i) == &apos;*&apos;) &#123;</div><div class="line">                String left = input.substring(0, i);</div><div class="line">                String right = input.substring(i + 1);</div><div class="line">                List&lt;Integer&gt; leftRes = diffWaysToCompute(left);</div><div class="line">                List&lt;Integer&gt; rightRes = diffWaysToCompute(right);</div><div class="line">                for (int l : leftRes) &#123;</div><div class="line">                    for (int r : rightRes) &#123;</div><div class="line">                        switch (input.charAt(i)) &#123;</div><div class="line">                            case &apos;+&apos; :</div><div class="line">                                res.add(l + r);</div><div class="line">                                break;</div><div class="line">                            case &apos;-&apos;:</div><div class="line">                                res.add(l - r);</div><div class="line">                                break;</div><div class="line">                            case &apos;*&apos;:</div><div class="line">                                res.add( l * r);</div><div class="line">                                break;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (res.size() == 0) &#123;</div><div class="line">            res.add(Integer.parseInt(input));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/09/22/223-Rectangle-Area/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1611,151 +1757,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/08/17/2017-08-17-148-Sort-List/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/17/2017-08-17-148-Sort-List/" itemprop="url">148. Sort List</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T15:22:44-04:00">
-                2017-08-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Sort a linked list in O(n log n) time using constant space complexity.</p>
-<h3 id="解法1：-Merge-Sort"><a href="#解法1：-Merge-Sort" class="headerlink" title="解法1： Merge Sort"></a>解法1： Merge Sort</h3><p>考察了几个基本算法：<br>linkedlist找中点<br>linkedlist merge</p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for singly-linked list.</span></div><div class="line"><span class="comment"> * public class ListNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     ListNode next;</span></div><div class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">sortList</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> head;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Cut into half, i.e. look for the middle point</span></div><div class="line">        ListNode slow = head, fast = head.next;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span>) &#123;</div><div class="line">            slow = slow.next;</div><div class="line">            fast = fast.next.next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// break from the middle point</span></div><div class="line">        ListNode rightHead = slow.next;</div><div class="line">        slow.next = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="comment">// Sort on each half</span></div><div class="line">        ListNode left = sortList(head);</div><div class="line">        ListNode right = sortList(rightHead);</div><div class="line"></div><div class="line">        <span class="comment">// Merge</span></div><div class="line">        <span class="keyword">return</span> merge(left, right);        </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> ListNode <span class="title">merge</span><span class="params">(ListNode left, ListNode right)</span> </span>&#123;</div><div class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode tail = dummy;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (left != <span class="keyword">null</span> &amp;&amp; right != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (left.val &lt; right.val) &#123;</div><div class="line">                tail.next = left;</div><div class="line">                left = left.next;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                tail.next = right;</div><div class="line">                right = right.next;</div><div class="line">            &#125;</div><div class="line">            tail = tail.next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (left != <span class="keyword">null</span>) &#123;</div><div class="line">            tail.next = left;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (right != <span class="keyword">null</span>) &#123;</div><div class="line">            tail.next = right;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dummy.next;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1806,7 +1807,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">416</span>
+                <span class="site-state-item-count">417</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1828,7 +1829,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

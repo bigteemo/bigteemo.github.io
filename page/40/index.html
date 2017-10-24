@@ -314,6 +314,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/10/01/2016-10-01-leetcode-solution-Nim-Game-292/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/10/01/2016-10-01-leetcode-solution-Nim-Game-292/" itemprop="url">leetcode解题: Nim Game (292)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-01T13:59:06-04:00">
+                2016-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.</p>
+<p>Both of you are very clever and have optimal strategies for the game. Write a function to determine whether you can win the game given the number of stones in the heap.</p>
+<p>For example, if there are 4 stones in the heap, then you will never win the game: no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.</p>
+<h3 id="解法1：DP-with-O-N-time-N-is-the-number-of-input-Runtime-Error"><a href="#解法1：DP-with-O-N-time-N-is-the-number-of-input-Runtime-Error" class="headerlink" title="解法1：DP with O(N) time, N is the number of input, Runtime Error"></a>解法1：DP with O(N) time, N is the number of input, Runtime Error</h3><p>思路就是去试几个不同的数，找出规律。自然的首先想到的是DP的算法，比如输入4，那么无论如何不能达到。如果是5，那么只要1可以，那么5就可以。似乎只需要看前面差4个数的结果。x[i] = x[i - 4]，但是当数据变大的时候会出现Runtime error。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canWinNim</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">      <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) &#123;</div><div class="line">          <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> (n &lt;= <span class="number">3</span>) &#123;</div><div class="line">          <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">bool</span> x[n + <span class="number">1</span>];</div><div class="line">      x[<span class="number">0</span>] = <span class="literal">false</span>; x[<span class="number">1</span>] = <span class="literal">true</span>; x[<span class="number">2</span>] = <span class="literal">true</span>; x[<span class="number">3</span>] = <span class="literal">true</span>;</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">4</span>; i &lt;= n; i++) &#123;</div><div class="line">          x[i] = x[i - <span class="number">4</span>];</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> x[n];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2：O-1-Time-with-Math"><a href="#解法2：O-1-Time-with-Math" class="headerlink" title="解法2：O(1) Time with Math"></a>解法2：O(1) Time with Math</h3><p>1,2,3 可以，4 false， 5，6，7 true, 8 false. 得出的结论是能除4的就不能赢。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canWinNim</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> n % <span class="number">4</span> != <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/10/01/2016-10-01-leetcode-solution-Moving-Average-from-Data-Stream-346/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1632,158 +1778,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/20/2016-07-20-leetcode-solution-decode-ways-91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/20/2016-07-20-leetcode-solution-decode-ways-91/" itemprop="url">leetcode解题: Decode Ways (91)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T09:42:41-04:00">
-                2016-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>A message containing letters from A-Z is being encoded to numbers using the following mapping:</p>
-<p>‘A’ -&gt; 1<br>‘B’ -&gt; 2<br>…<br>‘Z’ -&gt; 26<br>Given an encoded message containing digits, determine the total number of ways to decode it.</p>
-<p>For example,<br>Given encoded message “12”, it could be decoded as “AB” (1 2) or “L” (12).</p>
-<p>The number of ways decoding “12” is 2.</p>
-<h3 id="解法1：DP-O-N-with-O-1-空间"><a href="#解法1：DP-O-N-with-O-1-空间" class="headerlink" title="解法1：DP O(N) with O(1) 空间"></a>解法1：DP O(N) with O(1) 空间</h3><p>典型DP, dp数组表示前i个数字的# of decode ways. 那么对于dp[i], 他存在decode的办法有两种：</p>
-<ol>
-<li>单独一个数字decode, 这种情况实际是dp[i -1]</li>
-<li>和嵌挤一个数字拼成一个10 ~ 26 的数字decode, 这种情况的办法是dp[i - 2]<br>但是要注意的是对于每一种可能的decode办法，有corner case需要考虑：</li>
-<li>如果第i个数是0，那么只可能是dp[i - 2],并且要检查i - 1 和i拼成的数是否在10 ~ 26范围内, 比如120只可能是[1, 20]的分割</li>
-<li>检查数是否在10 ~ 26范围内</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numDecodings</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">	</div><div class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// empty string has no way of decoding</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[s.length()];</div><div class="line">    </div><div class="line">    dp[<span class="number">0</span>] = s.charAt(<span class="number">0</span>) == <span class="string">'0'</span>?<span class="number">0</span>: <span class="number">1</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; s.length(); i++) &#123;</div><div class="line">        <span class="keyword">if</span> (s.charAt(i) != <span class="string">'0'</span>) &#123;</div><div class="line">            dp[i] = dp[i - <span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> temp = Integer.parseInt(s.substring(i - <span class="number">1</span>, i + <span class="number">1</span>));</div><div class="line">        <span class="keyword">if</span> (temp &gt;= <span class="number">10</span> &amp;&amp; temp &lt;= <span class="number">26</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (i == <span class="number">1</span>) &#123;</div><div class="line">                dp[i] += <span class="number">1</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                dp[i] += dp[i - <span class="number">2</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (dp[i] == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dp[s.length() - <span class="number">1</span>];    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1834,7 +1828,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">416</span>
+                <span class="site-state-item-count">417</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1856,7 +1850,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

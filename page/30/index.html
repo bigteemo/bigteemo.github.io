@@ -314,6 +314,151 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/30/2016-12-30-leetcode-solution-Remove-Linked-List-Elements-203/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/30/2016-12-30-leetcode-solution-Remove-Linked-List-Elements-203/" itemprop="url">leetcode解题: Remove Linked List Elements (203)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-30T09:38:29-05:00">
+                2016-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Remove all elements from a linked list of integers that have value val.</p>
+<p>Example<br>Given: 1 –&gt; 2 –&gt; 6 –&gt; 3 –&gt; 4 –&gt; 5 –&gt; 6, val = 6<br>Return: 1 –&gt; 2 –&gt; 3 –&gt; 4 –&gt; 5</p>
+<h3 id="解法1：-O-N-One-Pass"><a href="#解法1：-O-N-One-Pass" class="headerlink" title="解法1： O(N) One Pass"></a>解法1： O(N) One Pass</h3><p>要注意的是因为可能头指针会被删除或者整条list会被删，要用dummy node。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for singly-linked list.</span></div><div class="line"><span class="comment"> * struct ListNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     ListNode *next;</span></div><div class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">removeElements</span><span class="params">(ListNode* head, <span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">        ListNode* dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        dummy-&gt;next = head;</div><div class="line">        head = dummy;</div><div class="line">        <span class="keyword">while</span> (head-&gt;next) &#123;</div><div class="line">            <span class="keyword">if</span> (head-&gt;next-&gt;val == val) &#123;</div><div class="line">                ListNode* temp = head-&gt;next;</div><div class="line">                head-&gt;next = head-&gt;next-&gt;next;</div><div class="line">                <span class="keyword">delete</span> temp;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                head = head-&gt;next;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        ListNode* res = dummy-&gt;next;</div><div class="line">        <span class="keyword">delete</span> dummy;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/30/2016-12-30-leetcode-solution-Remove-Nth-Node-From-End-of-List-19/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1650,155 +1795,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/27/2016-12-27-leetcode-solution-Valid-Sudoku-36/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/27/2016-12-27-leetcode-solution-Valid-Sudoku-36/" itemprop="url">leetcode解题: Valid Sudoku (36)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-27T18:18:29-05:00">
-                2016-12-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.</p>
-<p>The Sudoku board could be partially filled, where empty cells are filled with the character ‘.’.</p>
-<p>A partially filled sudoku which is valid.</p>
-<p>Note:<br>A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.</p>
-<h3 id="解法1：-O（N-N）-Time-O-NN-Space-一次遍历"><a href="#解法1：-O（N-N）-Time-O-NN-Space-一次遍历" class="headerlink" title="解法1： O（N  N） Time + O(NN) Space, 一次遍历"></a>解法1： O（N <em> N） Time + O(N</em>N) Space, 一次遍历</h3><p>本题要满足三个条件，行，列以及小方块都不能包含重复的数字。<br>可以用三个数组记录每一个条件是否满足，因为每个条件有9行，9列或者9个小方块。 每一个条件能出现的数字只有1到9。<br>那么每次扫描一个数字时，判断三个条件是否出现过一样的数字，如果有则返回false。<br>这样的做法好处是只需要遍历一次，代码很整洁。<br>要注意的是在计算小方块的index的时候， 用了k = i / 3 <em> 3 + j / 3, 注意这里因为i是int，所以不能把/3</em>3抵消掉。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidSudoku</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</div><div class="line">       </div><div class="line">       <span class="keyword">bool</span> rule1[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="literal">false</span>&#125;, rule2[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="literal">false</span>&#125;, rule3[<span class="number">9</span>][<span class="number">9</span>] = &#123;<span class="literal">false</span>&#125;;</div><div class="line">       </div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; board.size(); ++i) &#123;</div><div class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; board[<span class="number">0</span>].size(); ++j) &#123;</div><div class="line">               <span class="keyword">if</span> (board[i][j] != <span class="string">'.'</span>) &#123;</div><div class="line">                   <span class="keyword">int</span> digit = board[i][j] - <span class="string">'0'</span> - <span class="number">1</span>;</div><div class="line">                   <span class="keyword">int</span> smallMatrixIndex = i / <span class="number">3</span> * <span class="number">3</span> + j / <span class="number">3</span>;</div><div class="line">                   <span class="keyword">if</span> (rule1[i][digit] || rule2[j][digit] || rule3[smallMatrixIndex][digit]) &#123;</div><div class="line">                       <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                   &#125;</div><div class="line">                   rule1[i][digit] = rule2[j][digit] = rule3[smallMatrixIndex][digit] = <span class="literal">true</span>;</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       </div><div class="line">       <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<h3 id="解1法2：-O（N-N）-Time-O-1-Space，-三次遍历"><a href="#解1法2：-O（N-N）-Time-O-1-Space，-三次遍历" class="headerlink" title="解1法2： O（N * N） Time + O(1) Space， 三次遍历"></a>解1法2： O（N * N） Time + O(1) Space， 三次遍历</h3><p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidSudoku</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</div><div class="line">        </div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; <span class="built_in">map</span>;</div><div class="line">        <span class="comment">// check row</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; board.size(); ++i) &#123;</div><div class="line">            <span class="built_in">map</span>.clear();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; board[i].size(); ++j) &#123;</div><div class="line">                <span class="keyword">if</span> (board[i][j] == <span class="string">'.'</span>) &#123;</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (<span class="built_in">map</span>[board[i][j]] != <span class="number">0</span>) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="built_in">map</span>[board[i][j]] = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">// check col</span></div><div class="line">        <span class="keyword">int</span> row = board.size();</div><div class="line">        <span class="keyword">int</span> col = board[<span class="number">0</span>].size();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; col; ++i) &#123;</div><div class="line">            <span class="built_in">map</span>.clear();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; row; ++j) &#123;</div><div class="line">                <span class="keyword">if</span> (board[j][i] == <span class="string">'.'</span>) &#123;</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (<span class="built_in">map</span>[board[j][i]] != <span class="number">0</span>) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="built_in">map</span>[board[j][i]] = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">// check small matrix</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row / <span class="number">3</span>; ++i) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; col / <span class="number">3</span>; ++j) &#123;</div><div class="line">                <span class="built_in">map</span>.clear();</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = i * <span class="number">3</span>; k &lt; i * <span class="number">3</span> + <span class="number">3</span>; ++k) &#123;</div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> m = j * <span class="number">3</span>; m &lt; j * <span class="number">3</span> + <span class="number">3</span>; ++m) &#123;</div><div class="line">                        <span class="keyword">if</span> (board[k][m] == <span class="string">'.'</span>) &#123;</div><div class="line">                            <span class="keyword">continue</span>;</div><div class="line">                        &#125;</div><div class="line">                        <span class="keyword">if</span> (<span class="built_in">map</span>[board[k][m]] != <span class="number">0</span>) &#123;</div><div class="line">                            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                        &#125;</div><div class="line">                        <span class="built_in">map</span>[board[k][m]] = <span class="number">1</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1849,7 +1845,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">416</span>
+                <span class="site-state-item-count">417</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1871,7 +1867,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
