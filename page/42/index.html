@@ -314,6 +314,338 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/16/2016-07-16-Quant-Finance-Prep-market-risk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/16/2016-07-16-Quant-Finance-Prep-market-risk/" itemprop="url">量化金融面试知识点: Market Risk</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-16T22:50:13-04:00">
+                2016-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/量化分析知识点/" itemprop="url" rel="index">
+                    <span itemprop="name">量化分析知识点</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>问题来源于一份<a href="http://news.efinancialcareers.com/uk-en/212161/the-50-market-risk-interview-questions-you-need-to-anticipate" target="_blank" rel="external">Top 50 Questions related to Market Risk</a>. 试着回答了一部分问题，希望对准备面试有所帮助。</p>
+<h3 id="Risk-Measures"><a href="#Risk-Measures" class="headerlink" title="Risk Measures"></a>Risk Measures</h3><ol>
+<li><p>How would you calculate Value at Risk (VaR)?</p>
+<p>There are three methods to calculate VaR.</p>
+<ol>
+<li><p>Delta-Normal Method (Parametric Method)</p>
+<ul>
+<li>Assume the distribution of underlying asset returns. </li>
+<li>Go back on time for over N years and collect asset returns’ data.</li>
+<li>Fit the data into the assumed distribution and calculate the VaR as the Xth percentile.</li>
+<li>For example, a one-day 5% VaR is just the 5th percentile of the underlying return’s distribution.</li>
+</ul>
+</li>
+<li><p>Historical-Simulation Method</p>
+<ul>
+<li>Assume historical path will be a guidence of what will happen in the future</li>
+<li>Go back on time for over N years and collect portfolio’s data (close price).<ul>
+<li>Each historical period is considered a scenario</li>
+</ul>
+</li>
+<li>Given current portfolio’s value, forecast the next period’s value based on each scenario</li>
+<li>Once portfolio’s value is calculated for each period, calculate the sample Nth percentile as the VaR</li>
+</ul>
+</li>
+<li><p>Monte-Carlo Method</p>
+<ul>
+<li>Assume a stochastic process for each market variable (distribution and parameters)<ul>
+<li>parameters can be estimated from historical data</li>
+</ul>
+</li>
+<li>Simulate the data path for all variables of interest</li>
+<li>Revalue the portfolio by the new market variables and calculate the value difference</li>
+<li><p>Calculate the Nth percentile as the VaR value.</p>
+</li>
+<li><p>For example, we can assume all market variables changes are generated from a multivariate normal distribution</p>
+</li>
+<li>Then each step will involve generating data from the multivariate distribution and revalue the portfolio based on that</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>What’s wrong with VaR as a measurement of risk?</p>
+<ul>
+<li>It does not describe the loss on the left tail. When the return distribution is far from a normal distribution, it does not face real risk<ul>
+<li>Example: short CDS of a 3% default rate with 0 recovery rate bond, 95% VaR is 0 (which doesn’t reflect the risk at all)</li>
+</ul>
+</li>
+<li>It is not a coherent measure and is not sub-additive. <ul>
+<li>It means when we combine two positions, we do not always have VaR(C) &lt;= VaR(A) + VaR(B)</li>
+<li>Example: two short CDS positions with 3% default rate and 0 recovery rate bond:<br>  one of the bond default rate is 1 - (1 - 3%)*(1 - 3%) = 5.9%, so VaR(C) &gt; Var(A) + VaR(B)<br>  This contradicts the idea that diversification reduces risks.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>What is non-Linear VaR? How would you calculate it?<br> Non-linear VaR reflects that the portfolio contains nonlinear derivatives which the payoff or the response to the risk factor is non-linear.<br> It is often calculate by using the monte carlo simulation of pricing model.</p>
+</li>
+<li><p>What is the parametric method of calculating VaR? What are its advantages?<br> The parametric method is the delta-normal method described in Q1.<br> The advantage is it is simple to calculate. It just need to estimate the joint distribution and<br> calculate the portfolio return’s distribution using either linear or nonlinear model.</p>
+<ul>
+<li>Non-linear model is called: Cornish-Fisher expansion (P448 on John Hull)</li>
+</ul>
+</li>
+<li><p>What is the historical method of calculating VaR? What are its advantages?<br> Second Method described in Q1.<br> Advantage is it is a nonparametric method and the historical data determines the joint probability distribution of market variables.</p>
+</li>
+<li><p>Why would you calculate VaR using Monte Carlo simulations?<br> If the portfolio is consisting nonlinear derivatives, such as options, the return profile of the portfolio is non symmetric.<br> VaR is very sensitive to the left tail of the distribution so in this case we need to use monte carlo simulation to better model the nonlinear characterics.</p>
+</li>
+<li><p>What are the challenges in calculating VaR for a mixed portfolio?<br> Nonlinearity? [NOT finished yet]</p>
+</li>
+<li><p>What’s GVAR? How can you calculate it?<br> GVAR = Global vector autoregression Model</p>
+</li>
+<li><p>What is the one-day VaR of a $50m portfolio with a daily standard deviation of 2% at a 95% confidence level? What is the annualized VaR?</p>
+<ul>
+<li>One day VaR = 50m * 0.02 * 1.96 ~= 2m</li>
+<li>Annualized VaR = sqrt(252) * 2m = 16 * 2m = 32m</li>
+</ul>
+</li>
+<li><p>What do you know about extreme value theory?</p>
+<ul>
+<li>A framework to study the tail behavior of a distribution</li>
+<li><a href="https://en.wikipedia.org/wiki/Extreme_value_theory" target="_blank" rel="external">https://en.wikipedia.org/wiki/Extreme_value_theory</a></li>
+</ul>
+</li>
+<li><p>What is Expected Shortfall? How is it calculated? Why is it considered better than VaR? What are the disadvantages?</p>
+<ul>
+<li>Expected shortfall is also called conditional value at risk</li>
+<li>It measures the expected loss under a certain amount.</li>
+<li>It can be calculated by a list of scenarios. <ul>
+<li>Each scenarios has the probability of occurrence and the return</li>
+<li>Given a threshold, calculate the probablity of each scenario that happen with odds less than the threshold</li>
+<li>Cacluate the expected (averaged) loss.</li>
+</ul>
+</li>
+<li>Advantage： <ol>
+<li>It is a coherent measure and a more complete measure of downside risk<ul>
+<li>Reflect the sknewness (asymmetry) and kurtosis (fat tail)</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>Disadvantage: <ol>
+<li>It treats a large probability of small loss as equivalent to a small probability of large loss</li>
+<li>Difficult to forecast</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>What is incremental default risk?<br>Default risk incremental to what is calculated through the Value-at-risk model,<br>which often does not adequately capture the risk associated with illiquid products.</p>
+</li>
+</ol>
+<h3 id="Yield-Curve"><a href="#Yield-Curve" class="headerlink" title="Yield Curve"></a>Yield Curve</h3><ol>
+<li><p>What are the uses of the yield curve?<br>Yield curve depicts the relationship between bond yield and its maturities. It is used to:</p>
+<ol>
+<li>Forecasting interest rate</li>
+<li>Pricing bond</li>
+<li>Create strategies to boost total returns</li>
+</ol>
+</li>
+<li><p>What’s the riskiest part of the yield curve?<br>The riskiest part is either a flattening or steepening of the yield curve.<br>It reflects yield changing among comparable bonds with different maturities.</p>
+</li>
+<li><p>What does it mean for risk when the yield curve is inverted?<br>When the yield curve is inverted, it is often viewed as an pending economic recession.<br>In this case, people tend to have negative view in long term so the price of long term bond is bidding up.</p>
+</li>
+<li><p>What is the discount factor? How would you calculate it?<br>Discount factor is the present value of a unit of currency delivered at a future time T.</p>
+</li>
+<li><p>What is convexity? How would you calculate it? Why is it important?<br>Convexity is the second derivatives of bond price relative to the interest rate.<br>Convexity measures the curvature of price-yield curve. It is a key aspect when measure interest rate risk.</p>
+</li>
+<li><p>What’s the relationship between coupon rate and convexity?<br>convexity decrease as coupon rate increase.<br>Zero-coupon bond have the highest convexity compared to other bond with the same duration and yield to maturity.</p>
+</li>
+<li><p>What’s the meaning of duration? Is it constant for all yields?<br>Duration is the sentivity of bond price relative to interest rate. (First derivative)<br>It is not constant for all yield since price-yield curve has curvature.</p>
+</li>
+<li><p>What’s the meaning of partial duration?<br>It’s also called key rate duration. It measures the bond price change relative to a set of rates with specific maturities.<br>It does not assume parallel shift in yield curve.</p>
+</li>
+<li><p>What are the limits of duration as a risk measure?<br>It assumes the parallel shift in yield curve and it ignores the curvature.</p>
+</li>
+<li><p>How would you decide which discount curve to use to value future cash flows from interest rate swaps?</p>
+</li>
+</ol>
+<p>Questions on quantitative concepts:</p>
+<ol>
+<li><p>Can you explain the assumptions behind Black Scholes?</p>
+</li>
+<li><p>What’s a volatility smile? Why does it occur? What are the implications for Black Scholes?</p>
+</li>
+<li><p>What are the Greeks?</p>
+</li>
+<li><p>How are the main Greeks derived?</p>
+</li>
+<li><p>What do you know about jump processes?</p>
+</li>
+<li><p>Should you use implied standard deviation or historical deviation to forecast volatility? Explain your choice.</p>
+</li>
+</ol>
+<h3 id="Hedging"><a href="#Hedging" class="headerlink" title="Hedging"></a>Hedging</h3><ol>
+<li><p>What is delta hedging?</p>
+</li>
+<li><p>How would you hedge against a particular equity/bond under current market conditions?</p>
+</li>
+<li><p>When can hedging an options position mean that you take on more risk?</p>
+</li>
+<li><p>An option is at the money. How many shares of stock should you hold to hedge it?</p>
+</li>
+</ol>
+<p>Questions on particular products:</p>
+<ol>
+<li><p>What is interest rate risk?<br>The effect on your portfolio value when interest rate changes.</p>
+</li>
+<li><p>What is reinvestment risk?<br>If you have cash flow generated from your portfolio and the market interest rate is changing, you have the reinvestment risk.<br>That means you may have to reinvest your proceedings at a lower/higher market preceding rate.</p>
+</li>
+<li><p>How do interest rate risk and reinvestment risk interact?<br>Reinvestment risk is more likely when interest rates are declining.<br>Reinvestment risk affects the yield-to-maturity of a bond,<br>which is calculated on the premise that all future coupon payments will be reinvested at the interest rate in effect when the bond was first purchased.</p>
+</li>
+<li><p>Which bond has the greatest associated interest rate risk? A five year zero coupon bond? Or a five year bond that pays coupons?<br>zero coupon bond has the highest duration and thus has the greatest interest rate risk.</p>
+</li>
+<li><p>Which is more volatile, a 20-year zero coupon bond or a 20-year 4.5% coupon bond?<br>20-year zero coupon bond.</p>
+</li>
+<li><p>What are the risks inherent in an interest rate swap?</p>
+</li>
+</ol>
+<h3 id="Regulation"><a href="#Regulation" class="headerlink" title="Regulation"></a>Regulation</h3><ol>
+<li><p>How has Basel III changed the treatment of market risk?</p>
+</li>
+<li><p>What the implications of Basel IIIs new trading book rules for market risk professionals?</p>
+</li>
+<li><p>How could the Basel III treatment of trading books be improved?</p>
+</li>
+<li><p>How will trading businesses change as a result of Basel III capital rules for banks’ trading books?</p>
+</li>
+<li><p>What are the key requirements of the Basel stress testing framework? Are they sufficiently stringent?</p>
+</li>
+<li><p>Which extreme events should stress tests be taking into consideration now?</p>
+</li>
+<li><p>Why is Basel II blamed for precipitating the 2008 financial crisis?</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/16/2016-07-16-maupassant-hexo-with-mathjax/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1673,152 +2005,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/08/2016-07-08-leetcode-note-best-time-to-buy-and-sell-stock-III/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/08/2016-07-08-leetcode-note-best-time-to-buy-and-sell-stock-III/" itemprop="url">leetcode解题: best time to buy and sell stock III (123)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-08T10:41:56-04:00">
-                2016-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Say you have an array for which the ith element is the price of a given stock on day i.</p>
-<p>Design an algorithm to find the maximum profit. You may complete at most two transactions.</p>
-<p>Note:<br>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p>
-<h3 id="解法1：-Divide-amp-Conquer-O-N-2-Time-O-N-Space"><a href="#解法1：-Divide-amp-Conquer-O-N-2-Time-O-N-Space" class="headerlink" title="解法1： Divide &amp; Conquer O(N^2) Time + O(N) Space"></a>解法1： Divide &amp; Conquer O(N^2) Time + O(N) Space</h3><p>思路是利用I的解题方法，对于一个(i,j)范围的数组，可以用O(N)的时间和O(1)的空间算出最大的利润<br>那么可以将原数组分割为(0,i) + (i,length - 1)的两个数组，分别计算每个范围内的最大利润再相加。<br>一共有N种分割方法，所以总的时间复杂度是O(N^2)<br>这个解法lintcode可以AC,leetcode会TLE，所以需要改进这个解法，最好的是O(N) Time<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.length - <span class="number">1</span>; i++) &#123;</div><div class="line">		<span class="keyword">int</span> left = maxSingleTransition(prices, <span class="number">0</span>, i);</div><div class="line">		<span class="keyword">int</span> right = maxSingleTransition(prices, i, prices.length - <span class="number">1</span>);</div><div class="line">		<span class="keyword">int</span> sum = left + right;</div><div class="line">		res = Math.max(res, sum);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">maxSingleTransition</span><span class="params">(<span class="keyword">int</span>[] prices, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> min = prices[start];</div><div class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt;= end; i++) &#123;</div><div class="line">		res = Math.max(res, prices[i] - min);</div><div class="line">		min = Math.min(min, prices[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2：两次DP，O-N-Time-O-N-Space"><a href="#解法2：两次DP，O-N-Time-O-N-Space" class="headerlink" title="解法2：两次DP，O(N) Time + O(N) Space"></a>解法2：两次DP，O(N) Time + O(N) Space</h3><p>思路还是类似于第一种解法，但是做了优化。计算(0,i)的时候实际可以运用(0,i-1)的结果。同样，计算(i,length - 1)的时候可以<br>运用(i+1,length - 1)的结果。这就引出了用两个dp数组先记录下每一个区间的最大收益，然后再扫描一遍得到左右两个区间和的最大值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (prices == <span class="keyword">null</span> || prices.length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span>[] left = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length];</div><div class="line">	<span class="keyword">int</span>[] right = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length];</div><div class="line">	</div><div class="line">	<span class="comment">// Scan from left</span></div><div class="line">	<span class="keyword">int</span> min = prices[<span class="number">0</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</div><div class="line">		left[i] = Math.max(left[i - <span class="number">1</span>], prices[i] - min);</div><div class="line">		min = Math.min(min, prices[i]);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// Scan from right</span></div><div class="line">	<span class="keyword">int</span> max = prices[prices.length - <span class="number">1</span>];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = prices.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">		right[i] = Math.max(right[i + <span class="number">1</span>], max - prices[i]);</div><div class="line">		max = Math.max(max, prices[i]);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// search for the largest sum</span></div><div class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.length; i++) &#123;</div><div class="line">		res = Math.max(res, left[i] + right[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1869,7 +2055,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">425</span>
+                <span class="site-state-item-count">426</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
