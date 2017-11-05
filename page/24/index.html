@@ -314,6 +314,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Number-of-Islands-II-305/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/12/2017-03-12-leetcode-solution-Number-of-Islands-II-305/" itemprop="url">leetcode解题: Number of Islands II (305)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T15:09:36-04:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>A 2d grid map of m rows and n columns is initially filled with water. We may perform an addLand operation which turns the water at position (row, col) into a land. Given a list of positions to operate, count the number of islands after each addLand operation. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
+<p>Example:</p>
+<p>Given m = 3, n = 3, positions = [[0,0], [0,1], [1,2], [2,1]].<br>Initially, the 2d grid grid is filled with water. (Assume 0 represents water and 1 represents land).</p>
+<p>0 0 0<br>0 0 0<br>0 0 0<br>Operation #1: addLand(0, 0) turns the water at grid[0][0] into a land.</p>
+<p>1 0 0<br>0 0 0   Number of islands = 1<br>0 0 0<br>Operation #2: addLand(0, 1) turns the water at grid<a href="https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations/4" target="_blank" rel="external">0</a> into a land.</p>
+<p>1 1 0<br>0 0 0   Number of islands = 1<br>0 0 0<br>Operation #3: addLand(1, 2) turns the water at grid[1][2] into a land.</p>
+<p>1 1 0<br>0 0 1   Number of islands = 2<br>0 0 0<br>Operation #4: addLand(2, 1) turns the water at grid<a href="https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations/4" target="_blank" rel="external">2</a> into a land.</p>
+<p>1 1 0<br>0 0 1   Number of islands = 3<br>0 1 0<br>We return the result as an array: [1, 1, 2, 3]</p>
+<p>Challenge:</p>
+<p>Can you do it in time complexity O(k log mn), where k is the length of the positions?</p>
+<h3 id="解法1：Union-Find-O-k-logmn"><a href="#解法1：Union-Find-O-k-logmn" class="headerlink" title="解法1：Union Find O(k logmn)"></a>解法1：Union Find O(k logmn)</h3><p>这是一题难题了，为了熟悉Union Find的算法也做（抄）一下吧。主要是参考了<a href="https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations/4" target="_blank" rel="external">这篇</a>.<br>Union Find很适合用来解决两点是否想通的问题。用一个roots来记录每一个点的group id也就是下面code中的parent。<br>然后对于每一个插入的点，首先把自己的点的group id设为自己，然后搜索周围相邻的点，如果相邻的点是陆地并且相邻的点的group id和自己不同的时候，则说明需要进行Union操作。<br>这个时候对于当前岛屿的数量需要-1，因为合并了一个。<br>Java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    </div><div class="line">	private int[][] directions = &#123;&#123;0,1&#125;,&#123;0,-1&#125;,&#123;1,0&#125;,&#123;-1,0&#125;&#125;;</div><div class="line"></div><div class="line">	public List&lt;Integer&gt; numIslands2(int m, int n, int[][] positions) &#123;</div><div class="line">		// Union Find</div><div class="line">		List&lt;Integer&gt; result = new ArrayList&lt;Integer&gt;();</div><div class="line">		if (m &lt;= 0 || n &lt;= 0 || positions.length == 0 || positions[0].length == 0) &#123;</div><div class="line">			return result;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		int count = 0;</div><div class="line">		int[] roots = new int[m * n];</div><div class="line">		Arrays.fill(roots, -1);</div><div class="line"></div><div class="line">		for (int[] position: positions) &#123;</div><div class="line">			// positions</div><div class="line">			count++;</div><div class="line">			int index = n * position[0] + position[1];</div><div class="line">			roots[index] = index;</div><div class="line">			// perform union operations</div><div class="line">			for (int[] direction: directions) &#123;</div><div class="line">				int x = position[0] + direction[0];</div><div class="line">				int y = position[1] + direction[1];</div><div class="line">				int neighbor = x * n + y;</div><div class="line">				if ( x &lt; 0 || x &gt;= m || y &lt; 0 || y &gt;= n || roots[neighbor] == -1) &#123;</div><div class="line">					continue;</div><div class="line">				&#125;</div><div class="line">				int parent = find(roots, neighbor);</div><div class="line">				if (parent != index) &#123;</div><div class="line">					roots[index] = parent;</div><div class="line">					count--;</div><div class="line">					index = parent;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			result.add(count);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	private int find(int[] roots, int index) &#123;</div><div class="line">		while (roots[index] != index) &#123;</div><div class="line">			index = roots[index];</div><div class="line">		&#125;</div><div class="line">		return index;</div><div class="line">	&#125;		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Keyboard-Row-500/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1624,212 +1776,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/05/2017-03-05-leetcode-solution-The-Maze-490/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/05/2017-03-05-leetcode-solution-The-Maze-490/" itemprop="url">leetcode solution: The Maze (490)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-05T20:27:10-05:00">
-                2017-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by rolling up, down, left or right, but it won’t stop rolling until hitting a wall. When the ball stops, it could choose the next direction.</p>
-<p>Given the ball’s start position, the destination and the maze, determine whether the ball could stop at the destination.</p>
-<p>The maze is represented by a binary 2D array. 1 means the wall and 0 means the empty space. You may assume that the borders of the maze are all walls. The start and destination coordinates are represented by row and column indexes.</p>
-<p>Example 1</p>
-<p>Input 1: a maze represented by a 2D array<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0 0 1 0 0</div><div class="line">0 0 0 0 0</div><div class="line">0 0 0 1 0</div><div class="line">1 1 0 1 1</div><div class="line">0 0 0 0 0</div></pre></td></tr></table></figure></p>
-<p>Input 2: start coordinate (rowStart, colStart) = (0, 4)<br>Input 3: destination coordinate (rowDest, colDest) = (4, 4)<br><img src="https://leetcode.com/static/images/problemset/maze_1_example_1.png" alt="alt text"><br>Output: true<br>Explanation: One possible way is : left -&gt; down -&gt; left -&gt; down -&gt; right -&gt; down -&gt; right.</p>
-<p>Example 2</p>
-<p>Input 1: a maze represented by a 2D array<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0 0 1 0 0</div><div class="line">0 0 0 0 0</div><div class="line">0 0 0 1 0</div><div class="line">1 1 0 1 1</div><div class="line">0 0 0 0 0</div></pre></td></tr></table></figure></p>
-<p>Input 2: start coordinate (rowStart, colStart) = (0, 4)<br>Input 3: destination coordinate (rowDest, colDest) = (3, 2)<br><img src="https://leetcode.com/static/images/problemset/maze_1_example_2.png" alt="alt text"><br>Output: false<br>Explanation: There is no way for the ball to stop at the destination.</p>
-<p>Note:<br>There is only one ball and one destination in the maze.<br>Both the ball and the destination exist on an empty space, and they will not be at the same position initially.<br>The given maze does not contain border (like the red rectangle in the example pictures), but you could assume the border of the maze are all walls.<br>The maze contains at least 2 empty spaces, and both the width and height of the maze won’t exceed 100.</p>
-<h3 id="解法1：DFS-Memorization"><a href="#解法1：DFS-Memorization" class="headerlink" title="解法1：DFS + Memorization"></a>解法1：DFS + Memorization</h3><p>这题和一般的地图题或者是有一题岛屿的题目类似，都可以用DFS来解决。这里的难点或者是区别在，球会一直往一个方向滚直到撞到了墙。所以在设计dfs程序的时候要考虑这个问题，可以用一个while循环解决。另外，对于已经访问过的点，不需要额外的申请一个空间来存储，只需要把已经访问过的node对应的maze的值设为-1就可。<br>对于dfs的优化呢，可以用一个dp矩阵来记录每一个扫描过的初始节点是否有解来剪掉一些枝</p>
-<p>Java<br>
-public class Solution {
-    public boolean hasPath(int[][] maze, int[] start, int[] destination) {
-        
-        if (maze.length == 0 || maze[0].length == 0) {
-            return true;
-        }
-        
-        int[][] dp = new int[maze.length][maze[0].length];
-        for (int[] row: dp) {
-            Arrays.fill(row, -1);
-        }
-        return dfs(maze, start[0], start[1], destination, dp);
-        
-    }
-    
-    private boolean dfs(int[][] maze, int i, int j, int[] destination, int[][] dp) {
-        if (i == destination[0] && j == destination[1]) {
-            return true;
-        }
-        
-        if (dp[i][j]!= -1) {
-            return dp[i][j] == 1 ? true: false;
-        }
-        boolean res = false;
-        int[][] directions = {{0,-1},{-1,0},{0,1},{1,0}};
-        maze[i][j] = -1;  
-        for (int[] dir: directions) {
-            int x = i, y = j;
-            int xinc = dir[0];
-            int yinc = dir[1];
-            while (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] != 1) {
-                x += xinc;
-                y += yinc;
-            }
-            x -= xinc;
-            y -= yinc;
-            if (maze[x][y] != -1) {
-                res = res || dfs(maze, x,y, destination, dp);
-            }
-        }
-        
-        dp[i][j] = res? 1: 0;
-        maze[i][j] = 0;
-        return res;
-    }
-
-}
-</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1875,7 +1826,7 @@ public class Solution {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">420</span>
+                <span class="site-state-item-count">421</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

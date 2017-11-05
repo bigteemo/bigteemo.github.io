@@ -314,6 +314,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/26/2017-03-26-leetcode-solution-Count-Primes-204/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/26/2017-03-26-leetcode-solution-Count-Primes-204/" itemprop="url">leetcode解题: Count Primes (204)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-26T17:57:23-04:00">
+                2017-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Description:</p>
+<p>Count the number of prime numbers less than a non-negative number, n.</p>
+<p>Hint:</p>
+<p>Let’s start with a isPrime function. To determine if a number is prime, we need to check if it is not divisible by any number less than n. The runtime complexity of isPrime function would be O(n) and hence counting the total prime numbers up to n would be O(n2). Could we do better?</p>
+<p>As we know the number must not be divisible by any number &gt; n / 2, we can immediately cut the total iterations half by dividing only up to n / 2. Could we still do better?</p>
+<p>Let’s write down all of 12’s factors:</p>
+<p>2 × 6 = 12<br>3 × 4 = 12<br>4 × 3 = 12<br>6 × 2 = 12<br>As you can see, calculations of 4 × 3 and 6 × 2 are not necessary. Therefore, we only need to consider factors up to √n because, if n is divisible by some number p, then n = p × q and since p ≤ q, we could derive that p ≤ √n.</p>
+<p>Our total runtime has now improved to O(n1.5), which is slightly better. Is there a faster approach?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public int countPrimes(int n) &#123;</div><div class="line">   int count = 0;</div><div class="line">   for (int i = 1; i &lt; n; i++) &#123;</div><div class="line">      if (isPrime(i)) count++;</div><div class="line">   &#125;</div><div class="line">   return count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private boolean isPrime(int num) &#123;</div><div class="line">   if (num &lt;= 1) return false;</div><div class="line">   // Loop&apos;s ending condition is i * i &lt;= num instead of i &lt;= sqrt(num)</div><div class="line">   // to avoid repeatedly calling an expensive function sqrt().</div><div class="line">   for (int i = 2; i * i &lt;= num; i++) &#123;</div><div class="line">      if (num % i == 0) return false;</div><div class="line">   &#125;</div><div class="line">   return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>The Sieve of Eratosthenes is one of the most efficient ways to find all prime numbers up to n. But don’t let that name scare you, I promise that the concept is surprisingly simple.</p>
+<p>Sieve of Eratosthenes: algorithm steps for primes below 121. “Sieve of Eratosthenes Animation” by SKopp is licensed under CC BY 2.0.</p>
+<p>We start off with a table of n numbers. Let’s look at the first number, 2. We know all multiples of 2 must not be primes, so we mark them off as non-primes. Then we look at the next number, 3. Similarly, all multiples of 3 such as 3 × 2 = 6, 3 × 3 = 9, … must not be primes, so we mark them off as well. Now we look at the next number, 4, which was already marked off. What does this tell you? Should you mark off all multiples of 4 as well?</p>
+<p>4 is not a prime because it is divisible by 2, which means all multiples of 4 must also be divisible by 2 and were already marked off. So we can skip 4 immediately and go to the next number, 5. Now, all multiples of 5 such as 5 × 2 = 10, 5 × 3 = 15, 5 × 4 = 20, 5 × 5 = 25, … can be marked off. There is a slight optimization here, we do not need to start from 5 × 2 = 10. Where should we start marking off?</p>
+<p>In fact, we can mark off multiples of 5 starting at 5 × 5 = 25, because 5 × 2 = 10 was already marked off by multiple of 2, similarly 5 × 3 = 15 was already marked off by multiple of 3. Therefore, if the current number is p, we can always mark off multiples of p starting at p2, then in increments of p: p2 + p, p2 + 2p, … Now what should be the terminating loop condition?</p>
+<p>It is easy to say that the terminating loop condition is p &lt; n, which is certainly correct but not efficient. Do you still remember Hint #3?</p>
+<p>Yes, the terminating loop condition can be p &lt; √n, as all non-primes ≥ √n must have already been marked off. When the loop terminates, all the numbers in the table that are non-marked are prime.</p>
+<p>The Sieve of Eratosthenes uses an extra O(n) memory and its runtime complexity is O(n log log n). For the more mathematically inclined readers, you can read more about its algorithm complexity on Wikipedia.</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countPrimes</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        </div><div class="line">        <span class="keyword">boolean</span>[] isPrime = <span class="keyword">new</span> <span class="keyword">boolean</span>[n];</div><div class="line">        Arrays.fill(isPrime, <span class="keyword">true</span>);</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i * i &lt; n; ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (!isPrime[i]) <span class="keyword">continue</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i * i; j &lt; n; j += i) &#123;</div><div class="line">                isPrime[j] = <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; n; ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (isPrime[i]) &#123;</div><div class="line">                ++count;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/26/2017-03-26-leetcode-solution-K-diff-Pairs-in-an-Array-532/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1623,163 +1781,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Number-of-Islands-II-305/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/12/2017-03-12-leetcode-solution-Number-of-Islands-II-305/" itemprop="url">leetcode解题: Number of Islands II (305)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T15:09:36-04:00">
-                2017-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>A 2d grid map of m rows and n columns is initially filled with water. We may perform an addLand operation which turns the water at position (row, col) into a land. Given a list of positions to operate, count the number of islands after each addLand operation. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
-<p>Example:</p>
-<p>Given m = 3, n = 3, positions = [[0,0], [0,1], [1,2], [2,1]].<br>Initially, the 2d grid grid is filled with water. (Assume 0 represents water and 1 represents land).</p>
-<p>0 0 0<br>0 0 0<br>0 0 0<br>Operation #1: addLand(0, 0) turns the water at grid[0][0] into a land.</p>
-<p>1 0 0<br>0 0 0   Number of islands = 1<br>0 0 0<br>Operation #2: addLand(0, 1) turns the water at grid<a href="https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations/4" target="_blank" rel="external">0</a> into a land.</p>
-<p>1 1 0<br>0 0 0   Number of islands = 1<br>0 0 0<br>Operation #3: addLand(1, 2) turns the water at grid[1][2] into a land.</p>
-<p>1 1 0<br>0 0 1   Number of islands = 2<br>0 0 0<br>Operation #4: addLand(2, 1) turns the water at grid<a href="https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations/4" target="_blank" rel="external">2</a> into a land.</p>
-<p>1 1 0<br>0 0 1   Number of islands = 3<br>0 1 0<br>We return the result as an array: [1, 1, 2, 3]</p>
-<p>Challenge:</p>
-<p>Can you do it in time complexity O(k log mn), where k is the length of the positions?</p>
-<h3 id="解法1：Union-Find-O-k-logmn"><a href="#解法1：Union-Find-O-k-logmn" class="headerlink" title="解法1：Union Find O(k logmn)"></a>解法1：Union Find O(k logmn)</h3><p>这是一题难题了，为了熟悉Union Find的算法也做（抄）一下吧。主要是参考了<a href="https://discuss.leetcode.com/topic/29613/easiest-java-solution-with-explanations/4" target="_blank" rel="external">这篇</a>.<br>Union Find很适合用来解决两点是否想通的问题。用一个roots来记录每一个点的group id也就是下面code中的parent。<br>然后对于每一个插入的点，首先把自己的点的group id设为自己，然后搜索周围相邻的点，如果相邻的点是陆地并且相邻的点的group id和自己不同的时候，则说明需要进行Union操作。<br>这个时候对于当前岛屿的数量需要-1，因为合并了一个。<br>Java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    </div><div class="line">	private int[][] directions = &#123;&#123;0,1&#125;,&#123;0,-1&#125;,&#123;1,0&#125;,&#123;-1,0&#125;&#125;;</div><div class="line"></div><div class="line">	public List&lt;Integer&gt; numIslands2(int m, int n, int[][] positions) &#123;</div><div class="line">		// Union Find</div><div class="line">		List&lt;Integer&gt; result = new ArrayList&lt;Integer&gt;();</div><div class="line">		if (m &lt;= 0 || n &lt;= 0 || positions.length == 0 || positions[0].length == 0) &#123;</div><div class="line">			return result;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		int count = 0;</div><div class="line">		int[] roots = new int[m * n];</div><div class="line">		Arrays.fill(roots, -1);</div><div class="line"></div><div class="line">		for (int[] position: positions) &#123;</div><div class="line">			// positions</div><div class="line">			count++;</div><div class="line">			int index = n * position[0] + position[1];</div><div class="line">			roots[index] = index;</div><div class="line">			// perform union operations</div><div class="line">			for (int[] direction: directions) &#123;</div><div class="line">				int x = position[0] + direction[0];</div><div class="line">				int y = position[1] + direction[1];</div><div class="line">				int neighbor = x * n + y;</div><div class="line">				if ( x &lt; 0 || x &gt;= m || y &lt; 0 || y &gt;= n || roots[neighbor] == -1) &#123;</div><div class="line">					continue;</div><div class="line">				&#125;</div><div class="line">				int parent = find(roots, neighbor);</div><div class="line">				if (parent != index) &#123;</div><div class="line">					roots[index] = parent;</div><div class="line">					count--;</div><div class="line">					index = parent;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			result.add(count);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	private int find(int[] roots, int index) &#123;</div><div class="line">		while (roots[index] != index) &#123;</div><div class="line">			index = roots[index];</div><div class="line">		&#125;</div><div class="line">		return index;</div><div class="line">	&#125;		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1825,7 +1831,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">420</span>
+                <span class="site-state-item-count">421</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

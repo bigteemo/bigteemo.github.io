@@ -314,6 +314,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/16/2017-02-16-leetcode-solution-Find-Minimum-in-Rotated-Sorted-Array-153/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/16/2017-02-16-leetcode-solution-Find-Minimum-in-Rotated-Sorted-Array-153/" itemprop="url">leetcode解题: Find Minimum in Rotated Sorted Array (153)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T20:24:01-05:00">
+                2017-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</p>
+<p>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).</p>
+<p>Find the minimum element.</p>
+<p>You may assume no duplicate exists in the array.</p>
+<h3 id="解法1：Binary-Search"><a href="#解法1：Binary-Search" class="headerlink" title="解法1：Binary Search"></a>解法1：Binary Search</h3><p>这也是一题经典的binary search的题目。 难点在于怎么判断最小值是在mid的左面还是右面，以此来缩小范围。<br>当搜索的范围[start, end]确定了之后，mid的取值可以有几种情况</p>
+<ul>
+<li>start &lt; end, 那么最小值在start和mid之间</li>
+<li>start &gt; end, 那么最小值的位置取决于mid和start，end的关系<ul>
+<li>如果mid &lt; end, 那么最小值一定在start和mid之间</li>
+<li>如果mid &gt; end, 那么pivot点一定在mid和end之间。<br>按照这个思路写程序就很简单了。<br>C++<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (nums.size() == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> start = <span class="number">0</span>, end = nums.size() - <span class="number">1</span>;</div><div class="line">		<span class="keyword">while</span> (start + <span class="number">1</span> &lt; end) &#123;</div><div class="line">			<span class="keyword">int</span> mid = start + (end - start) / <span class="number">2</span>;</div><div class="line">			<span class="keyword">if</span> (nums[start] &lt; nums[end]) &#123;</div><div class="line">				end = mid;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">if</span> (nums[mid] &lt; nums[end]) &#123;</div><div class="line">					end = mid;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					start = mid;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (nums[start] &lt; nums[end]) &#123;</div><div class="line">			<span class="keyword">return</span> nums[start];</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> nums[end];</div><div class="line">		&#125; </div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/16/2017-02-16-leetcode-solution-Search-for-a-Range-34/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1639,160 +1795,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/04/2017-01-26-leetcode-solution-Decode-String-394/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/04/2017-01-26-leetcode-solution-Decode-String-394/" itemprop="url">leetcode解题: Decode String (394)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-04T09:33:00-05:00">
-                2017-02-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an encoded string, return it’s decoded string.</p>
-<p>The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.</p>
-<p>You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.</p>
-<p>Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there won’t be input like 3a or 2[4].</p>
-<p>Examples:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s = &quot;3[a]2[bc]&quot;, return &quot;aaabcbc&quot;.</div><div class="line">s = &quot;3[a2[c]]&quot;, return &quot;accaccacc&quot;.</div><div class="line">s = &quot;2[abc]3[cd]ef&quot;, return &quot;abcabccdcdcdef&quot;.</div></pre></td></tr></table></figure></p>
-<h3 id="解法1：-递归"><a href="#解法1：-递归" class="headerlink" title="解法1： 递归"></a>解法1： 递归</h3><p>主要的想法就是， 每一个数字后面一定跟着一个左括号。 而左括号里面的东西是另外一个decode的过程，一个decode结束的标志是要么string结束了，或者是遇到了右括号（[),<br>要注意的是,为了要不停的往前扫描,我们在递归函数返回的时候需要记录当前扫描到的位置. 可以用辅助class解决,在c++里也可以用引用解决这个问题.<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="built_in">string</span> <span class="title">decodeString</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</div><div class="line">		<span class="keyword">int</span> pos = <span class="number">0</span>;</div><div class="line">		<span class="built_in">string</span> res = decode(s, pos);</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="built_in">string</span> <span class="title">decode</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span>&amp; pos)</span> </span>&#123;</div><div class="line">		<span class="built_in">string</span> res = <span class="string">""</span>;</div><div class="line"></div><div class="line">		<span class="keyword">while</span> (pos &lt; s.size() &amp;&amp; s[pos] != <span class="string">']'</span>) &#123;</div><div class="line">			<span class="keyword">if</span> (!<span class="built_in">isdigit</span>(s[pos])) &#123;</div><div class="line">				res += s[pos];</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">int</span> start = pos;</div><div class="line">				<span class="keyword">while</span> (pos &lt; s.size() &amp;&amp; <span class="built_in">isdigit</span>(s[pos])) &#123;</div><div class="line">					pos++;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">int</span> number = stoi(s.substr(start, pos));</div><div class="line">				pos++;	<span class="comment">// skip the [</span></div><div class="line">				<span class="built_in">string</span> next = decode(s, pos);</div><div class="line">				pos++;	<span class="comment">// since decode stops at ] or at the end of string, we need to skip ]</span></div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; number; ++i) &#123;</div><div class="line">					res += next;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> res;</div><div class="line">	&#125;	 </div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<h3 id="解法2-Stack"><a href="#解法2-Stack" class="headerlink" title="解法2: Stack"></a>解法2: Stack</h3><p>用递归的算法如果要用iteration的办法解决一般会用到Stack. 基本的思路是用两个stack分别记录数字和字符, 当遇到”]”时使用当前栈顶的字母和数字来进行decode, 然后decode的结果要存入字母的栈顶.<br>最后的结果要么是当前的字符串, 要么是栈顶的字符串.<br>C++<br><figure class="highlight plain"><figcaption><span>lang: cpp</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">public:</div><div class="line">	string decodeString(string s) &#123;</div><div class="line"></div><div class="line">		stack&lt;int&gt; numbers;</div><div class="line">		stack&lt;string&gt; decoded;</div><div class="line"></div><div class="line">		string t;	// 记录在遇到&quot;[&quot;之前的string</div><div class="line">		int number = 0;	</div><div class="line"></div><div class="line">		for (int i = 0; i &lt; s.size(); ++i) &#123;</div><div class="line">			if (isdigit(s[i])) &#123;</div><div class="line">				number = number * 10 + s[i] - &apos;0&apos;;</div><div class="line">			&#125; else if (s[i] == &apos;[&apos;) &#123;</div><div class="line">				numbers.push(number);</div><div class="line">				number = 0;</div><div class="line">				decoded.push(t);	// 把当前所记录到的string存入栈中</div><div class="line">				t = &quot;&quot;;</div><div class="line">			&#125; else if (s[i] == &apos;]&apos;) &#123;</div><div class="line">				int rep = numbers.top();</div><div class="line">				numbers.pop();</div><div class="line">				for (int j = 0; j &lt; rep; ++j) &#123;</div><div class="line">					decoded.top() += t;	// t记录了当前扫描到还没有decode的string</div><div class="line">				&#125;</div><div class="line">				t = decoded.top();	</div><div class="line">				decoded.pop();	</div><div class="line">			&#125; else &#123;</div><div class="line">				t += s[i];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return decoded.empty()? t : decoded.top();</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1838,7 +1845,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">420</span>
+                <span class="site-state-item-count">421</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
