@@ -314,6 +314,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/11/05/2016-11-05-Connect-to-remote-MySQL-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/05/2016-11-05-Connect-to-remote-MySQL-server/" itemprop="url">Connect to remote MySQL server</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-05T22:37:15-04:00">
+                2016-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术总结/" itemprop="url" rel="index">
+                    <span itemprop="name">技术总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>家里有两台台式机，一台干脆专门用来下data，配置了一下MySQL,从另一台电脑上成功连接，把大概的步骤记录一下。</p>
+<ul>
+<li><p>打开 3306 端口<br>….MySQL的默认端口是3306,需要配置firewall来开放端口，如果是Windows机可以参考<a href="http://www.thewindowsclub.com/block-open-port-windows-8-firewall" target="_blank" rel="external">这篇文章</a>。</p>
+</li>
+<li><p>建立远程连接的用户<br>…. 添加用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'myuser'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'mypass'</span>;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'myuser'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'mypass'</span>;</div></pre></td></tr></table></figure>
+<p>….设定用户的权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'myuser'</span>@<span class="string">'localhost'</span>;</div><div class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'myuser'</span>@<span class="string">'%'</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>连接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u USERNAME -h HOST_IP -p</div></pre></td></tr></table></figure>
+</li>
+<li><p>基本操作</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// <span class="keyword">Show</span> all <span class="keyword">databases</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">database</span>;</div><div class="line">// Switch to a table</div><div class="line"><span class="keyword">use</span> DATABASE_NAMME;</div><div class="line">// <span class="keyword">Show</span> all <span class="keyword">tables</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Reference：<br><a href="http://stackoverflow.com/questions/16287559/mysql-adding-user-for-remote-access" target="_blank" rel="external">http://stackoverflow.com/questions/16287559/mysql-adding-user-for-remote-access</a><br><a href="http://stackoverflow.com/questions/15872543/access-remote-database-from-command-line" target="_blank" rel="external">http://stackoverflow.com/questions/15872543/access-remote-database-from-command-line</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/10/02/2016-10-02-leetcode-solution-Maximum-Depth-of-Binary-Tree-104/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1618,162 +1776,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/20/2016-07-20-leetcode-solution-counting-bits-338/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/20/2016-07-20-leetcode-solution-counting-bits-338/" itemprop="url">leetcode解题: counting bits (338)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T16:48:45-04:00">
-                2016-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate the number of 1’s in their binary representation and return them as an array.</p>
-<p>Example:<br>For num = 5 you should return [0,1,1,2,1,2].</p>
-<p>Follow up:</p>
-<p>It is very easy to come up with a solution with run time O(n*sizeof(integer)). But can you do it in linear time O(n) /possibly in a single pass?<br>Space complexity should be O(n).<br>Can you do it like a boss? Do it without using any builtin function like __builtin_popcount in c++ or in any other language.<br>Hint:</p>
-<p>You should make use of what you have produced already.<br>Divide the numbers in ranges like [2-3], [4-7], [8-15] and so on. And try to generate new range from previous.<br>Or does the odd/even status of the number help you in calculating the number of 1s?</p>
-<h3 id="解法1：-找规律-Memorization-One-pass-O-N-Time"><a href="#解法1：-找规律-Memorization-One-pass-O-N-Time" class="headerlink" title="解法1： 找规律 + Memorization, One pass O(N) Time"></a>解法1： 找规律 + Memorization, One pass O(N) Time</h3><p>这题需要多写几个数出来找一下规律:<br>如果我们把0到15的二进制表达式写出来，并且把对应的set bit的个数写出来，我们可以得到如下：</p>
-<h2 id="0-0000-0"><a href="#0-0000-0" class="headerlink" title="0    0000    0"></a>0    0000    0</h2><h2 id="1-0001-1"><a href="#1-0001-1" class="headerlink" title="1    0001    1"></a>1    0001    1</h2><p>2    0010    1</p>
-<h2 id="3-0011-2"><a href="#3-0011-2" class="headerlink" title="3    0011    2"></a>3    0011    2</h2><p>4    0100    1<br>5    0101    2<br>6    0110    2</p>
-<h2 id="7-0111-3"><a href="#7-0111-3" class="headerlink" title="7    0111    3"></a>7    0111    3</h2><p>8    1000    1<br>9    1001    2<br>10   1010    2<br>11   1011    3<br>12   1100    2<br>13   1101    3<br>14   1110    3<br>15   1111    4</p>
-<p>观察后联系hint,发现偶数X的bit数是X/2的bit数，奇数X的bit数是X/2的bit数+1，于是可以得到一个O(N)的算法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</div><div class="line">   </div><div class="line">   <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[num + <span class="number">1</span>];</div><div class="line">   <span class="comment">// dp[0] is 0</span></div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">            dp[i] = dp[i / <span class="number">2</span>];</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            dp[i] = dp[i / <span class="number">2</span>] + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dp;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-找规律-Memorization-One-pass-O-N-Time"><a href="#解法2：-找规律-Memorization-One-pass-O-N-Time" class="headerlink" title="解法2： 找规律 + Memorization, One pass O(N) Time"></a>解法2： 找规律 + Memorization, One pass O(N) Time</h3><p>另一种规律，我们使用i &amp; (i - 1) 来看对应的结果。</p>
-<h2 id="0-0000-0-N-A"><a href="#0-0000-0-N-A" class="headerlink" title="0    0000    0    N/A"></a>0    0000    0    N/A</h2><h2 id="1-0001-1-0000"><a href="#1-0001-1-0000" class="headerlink" title="1    0001    1    0000"></a>1    0001    1    0000</h2><p>2    0010    1    0000</p>
-<h2 id="3-0011-2-0010"><a href="#3-0011-2-0010" class="headerlink" title="3    0011    2    0010"></a>3    0011    2    0010</h2><p>4    0100    1    0000<br>5    0101    2    0100<br>6    0110    2    0100</p>
-<h2 id="7-0111-3-0110"><a href="#7-0111-3-0110" class="headerlink" title="7    0111    3    0110"></a>7    0111    3    0110</h2><p>8    1000    1    0000<br>9    1001    2    1000<br>10   1010    2    1000<br>11   1011    3    1010<br>12   1100    2    1000<br>13   1101    3    1100<br>14   1110    3    1100<br>15   1111    4    1110</p>
-<p>更加简化的一个规律是dp[i] = dp[i &amp; (i - 1)] + 1, 比如15, 15 &amp; 14 = ‘1110’， ’1110‘的bits是3，所以15的bits是4<br>那么就可以得到如下的程序。这个程序更简短。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</div><div class="line">   </div><div class="line">   <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[num + <span class="number">1</span>];</div><div class="line">   <span class="comment">// dp[0] is 0</span></div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) &#123;</div><div class="line">        dp[i] = dp[i &amp; (i - <span class="number">1</span>)] + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dp;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1824,7 +1826,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">422</span>
+                <span class="site-state-item-count">423</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
