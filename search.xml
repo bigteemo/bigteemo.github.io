@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[714. Best Time to Buy and Sell Stock with Transaction Fee]]></title>
+    <url>%2F2017%2F11%2F05%2F714-Best-Time-to-Buy-and-Sell-Stock-with-Transaction-Fee%2F</url>
+    <content type="text"><![CDATA[Your are given an array of integers prices, for which the i-th element is the price of a given stock on day i; and a non-negative integer fee representing a transaction fee. You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction. You may not buy more than 1 share of a stock at a time (ie. you must sell the stock share before you buy again.) Return the maximum profit you can make. Example 1:12345678Input: prices = [1, 3, 2, 8, 4, 9], fee = 2Output: 8Explanation: The maximum profit can be achieved by:Buying at prices[0] = 1Selling at prices[3] = 8Buying at prices[4] = 4Selling at prices[5] = 9The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8. Note:1230 &lt; prices.length &lt;= 50000.0 &lt; prices[i] &lt; 50000.0 &lt;= fee &lt; 50000. 解法1： Two DP process这一系列题的推广解法非常的简洁也非常的好懂。这是一种互为影响的dp系列。一般用两个dp array解决。一个array代表在时间i不持有股票的最大值，另一个代表在时间i持有股票的最大值。那么可以得到这样的关系withStock[i] = Math.max(withStock[i - 1], withoutStock[i - 1] - price)这里表示在时间i如果买了股票的话资金池就需要减掉pricewithoutStock[i] = Math.max(withoutStock[i - 1], withStock[i - 1] + price)这里只是加入了fee，那么我们可以把它放在sell的时候或者是buy的时候就可以了。最后最大的值一定是withoutStock[i] 123456789101112131415161718class Solution &#123; public int maxProfit(int[] prices, int fee) &#123; if (prices == null || prices.length == 0) &#123; return 0; &#125; long tik0 = 0, tik1 = Integer.MIN_VALUE; for (int price : prices) &#123; long tik0_old = tik0; tik0 = Math.max(tik0, tik1 + price - fee); tik1 = Math.max(tik1, tik0_old - price); &#125; return (int)tik0; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[669. Trim a Binary Search Tree]]></title>
     <url>%2F2017%2F11%2F05%2F669-Trim-a-Binary-Search-Tree%2F</url>
     <content type="text"><![CDATA[Given a binary search tree and the lowest and highest boundaries as L and R, trim the tree so that all its elements lies in [L, R] (R &gt;= L). You might need to change the root of the tree, so the result should return the new root of the trimmed binary search tree. Example 1:123456789101112Input: 1 / \ 0 2 L = 1 R = 2Output: 1 \ 2 Example 2:1234567891011121314151617Input: 3 / \ 0 4 \ 2 / 1 L = 1 R = 3Output: 3 / 2 / 解法1： Recursion应用BST的性质，如果当前是一个leaf并且不在[L,R]范围内，那么就返回null。如果不是leaf并且leaf的value在范围内，那么就对左右子树各trim如果不是leaf而不在范围内，那么就either对左子数或者右子数trim就可以了。 12345678910111213141516171819202122232425262728293031323334/** * Definition for a binary tree node. * public class TreeNode &#123; * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) &#123; val = x; &#125; * &#125; */class Solution &#123; public TreeNode trimBST(TreeNode root, int L, int R) &#123; if (root == null) return null; if (root.left == null &amp;&amp; root.right == null) &#123; if (root.val &gt;= L &amp;&amp; root.val &lt;= R) &#123; return root; &#125; else &#123; return null; &#125; &#125; int val = root.val; if (val &gt;= L &amp;&amp; val &lt;= R) &#123; root.left = trimBST(root.left, L, R); root.right = trimBST(root.right, L, R); return root; &#125; else if (val &lt; L) &#123; return trimBST(root.right, L, R); &#125; else &#123; // val &gt; R return trimBST(root.left, L, R); &#125; &#125;&#125;]]></content>
