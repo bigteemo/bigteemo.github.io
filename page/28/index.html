@@ -314,6 +314,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/23/2017-01-23-leetcode-solution-Letter-Combinations-of-a-Phone-Number-17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/23/2017-01-23-leetcode-solution-Letter-Combinations-of-a-Phone-Number-17/" itemprop="url">leetcode解题: Letter Combinations of a Phone Number (17)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-23T20:37:18-05:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a digit string, return all possible letter combinations that the number could represent.</p>
+<p>A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt="alt text"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input:Digit string &quot;23&quot;</div><div class="line">Output: [&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].</div></pre></td></tr></table></figure></p>
+<p>Note:<br>Although the above answer is in lexicographical order, your answer could be in any order you want.</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>先建一个map来存储每一个字母可以映射的字母，然后就是常规的backtracking的解法。没有特殊的地方。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; letterCombinations(<span class="built_in">string</span> digits) &#123;</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; <span class="built_in">map</span>;</div><div class="line">        <span class="built_in">map</span>[<span class="string">'2'</span>] = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; &#123;<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>&#125;;</div><div class="line">        <span class="built_in">map</span>[<span class="string">'3'</span>] = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; &#123;<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>&#125;;</div><div class="line">        <span class="built_in">map</span>[<span class="string">'4'</span>] = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; &#123;<span class="string">'g'</span>,<span class="string">'h'</span>,<span class="string">'i'</span>&#125;;</div><div class="line">        <span class="built_in">map</span>[<span class="string">'5'</span>] = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; &#123;<span class="string">'j'</span>,<span class="string">'k'</span>,<span class="string">'l'</span>&#125;;</div><div class="line">        <span class="built_in">map</span>[<span class="string">'6'</span>] = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; &#123;<span class="string">'m'</span>,<span class="string">'n'</span>,<span class="string">'o'</span>&#125;;</div><div class="line">        <span class="built_in">map</span>[<span class="string">'7'</span>] = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; &#123;<span class="string">'p'</span>,<span class="string">'q'</span>,<span class="string">'r'</span>,<span class="string">'s'</span>&#125;;</div><div class="line">        <span class="built_in">map</span>[<span class="string">'8'</span>] = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; &#123;<span class="string">'t'</span>,<span class="string">'u'</span>,<span class="string">'v'</span>&#125;;</div><div class="line">        <span class="built_in">map</span>[<span class="string">'9'</span>] = <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; &#123;<span class="string">'w'</span>,<span class="string">'x'</span>,<span class="string">'y'</span>,<span class="string">'z'</span>&#125;;</div><div class="line">        </div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</div><div class="line">        <span class="built_in">string</span> cur = <span class="string">""</span>;</div><div class="line">        <span class="keyword">if</span> (digits.size() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line">        helper(digits, <span class="number">0</span>, cur, res, <span class="built_in">map</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">        </div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="built_in">string</span> digits, <span class="keyword">int</span> pos, <span class="built_in">string</span> cur, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; res, <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; <span class="built_in">map</span>)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (cur.size() == digits.size()) &#123;</div><div class="line">            res.push_back(cur);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = pos; i &lt; digits.size(); ++i) &#123;</div><div class="line">            <span class="keyword">char</span> digit = digits[i];</div><div class="line">            <span class="keyword">if</span> (!<span class="built_in">map</span>.count(digit)) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; dict = <span class="built_in">map</span>[digit];</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dict.size(); ++j) &#123;</div><div class="line">                    <span class="built_in">string</span> temp = cur + dict[j];</div><div class="line">                    helper(digits, i + <span class="number">1</span>, temp, res, <span class="built_in">map</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/21/2017-01-21-leetcode-solution-Permutation-II-47/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1621,158 +1768,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/13/2017-01-13-leetcode-solution-Restore-IP-Address-93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/13/2017-01-13-leetcode-solution-Restore-IP-Address-93/" itemprop="url">leetcode解题: Restore IP Address (93)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-13T21:28:47-05:00">
-                2017-01-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a string containing only digits, restore it by returning all possible valid IP address combinations.</p>
-<p>For example:<br>Given “25525511135”,</p>
-<p>return [“255.255.11.135”, “255.255.111.35”]. (Order does not matter)</p>
-<h3 id="解法1：-Backtracking-Time-O-2-N-Space-O-2-N"><a href="#解法1：-Backtracking-Time-O-2-N-Space-O-2-N" class="headerlink" title="解法1： Backtracking, Time O(2^N), Space O(2^N)"></a>解法1： Backtracking, Time O(2^N), Space O(2^N)</h3><p>也是比较经典的backtracking的题目，也是不停的去取一部分string，要判断不用继续搜索的条件有这些：</p>
-<ol>
-<li>每个字串是否符合ip的条件，一定要是0到255， 并且开头的不能是0， 除了0本身。</li>
-<li>字串的长度不能超过3</li>
-<li>ip一共有4部分组成，所以也要判断是否超i过了这个条件。</li>
-</ol>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; restoreIpAddresses(<span class="built_in">string</span> s) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</div><div class="line">        <span class="keyword">if</span> (s.empty()) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; cur;</div><div class="line">        helper(s, <span class="number">0</span>, cur, res);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValid</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (s[<span class="number">0</span>] == <span class="string">'0'</span> &amp;&amp; s.size() &gt; <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> temp = stoll(s);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (temp &gt;= <span class="number">0</span> &amp;&amp; temp &lt;= <span class="number">255</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">createIP</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; cur)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="built_in">string</span> res = <span class="string">""</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cur.size() - <span class="number">1</span>; ++i) &#123;</div><div class="line">            res += cur[i] + <span class="string">"."</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        res += cur[cur.size() - <span class="number">1</span>];</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> pos, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; cur, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; res)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (pos == s.size()) &#123;</div><div class="line">            <span class="keyword">if</span> (cur.size() == <span class="number">4</span>) &#123;</div><div class="line">                res.push_back(createIP(cur));</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (cur.size() &gt; <span class="number">4</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = pos; i &lt; s.size(); ++i) &#123;</div><div class="line">            <span class="keyword">if</span> (cur.size() &lt; <span class="number">4</span> &amp;&amp; i - pos &lt; <span class="number">3</span>) &#123;</div><div class="line">                <span class="built_in">string</span> item = s.substr(pos, i - pos + <span class="number">1</span>);</div><div class="line">                <span class="comment">// check if the item is between 0 and 255</span></div><div class="line">                <span class="keyword">if</span> (!isValid(item)) &#123;</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                cur.push_back(item);</div><div class="line">                helper(s, i + <span class="number">1</span>, cur, res);</div><div class="line">                cur.pop_back();</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">restoreIpAddresses</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        List&lt;String&gt; current = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line"></div><div class="line">        helper(s, <span class="number">0</span>, current, res);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (s.charAt(<span class="number">0</span>) == <span class="string">'0'</span> &amp;&amp; s.length() &gt; <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> temp = Integer.parseInt(s);</div><div class="line">        <span class="keyword">if</span> (temp &gt;= <span class="number">0</span> &amp;&amp; temp &lt;= <span class="number">255</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">String <span class="title">createIP</span><span class="params">(List&lt;String&gt; current)</span> </span>&#123;</div><div class="line"></div><div class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; current.size() - <span class="number">1</span>; i++) &#123;</div><div class="line">            sb.append(current.get(i));</div><div class="line">            sb.append(<span class="string">"."</span>);</div><div class="line">        &#125;</div><div class="line">        sb.append(current.get(current.size() - <span class="number">1</span>));</div><div class="line">        <span class="keyword">return</span> sb.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(String s, <span class="keyword">int</span> pos, List&lt;String&gt; current, List&lt;String&gt; res)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (pos == s.length()) &#123;</div><div class="line">            <span class="keyword">if</span> (current.size() == <span class="number">4</span>) &#123;</div><div class="line">                res.add(createIP(current));</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (current.size() &gt; <span class="number">4</span>) <span class="keyword">return</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = pos; i &lt; s.length() &amp;&amp; i &lt; pos + <span class="number">3</span>; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (current.size() &lt; <span class="number">4</span>) &#123;</div><div class="line">                String item = s.substring(pos, i + <span class="number">1</span>);</div><div class="line">                <span class="keyword">if</span> (!isValid(item)) &#123;</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                &#125;</div><div class="line">                current.add(item);</div><div class="line">                helper(s, i + <span class="number">1</span>, current, res);</div><div class="line">                current.remove(current.size() - <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1823,7 +1818,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">427</span>
+                <span class="site-state-item-count">428</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

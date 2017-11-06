@@ -314,6 +314,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/12/2016-12-12-Leetcode-solution-happy-number-202/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/12/2016-12-12-Leetcode-solution-happy-number-202/" itemprop="url">Leetcode解题: happy number (202)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-12T22:05:24-05:00">
+                2016-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Write an algorithm to determine if a number is “happy”.</p>
+<p>A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.</p>
+<p>Example: 19 is a happy number</p>
+<p>12 + 92 = 82<br>82 + 22 = 68<br>62 + 82 = 100<br>12 + 02 + 02 = 1</p>
+<h3 id="解法1：hashmap"><a href="#解法1：hashmap" class="headerlink" title="解法1：hashmap"></a>解法1：hashmap</h3><p>这里需要判断重复的情况，想到用hashmap来存储已经计算过的值。对每一个未访问过的数值，计算位数的平方和。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isHappy</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">bool</span>&gt; <span class="built_in">map</span>;</div><div class="line">        <span class="keyword">while</span> (n != <span class="number">1</span>) &#123;</div><div class="line">            <span class="built_in">map</span>[n] = <span class="literal">true</span>;</div><div class="line">            <span class="keyword">int</span> temp = digitSquareSum(n);</div><div class="line">            <span class="keyword">if</span> (<span class="built_in">map</span>[temp]) &#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125;</div><div class="line">            n = temp;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">digitSquareSum</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">0</span> || n == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> n;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (n != <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">int</span> digit = n % <span class="number">10</span>;</div><div class="line">            sum += digit * digit;</div><div class="line">            n /= <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<h3 id="解法2：观察规律"><a href="#解法2：观察规律" class="headerlink" title="解法2：观察规律"></a>解法2：观察规律</h3><p>看到别人的解法里有这么一个巧妙的方法：可以试试几个会出现loop的数，最后都会出现4。结论是：所有最终会有4的都不是happy number，这样我们就可以把额外的空间要求去除了。<br>例子如下：<br>1^2 + 1^2 = 2<br>2^2 = 4<br>4^2 = 16<br>1^2 + 6^2 = 37<br>3^2 + 7^2 = 58<br>5^2 + 8^2 = 89<br>8^2 + 9^2 = 145<br>1^2 + 4^2 + 5^2 = 42<br>4^2 + 2^2 = 20<br>2^2 + 0^2 = 4</p>
+<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isHappy</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span> (n != <span class="number">1</span> &amp;&amp; n != <span class="number">4</span>) &#123;</div><div class="line">            <span class="keyword">int</span> t = <span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span> (n) &#123;</div><div class="line">                t += (n % <span class="number">10</span>) * (n % <span class="number">10</span>);</div><div class="line">                n /= <span class="number">10</span>;</div><div class="line">            &#125;</div><div class="line">            n = t;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> n == <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/12/2016-12-12-Leetcode-Solution-Power-of-Three-326/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1624,162 +1773,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/04/2016-12-04-leetcode-solution-Add-Strings-415/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/04/2016-12-04-leetcode-solution-Add-Strings-415/" itemprop="url">leetcode解题: Add Strings (415)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-04T17:18:55-05:00">
-                2016-12-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given two non-negative numbers num1 and num2 represented as string, return the sum of num1 and num2.</p>
-<p>Note:</p>
-<p>The length of both num1 and num2 is &lt; 5100.<br>Both num1 and num2 contains only digits 0-9.<br>Both num1 and num2 does not contain any leading zero.<br>You must not use any built-in BigInteger library or convert the inputs to integer directly.<br>Show Company Tags<br>Show Tags<br>Show Similar Problems</p>
-<h3 id="解法1：Two-pointers-O-N-M-Time"><a href="#解法1：Two-pointers-O-N-M-Time" class="headerlink" title="解法1：Two pointers, O(N + M) Time"></a>解法1：Two pointers, O(N + M) Time</h3><p>经典的两数相加问题，主要的考察就是每一位上怎么计算digit和carry。digit = (temp + carry) % 10, carry = (temp + carry) / 10;<br>容易忘记的几个点：</p>
-<ol>
-<li>如果两个string的长度不相等，最后要遍历剩下较长的string</li>
-<li>最后要判断carry是否为0，如果不是，要在string的最前面加上carry的值</li>
-</ol>
-<h4 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h4><p>C++ 里的几个用法：</p>
-<ul>
-<li>char&amp; to int: 只能用c - ‘0’这种办法</li>
-<li>int to string: 在c++ 11里有std::to_string 的函数，用法为std::to_string(string&amp; s)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">addStrings</span><span class="params">(<span class="built_in">string</span> num1, <span class="built_in">string</span> num2)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (num1.empty()) &#123;</div><div class="line">            <span class="keyword">return</span> num2;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (num2.empty()) &#123;</div><div class="line">            <span class="keyword">return</span> num1;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">string</span> res = <span class="string">""</span>;</div><div class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> i, j;</div><div class="line">        <span class="keyword">for</span> (i = num1.size() - <span class="number">1</span>, j = num2.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span> &amp;&amp; j &gt;= <span class="number">0</span>; --i, --j) &#123;</div><div class="line">            <span class="keyword">int</span> temp = num1[i] - <span class="string">'0'</span> + num2[j] - <span class="string">'0'</span>;</div><div class="line">            <span class="keyword">int</span> digit = (temp + carry) % <span class="number">10</span>;</div><div class="line">            carry = (temp + carry) / <span class="number">10</span>;</div><div class="line">            res = to_string(digit) + res;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (; i &gt;= <span class="number">0</span>; --i) &#123;</div><div class="line">            <span class="keyword">int</span> temp = num1[i] - <span class="string">'0'</span>;</div><div class="line">            <span class="keyword">int</span> digit = (temp + carry) % <span class="number">10</span>;</div><div class="line">            carry = (temp + carry) / <span class="number">10</span>;</div><div class="line">            res = to_string(digit) + res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (; j &gt;= <span class="number">0</span>; --j) &#123;</div><div class="line">            <span class="keyword">int</span> temp = num2[j]  - <span class="string">'0'</span>;</div><div class="line">            <span class="keyword">int</span> digit = (temp + carry) % <span class="number">10</span>;</div><div class="line">            carry = (temp + carry) / <span class="number">10</span>;</div><div class="line">            res = to_string(digit) + res;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (carry &gt; <span class="number">0</span>) &#123;</div><div class="line">            res = to_string(carry) + res;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1830,7 +1823,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">427</span>
+                <span class="site-state-item-count">428</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

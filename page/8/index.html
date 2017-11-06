@@ -314,6 +314,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/23/2017-07-23-623-Add-One-Row-to-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/2017-07-23-623-Add-One-Row-to-Tree/" itemprop="url">623. Add One Row to Tree</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T10:03:34-04:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given the root of a binary tree, then value v and depth d, you need to add a row of nodes with value v at the given depth d. The root node is at depth 1.</p>
+<p>The adding rule is: given a positive integer depth d, for each NOT null tree nodes N in depth d-1, create two tree nodes with value v as N’s left subtree root and right subtree root. And N’s original left subtree should be the left subtree of the new left subtree root, its original right subtree should be the right subtree of the new right subtree root. If depth d is 1 that means there is no depth d-1 at all, then create a tree node with value v as the new root of the whole original tree, and the original tree is the new root’s left subtree.</p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">A binary tree as following:</div><div class="line">       4</div><div class="line">     /   \</div><div class="line">    2     6</div><div class="line">   / \   /</div><div class="line">  3   1 5   </div><div class="line"></div><div class="line">v = 1</div><div class="line"></div><div class="line">d = 2</div><div class="line"></div><div class="line">Output:</div><div class="line">       4</div><div class="line">      / \</div><div class="line">     1   1</div><div class="line">    /     \</div><div class="line">   2       6</div><div class="line">  / \     /</div><div class="line"> 3   1   5</div></pre></td></tr></table></figure></p>
+<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">A binary tree as following:</div><div class="line">      4</div><div class="line">     /   </div><div class="line">    2    </div><div class="line">   / \   </div><div class="line">  3   1    </div><div class="line"></div><div class="line">v = 1</div><div class="line"></div><div class="line">d = 3</div><div class="line"></div><div class="line">Output:</div><div class="line">      4</div><div class="line">     /   </div><div class="line">    2</div><div class="line">   / \    </div><div class="line">  1   1</div><div class="line"> /     \  </div><div class="line">3       1</div></pre></td></tr></table></figure></p>
+<p>Note:</p>
+<pre><code>The given d is in range [1, maximum depth of the given tree + 1].
+The given binary tree has at least one tree node.
+</code></pre><h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>先用bfs找到要加的层的上一层。然后对每一个node加上新的node，然后把原来的left assign给left，rightassign给right<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">addOneRow</span><span class="params">(TreeNode root, <span class="keyword">int</span> v, <span class="keyword">int</span> d)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// do a level order traversal</span></div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (d == <span class="number">1</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">new</span> TreeNode(v);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> depth = <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (d == <span class="number">1</span>) &#123;</div><div class="line">            TreeNode root_new = <span class="keyword">new</span> TreeNode(v);</div><div class="line">            root_new.left = root;</div><div class="line">            <span class="keyword">return</span> root_new;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">        queue.offer(root);</div><div class="line"></div><div class="line">        <span class="comment">// do level order traversal until reach the level right before depth</span></div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty() &amp;&amp; depth &lt; d - <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">int</span> size = queue.size();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">                TreeNode current = queue.poll();</div><div class="line">                <span class="keyword">if</span> (current.left != <span class="keyword">null</span>) &#123;</div><div class="line">                    queue.offer(current.left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (current.right != <span class="keyword">null</span>) &#123;</div><div class="line">                    queue.offer(current.right);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            depth++;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// depth == d - 1</span></div><div class="line">        <span class="comment">// queue contains all the nodes that is point to depth</span></div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">            TreeNode current = queue.poll();</div><div class="line">            TreeNode left = current.left;   <span class="comment">// original left</span></div><div class="line">            TreeNode right = current.right; <span class="comment">// original right</span></div><div class="line">            TreeNode left_new = <span class="keyword">new</span> TreeNode(v);    <span class="comment">// new left</span></div><div class="line">            TreeNode right_new = <span class="keyword">new</span> TreeNode(v);</div><div class="line">            current.left = left_new;</div><div class="line">            current.right = right_new;</div><div class="line">            left_new.left = left;</div><div class="line">            right_new.right = right;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> root;        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/23/2017-07-23-582-Kill-Process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1635,160 +1785,6 @@ n &gt;= 1.
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/23/2017-07-23-474-Ones-and-Zeros/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/2017-07-23-474-Ones-and-Zeros/" itemprop="url">474. Ones and Zeros</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T08:46:01-04:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>In the computer world, use restricted resource you have to generate maximum benefit is what we always want to pursue.</p>
-<p>For now, suppose you are a dominator of m 0s and n 1s respectively. On the other hand, there is an array with strings consisting of only 0s and 1s.</p>
-<p>Now your task is to find the maximum number of strings that you can form with given m 0s and n 1s. Each 0 and 1 can be used at most once.</p>
-<p>Note:</p>
-<pre><code>The given numbers of 0s and 1s will both not exceed 100
-The size of given string array won&apos;t exceed 600.
-</code></pre><p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Input: Array = &#123;&quot;10&quot;, &quot;0001&quot;, &quot;111001&quot;, &quot;1&quot;, &quot;0&quot;&#125;, m = 5, n = 3</div><div class="line">Output: 4</div><div class="line"></div><div class="line">Explanation: This are totally 4 strings can be formed by the using of 5 0s and 3 1s, which are “10,”0001”,”1”,”0”</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Input: Array = &#123;&quot;10&quot;, &quot;0&quot;, &quot;1&quot;&#125;, m = 1, n = 1</div><div class="line">Output: 2</div><div class="line"></div><div class="line">Explanation: You could form &quot;10&quot;, but then you&apos;d have nothing left. Better form &quot;0&quot; and &quot;1&quot;.</div></pre></td></tr></table></figure></p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>这个的解释还算可以,来自于leetcode discuss:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">The idea is to build up the solution for 0..m zeros and 0..n ones, from only knowing 1 string, 2 strings, ..., up to n strings.</div><div class="line"></div><div class="line">For example, for array = &#123;&quot;10&quot;, &quot;0&quot;, &quot;1&quot;&#125;, m = 1, n = 1.</div><div class="line"></div><div class="line">    for first string &quot;10&quot;:</div><div class="line">        zero = 0, one = 0</div><div class="line">        zero = 1, one = 0</div><div class="line">        zero = 0, one = 1</div><div class="line">        zero = 1, one = 1, can form &quot;10&quot; [+1]</div><div class="line">    continue on the second string &quot;0&quot;, with previous knowledge of string &quot;10&quot;:</div><div class="line">        zero = 0, one = 0</div><div class="line">        zero = 1, one = 0, can form &quot;0&quot; [+1]</div><div class="line">        zero = 0, one = 1</div><div class="line">        zero = 1, one = 1, can form &quot;0&quot; [+1] or 1 string (&quot;10&quot;), known from previous string</div><div class="line">    continue on the last string &quot;1&quot;, with previous knowledge of strings &quot;10&quot; and &quot;0&quot;:</div><div class="line">        zero = 0, one = 0</div><div class="line">        zero = 1, one = 0, can&apos;t form &quot;1&quot;, but we know it can form 1 string (&quot;0&quot;) from previous set of strings</div><div class="line">        zero = 0, one = 1, can form &quot;1&quot; (+1)</div><div class="line">        zero = 1, one = 1, (can form &quot;1&quot; and 1 more string (&quot;0&quot;) with zero = 1, one = 0, known from previous set of strings) or (1 string (&quot;10&quot;), known from previous set of strings)</div><div class="line"></div><div class="line">Hence, at the end, we know that with zero = 1, one = 1, with string &quot;10&quot;, &quot;0&quot;, and &quot;1&quot;, the maximum number of strings we can form is 2.</div></pre></td></tr></table></figure></p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">findMaxForm</span><span class="params">(String[] strs, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[m + <span class="number">1</span>][n + <span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span> (String str : strs) &#123;</div><div class="line">            <span class="keyword">int</span>[] count = count(str);</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &gt;= count[<span class="number">0</span>]; i--) &#123;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = n; j &gt;= count[<span class="number">1</span>]; j--) &#123;</div><div class="line">                    dp[i][j] = Math.max(dp[i][j], dp[i - count[<span class="number">0</span>]][j - count[<span class="number">1</span>]] + <span class="number">1</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dp[m][n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] count(String s) &#123;</div><div class="line">	<span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">	<span class="keyword">char</span>[] array = s.toCharArray();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i : array) &#123;</div><div class="line">	    result[i - <span class="string">'0'</span>]++;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-背包解法"><a href="#解法2：-背包解法" class="headerlink" title="解法2： 背包解法"></a>解法2： 背包解法</h3><p>此题实际上是一个背包问题，背包问题的本质是：<br>求一个最大或者最小，给定一定的限定条件。这里的限定条件是有限的0和1。<br>背包就构建一个n维数组，dp[i][j][k]表示前i个数，用jk两个限定条件所能达到的最大结果。</p>
-<figure class="highlight plain"><figcaption><span>lang: java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int findMaxForm(String[] strs, int m, int n) &#123;</div><div class="line"></div><div class="line">        if (strs == null || strs.length == 0) &#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        int strn = strs.length;</div><div class="line">        int[][][] dp = new int[strn + 1][m + 1][n + 1];</div><div class="line">        // dp[l][i][j] means up to first l strings, with m zeros and n ones, the max number of strings it can form</div><div class="line">        // do[l][i][j] = Math.max(dp[l - 1][i - zero[l]][j - zero[l][i - ones]] + 1, dp[l - 1][i][j]）；</div><div class="line"></div><div class="line">        for (int l = 1; l &lt;= strn; l++) &#123;</div><div class="line">            int[] current = count(strs[l - 1]);   // count current number of zeros and ones</div><div class="line">            for (int i = 0; i &lt;= m; i++) &#123;</div><div class="line">                for (int j = 0; j &lt;= n; j++) &#123;</div><div class="line">                    if (i &gt;= current[0] &amp;&amp; j &gt;= current[1]) &#123;</div><div class="line">                        dp[l][i][j] = Math.max(dp[l][i][j], dp[l - 1][i - current[0]][j - current[1]] + 1);</div><div class="line">                    &#125;</div><div class="line">                    dp[l][i][j] = Math.max(dp[l][i][j], dp[l - 1][i][j]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return dp[strn][m][n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private int[] count(String str) &#123;</div><div class="line">        // count number of ones and zeros in the string</div><div class="line">        int[] res = new int[2];</div><div class="line">        for (int i = 0; i &lt; str.length(); i++) &#123;</div><div class="line">            if (str.charAt(i) == &apos;0&apos;) &#123;</div><div class="line">                res[0]++;</div><div class="line">            &#125; else &#123;</div><div class="line">                res[1]++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1839,7 +1835,7 @@ The size of given string array won&apos;t exceed 600.
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">427</span>
+                <span class="site-state-item-count">428</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
