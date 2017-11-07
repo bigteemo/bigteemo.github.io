@@ -314,6 +314,151 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Keyboard-Row-500/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/12/2017-03-12-leetcode-solution-Keyboard-Row-500/" itemprop="url">leetcode解题: Keyboard Row (500)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T15:03:15-04:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a List of words, return the words that can be typed using letters of alphabet on only one row’s of American keyboard like the image below.<br><img src="https://leetcode.com/static/images/problemset/keyboard.png" alt="alt text" title="American Keyboard"></p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: [&quot;Hello&quot;, &quot;Alaska&quot;, &quot;Dad&quot;, &quot;Peace&quot;]</div><div class="line">Output: [&quot;Alaska&quot;, &quot;Dad&quot;]</div></pre></td></tr></table></figure></p>
+<p>Note:<br>You may use one character in the keyboard more than once.<br>You may assume the input string will only contain letters of alphabet.</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>这题就是掌握一下语言中对于string查找相关的操作。<br>Java<br>Java中的string.toCharArray()，还有查找一个char是否在string里的操作string.indexOf(s) == -1<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    String[] keyboards = &#123;<span class="string">"qwertyuiop"</span>,<span class="string">"asdfghjkl"</span>,<span class="string">"zxcvbnm"</span>&#125;;</div><div class="line">    <span class="keyword">public</span> String[] findWords(String[] words) &#123;</div><div class="line">        </div><div class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">for</span> (String word: words) &#123;</div><div class="line">            <span class="keyword">for</span> (String row: keyboards) &#123;</div><div class="line">                <span class="keyword">boolean</span> temp = <span class="keyword">true</span>;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">char</span> s: word.toLowerCase().toCharArray()) &#123;</div><div class="line">                    <span class="keyword">if</span> (row.indexOf(s) == -<span class="number">1</span>) &#123;</div><div class="line">                        temp = <span class="keyword">false</span>;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (temp) &#123;</div><div class="line">                    res.add(word);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String[] r = <span class="keyword">new</span> String[res.size()];</div><div class="line">        res.toArray(r);</div><div class="line">        <span class="keyword">return</span> r;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Construct-the-rectangle-492/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1680,154 +1825,6 @@ public class Solution {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/05/2017-03-05-leetcode-solution-Clone-Graph-133/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/05/2017-03-05-leetcode-solution-Clone-Graph-133/" itemprop="url">leetcode解题: Clone Graph (133)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-05T20:25:04-05:00">
-                2017-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.</p>
-<p>OJ’s undirected graph serialization:<br>Nodes are labeled uniquely.</p>
-<p>We use # as a separator for each node, and , as a separator for node label and each neighbor of the node.<br>As an example, consider the serialized graph {0,1,2#1,2#2,2}.</p>
-<p>The graph has a total of three nodes, and therefore contains three parts as separated by #.</p>
-<p>First node is labeled as 0. Connect node 0 to both nodes 1 and 2.<br>Second node is labeled as 1. Connect node 1 to node 2.<br>Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a self-cycle.<br>Visually, the graph looks like the following:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   1</div><div class="line">  / \</div><div class="line"> /   \</div><div class="line">0 --- 2</div><div class="line">     / \</div><div class="line">     \_/</div></pre></td></tr></table></figure></p>
-<h3 id="解法1：HashMap-DFS-O-N-Time-O-N-Space"><a href="#解法1：HashMap-DFS-O-N-Time-O-N-Space" class="headerlink" title="解法1：HashMap + DFS, O(N) Time + O(N) Space"></a>解法1：HashMap + DFS, O(N) Time + O(N) Space</h3><p>思路和有一题linkedlist有random pointer的一样，要分两步进行，一个是要遍历整个图（可选dfs或者bfs），另外要用一个hashmap来记录node和node之间的对应关系。</p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for undirected graph.</span></div><div class="line"><span class="comment"> * class UndirectedGraphNode &#123;</span></div><div class="line"><span class="comment"> *     int label;</span></div><div class="line"><span class="comment"> *     List&lt;UndirectedGraphNode&gt; neighbors;</span></div><div class="line"><span class="comment"> *     UndirectedGraphNode(int x) &#123; label = x; neighbors = new ArrayList&lt;UndirectedGraphNode&gt;(); &#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> UndirectedGraphNode <span class="title">cloneGraph</span><span class="params">(UndirectedGraphNode node)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> node;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt; map = <span class="keyword">new</span> HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt;();</div><div class="line">        dfs(node, map);</div><div class="line">        <span class="keyword">for</span> (UndirectedGraphNode old: map.keySet()) &#123;</div><div class="line">            <span class="keyword">if</span> (node.neighbors != <span class="keyword">null</span>) &#123;</div><div class="line">                List&lt;UndirectedGraphNode&gt; ns = <span class="keyword">new</span> ArrayList&lt;UndirectedGraphNode&gt;();</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; old.neighbors.size(); ++i) &#123;</div><div class="line">                    ns.add(map.get(old.neighbors.get(i)));</div><div class="line">                &#125;</div><div class="line">                map.get(old).neighbors = ns;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> map.get(node);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(UndirectedGraphNode node, HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt; map)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!map.containsKey(node)) &#123;</div><div class="line">            <span class="comment">// Delay the assignment of neighbors</span></div><div class="line">            UndirectedGraphNode cloned = <span class="keyword">new</span> UndirectedGraphNode(node.label);</div><div class="line">            map.put(node, cloned);</div><div class="line">            <span class="keyword">if</span> (node.neighbors!= <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; node.neighbors.size(); ++i) &#123;</div><div class="line">                    dfs(node.neighbors.get(i), map);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1878,7 +1875,7 @@ public class Solution {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">429</span>
+                <span class="site-state-item-count">430</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

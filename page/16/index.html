@@ -314,6 +314,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/02/2017-07-02-521-Longest-Uncommon-Subsequence-I/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/02/2017-07-02-521-Longest-Uncommon-Subsequence-I/" itemprop="url">521. Longest Uncommon Subsequence I</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-02T15:22:13-04:00">
+                2017-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a group of two strings, you need to find the longest uncommon subsequence of this group of two strings. The longest uncommon subsequence is defined as the longest subsequence of one of these strings and this subsequence should not be any subsequence of the other strings.</p>
+<p>A subsequence is a sequence that can be derived from one sequence by deleting some characters without changing the order of the remaining elements. Trivially, any string is a subsequence of itself and an empty string is a subsequence of any string.</p>
+<p>The input will be two strings, and the output needs to be the length of the longest uncommon subsequence. If the longest uncommon subsequence doesn’t exist, return -1.</p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input: &quot;aba&quot;, &quot;cdc&quot;</div><div class="line">Output: 3</div><div class="line">Explanation: The longest uncommon subsequence is &quot;aba&quot; (or &quot;cdc&quot;),</div><div class="line">because &quot;aba&quot; is a subsequence of &quot;aba&quot;,</div><div class="line">but not a subsequence of any other strings in the group of two strings.</div></pre></td></tr></table></figure></p>
+<p>Note:</p>
+<p>   Both strings’ lengths will not exceed 100.<br>   Only letters from a ~ z will appear in input strings.</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findLUSlength</span><span class="params">(String a, String b)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (a == <span class="keyword">null</span> || b == <span class="keyword">null</span>) &#123;</div><div class="line">           <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (a.equals(b)) &#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> Math.max(a.length(), b.length());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/02/2017-07-02-551-Student-Attendance-Record-I/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1640,153 +1789,6 @@ getRandom: Returns a random element from current collection of elements. The pro
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/29/2017-06-29-128-Longest-Consecutive-Sequence/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/29/2017-06-29-128-Longest-Consecutive-Sequence/" itemprop="url">128. Longest Consecutive Sequence</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-29T20:52:48-04:00">
-                2017-06-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence.</p>
-<p>For example,<br>Given [100, 4, 200, 1, 3, 2],<br>The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.</p>
-<p>Your algorithm should run in O(n) complexity.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>复杂度要求比较高，算来算去能用的也只有HashMap了。这个解法不太常见，用一个map存储一个range。<br>对于任意一个数，low和high都是数字本身。然后在map之内寻找下限和上限。寻找到之后更新res。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestConsecutive</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        HashMap&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</div><div class="line">            <span class="keyword">if</span> (map.containsKey(num)) <span class="keyword">continue</span>;</div><div class="line">            <span class="keyword">int</span> low = num;</div><div class="line">            <span class="keyword">int</span> high = num;</div><div class="line">            <span class="keyword">if</span> (map.containsKey(num - <span class="number">1</span>)) low = map.get(num - <span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span> (map.containsKey(num + <span class="number">1</span>)) high = map.get(num + <span class="number">1</span>);</div><div class="line">            res = Math.max(res, high - low + <span class="number">1</span>);</div><div class="line">            map.put(num, num);</div><div class="line">            map.put(low, high);</div><div class="line">            map.put(high, low);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2："><a href="#解法2：" class="headerlink" title="解法2："></a>解法2：</h3><p>这个解法清楚多了，首先把所有数据加入一个hashset. 之后对于每一个数，往下以及往上找到所有在set中的数据。 然后更新一下range。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestConsecutive</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        HashSet&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</div><div class="line">            set.add(num);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</div><div class="line">            <span class="keyword">int</span> down = num - <span class="number">1</span>;</div><div class="line">            <span class="keyword">while</span> (set.contains(down)) &#123;</div><div class="line">                set.remove(down);</div><div class="line">                down--;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">int</span> upper = num + <span class="number">1</span>;</div><div class="line">            <span class="keyword">while</span> (set.contains(upper)) &#123;</div><div class="line">                set.remove(upper);</div><div class="line">                upper++;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            res = Math.max(res, upper - down - <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1837,7 +1839,7 @@ getRandom: Returns a random element from current collection of elements. The pro
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">429</span>
+                <span class="site-state-item-count">430</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
