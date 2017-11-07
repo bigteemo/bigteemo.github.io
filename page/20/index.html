@@ -314,6 +314,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/20/2017-06-20-287-Find-the-Duplicate-Number/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/20/2017-06-20-287-Find-the-Duplicate-Number/" itemprop="url">287. Find the Duplicate Number</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T18:30:17-04:00">
+                2017-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.</p>
+<p>Note:</p>
+<p>   You must not modify the array (assume the array is read only).<br>   You must use only constant, O(1) extra space.<br>   Your runtime complexity should be less than O(n2).<br>   There is only one duplicate number in the array, but it could be repeated more than once.</p>
+<h3 id="解法1：O-NlogN"><a href="#解法1：O-NlogN" class="headerlink" title="解法1：O(NlogN)"></a>解法1：O(NlogN)</h3><p>这题是一个binary search的变形。题目给的条件显示能套用的常用算法应该只剩下binary search了。<br>难点是怎么舍弃一半的空间。这里巧妙的用了这个特性：1 - n的数字的mid是（1+n)/2, 那么如果比mid小的数较多，说明重复的数在小半区。这样我们可以缩小范围。<br>如果比mid小的数较少，那么重复的数就在大半区。<br>计算出一个mid之后统计和mid大小的时候要遍历。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> left = <span class="number">1</span>, right = nums.length - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</div><div class="line">            <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</div><div class="line">            <span class="comment">// loop through nums</span></div><div class="line">            <span class="keyword">int</span> cnt = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</div><div class="line">                <span class="keyword">if</span> (num &lt;= mid) &#123;</div><div class="line">                    cnt++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (cnt &gt; mid) &#123;</div><div class="line">                right = mid;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                left = mid + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> left;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2：O-N"><a href="#解法2：O-N" class="headerlink" title="解法2：O(N)"></a>解法2：O(N)</h3><p>龟兔赛跑的算法，和找闭环的入口的思路一样。这里用的是一个扩展了的算法。<br>核心就是对于slow指针apply function一次，而对于fast指针apply function两次。<br>具体的解释可以参考<a href="http://bookshadow.com/weblog/2015/09/28/leetcode-find-duplicate-number/" target="_blank" rel="external">这个</a><br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> slow = <span class="number">0</span>, fast = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">            slow = nums[slow];</div><div class="line">            fast = nums[nums[fast]];</div><div class="line">            <span class="keyword">if</span> (slow == fast) &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        fast = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">            slow = nums[slow];</div><div class="line">            fast = nums[fast];</div><div class="line">            <span class="keyword">if</span> (slow == fast) &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> slow;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/20/2017-06-20-33-Search-in-Rotated-Sorted-Array/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1617,152 +1764,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/04/20/2017-04-20-leetcode-solution-Sort-Characters-By-Frequency-451/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/20/2017-04-20-leetcode-solution-Sort-Characters-By-Frequency-451/" itemprop="url">leetcode solution: Sort Characters By Frequency (451)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T21:04:18-04:00">
-                2017-04-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a string, sort it in decreasing order based on the frequency of characters.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">&quot;tree&quot;</div><div class="line"></div><div class="line">Output:</div><div class="line">&quot;eert&quot;</div><div class="line"></div><div class="line">Explanation:</div><div class="line">&apos;e&apos; appears twice while &apos;r&apos; and &apos;t&apos; both appear once.</div><div class="line">So &apos;e&apos; must appear before both &apos;r&apos; and &apos;t&apos;. Therefore &quot;eetr&quot; is also a valid answer.</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">&quot;cccaaa&quot;</div><div class="line"></div><div class="line">Output:</div><div class="line">&quot;cccaaa&quot;</div><div class="line"></div><div class="line">Explanation:</div><div class="line">Both &apos;c&apos; and &apos;a&apos; appear three times, so &quot;aaaccc&quot; is also a valid answer.</div><div class="line">Note that &quot;cacaca&quot; is incorrect, as the same characters must be together.</div></pre></td></tr></table></figure></p>
-<p>Example 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">&quot;Aabb&quot;</div><div class="line"></div><div class="line">Output:</div><div class="line">&quot;bbAa&quot;</div><div class="line"></div><div class="line">Explanation:</div><div class="line">&quot;bbaA&quot; is also a valid answer, but &quot;Aabb&quot; is incorrect.</div><div class="line">Note that &apos;A&apos; and &apos;a&apos; are treated as two different characters.</div></pre></td></tr></table></figure></p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">frequencySort</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Character,Integer&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c: s.toCharArray()) &#123;</div><div class="line">            map.put(c, map.getOrDefault(c,<span class="number">0</span>) + <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        List&lt;Map.Entry&lt;Character, Integer&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(map.entrySet());</div><div class="line">        Comparator&lt;Map.Entry&lt;Character,Integer&gt;&gt; comparator = <span class="keyword">new</span> Comparator&lt;Map.Entry&lt;Character, Integer&gt;&gt;() &#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Map.Entry&lt;Character, Integer&gt; left, Map.Entry&lt;Character, Integer&gt; right)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> right.getValue().compareTo(left.getValue());</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        </div><div class="line">        list.sort(comparator);</div><div class="line">        </div><div class="line">        <span class="comment">// Create String</span></div><div class="line">        StringBuffer ss = <span class="keyword">new</span> StringBuffer();</div><div class="line">        <span class="keyword">for</span> (Map.Entry&lt;Character, Integer&gt; entry : list) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; entry.getValue(); ++i) &#123;</div><div class="line">                ss.append(entry.getKey());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> ss.toString();</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1813,7 +1814,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">428</span>
+                <span class="site-state-item-count">429</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
