@@ -314,6 +314,161 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/01/2017-07-01-381-Insert-Delete-GetRandom-O-1-Duplicates-allowed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/01/2017-07-01-381-Insert-Delete-GetRandom-O-1-Duplicates-allowed/" itemprop="url">381. Insert Delete GetRandom O(1) - Duplicates allowed</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-01T12:28:02-04:00">
+                2017-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Design a data structure that supports all following operations in average O(1) time.<br>Note: Duplicate elements are allowed.</p>
+<pre><code>insert(val): Inserts an item val to the collection.
+remove(val): Removes an item val from the collection if present.
+getRandom: Returns a random element from current collection of elements. The probability of each element being returned is linearly related to the number of same value the collection contains.
+</code></pre><p>Example:</p>
+<p>// Init an empty collection.<br>RandomizedCollection collection = new RandomizedCollection();</p>
+<p>// Inserts 1 to the collection. Returns true as the collection did not contain 1.<br>collection.insert(1);</p>
+<p>// Inserts another 1 to the collection. Returns false as the collection contained 1. Collection now contains [1,1].<br>collection.insert(1);</p>
+<p>// Inserts 2 to the collection, returns true. Collection now contains [1,1,2].<br>collection.insert(2);</p>
+<p>// getRandom should return 1 with the probability 2/3, and returns 2 with the probability 1/3.<br>collection.getRandom();</p>
+<p>// Removes 1 from the collection, returns true. Collection now contains [1,2].<br>collection.remove(1);</p>
+<p>// getRandom should return 1 and 2 both equally likely.<br>collection.getRandom();</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>自己写的怎么都没过OA,这个AC的答案是网上抄的[捂脸]。主要的思想和没有duplicates的版本很相似。区别就是这里对于每一个数字，要存储的是出现的index的list。删除操作的时候，把末尾的元素直接写到被删除的元素的位置。同时维护一下两个index的list.<br>对于需要删除的数字，去掉list中相应的位置<br>对于末尾的数字，在list中加入要删除的数字的位置<br>在队列中把要删除的元素的位置置换为末尾的元素<br>删除队列末尾的元素（因为已经放到了队列中间去了)<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RandomizedCollection</span> </span>&#123;</div><div class="line"></div><div class="line">    ArrayList&lt;Integer&gt; result;</div><div class="line">    HashMap&lt;Integer, LinkedHashSet&lt;Integer&gt;&gt; map;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RandomizedCollection</span><span class="params">()</span> </span>&#123;</div><div class="line">        result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        map = <span class="keyword">new</span> HashMap&lt;Integer, LinkedHashSet&lt;Integer&gt;&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">        <span class="comment">// Add item to map if it doesn't already exist.</span></div><div class="line">        <span class="keyword">boolean</span> alreadyExists = map.containsKey(val);</div><div class="line">        <span class="keyword">if</span>(!alreadyExists) &#123;</div><div class="line">            map.put(val, <span class="keyword">new</span> LinkedHashSet&lt;Integer&gt;());</div><div class="line">        &#125;</div><div class="line">        map.get(val).add(result.size());</div><div class="line">        result.add(val);</div><div class="line">        <span class="keyword">return</span> !alreadyExists;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/** Removes a value from the collection. Returns true if the collection contained the specified element. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!map.containsKey(val)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Get arbitary index of the ArrayList that contains val</span></div><div class="line">        LinkedHashSet&lt;Integer&gt; valSet = map.get(val);</div><div class="line">        <span class="keyword">int</span> indexToReplace = valSet.iterator().next();</div><div class="line"></div><div class="line">        <span class="comment">// Obtain the set of the number in the last place of the ArrayList</span></div><div class="line">        <span class="keyword">int</span> numAtLastPlace = result.get(result.size() - <span class="number">1</span>);</div><div class="line">        LinkedHashSet&lt;Integer&gt; replaceWith = map.get(numAtLastPlace);</div><div class="line"></div><div class="line">        <span class="comment">// Replace val at arbitary index with very last number</span></div><div class="line">        result.set(indexToReplace, numAtLastPlace);</div><div class="line"></div><div class="line">        <span class="comment">// Remove appropriate index</span></div><div class="line">        valSet.remove(indexToReplace);</div><div class="line"></div><div class="line">        <span class="comment">// Don't change set if we were replacing the removed item with the same number</span></div><div class="line">        <span class="keyword">if</span>(indexToReplace != result.size() - <span class="number">1</span>) &#123;</div><div class="line">            replaceWith.remove(result.size() - <span class="number">1</span>);</div><div class="line">            replaceWith.add(indexToReplace);</div><div class="line">        &#125;</div><div class="line">        result.remove(result.size() - <span class="number">1</span>);</div><div class="line"></div><div class="line">        <span class="comment">// Remove map entry if set is now empty, then return</span></div><div class="line">        <span class="keyword">if</span>(valSet.isEmpty()) &#123;</div><div class="line">            map.remove(val);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/** Get a random element from the collection. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getRandom</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// Get linearly random item</span></div><div class="line">        Random random = <span class="keyword">new</span> Random();</div><div class="line">        <span class="keyword">return</span> result.get(random.nextInt(result.size()));</div><div class="line">        <span class="comment">// return result.get((int)(Math.random() * result.size()));</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your RandomizedCollection object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * RandomizedCollection obj = new RandomizedCollection();</span></div><div class="line"><span class="comment"> * boolean param_1 = obj.insert(val);</span></div><div class="line"><span class="comment"> * boolean param_2 = obj.remove(val);</span></div><div class="line"><span class="comment"> * int param_3 = obj.getRandom();</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/01/2017-07-01-126-Word-Ladder-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1639,155 +1794,6 @@ For all rows that have a black pixel at column C, they should be exactly the sam
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/26/2017-06-26-548-Split-Array-with-Equal-Sum/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/26/2017-06-26-548-Split-Array-with-Equal-Sum/" itemprop="url">548. Split Array with Equal Sum</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-26T22:03:12-04:00">
-                2017-06-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array with n integers, you need to find if there are triplets (i, j, k) which satisfies following conditions:</p>
-<p>   0 &lt; i, i + 1 &lt; j, j + 1 &lt; k &lt; n - 1<br>   Sum of subarrays (0, i - 1), (i + 1, j - 1), (j + 1, k - 1) and (k + 1, n - 1) should be equal.</p>
-<p>where we define that subarray (L, R) represents a slice of the original array starting from the element indexed L to the element indexed R.</p>
-<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Input: [1,2,1,2,1,2,1]</div><div class="line">Output: True</div><div class="line">Explanation:</div><div class="line">i = 1, j = 3, k = 5.</div><div class="line">sum(0, i - 1) = sum(0, 0) = 1</div><div class="line">sum(i + 1, j - 1) = sum(2, 2) = 1</div><div class="line">sum(j + 1, k - 1) = sum(4, 4) = 1</div><div class="line">sum(k + 1, n - 1) = sum(6, 6) = 1</div></pre></td></tr></table></figure></p>
-<p>Note:</p>
-<p>   1 &lt;= n &lt;= 2000.<br>   Elements in the given array will be in range [-1,000,000, 1,000,000].</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>这题又是2sum的一个变种。把一个数组分成加和相等的4份。trick在于如果遍历中间的点，那么左右那边变成找出是否存在切割点使得切割之后的两份的加和相等。<br>那么这一部分就可以用hashset来解决。存储可以等分的sum，然后在右边的部分寻找等分的时候看是否在左面出现过。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">splitArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (nums.length &lt;= <span class="number">6</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] sum = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">        sum[<span class="number">0</span>] = nums[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</div><div class="line">            sum[i] = sum[i - <span class="number">1</span>] + nums[i];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">3</span>; j &lt; nums.length - <span class="number">3</span>; j++) &#123;</div><div class="line">            HashSet&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; j - <span class="number">1</span>; i++) &#123;</div><div class="line">                <span class="keyword">if</span> (sum[i - <span class="number">1</span>] == sum[j - <span class="number">1</span>] - sum[i]) &#123;</div><div class="line">                    set.add(sum[i - <span class="number">1</span>]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = j + <span class="number">2</span>; k &lt; nums.length - <span class="number">1</span>; k++) &#123;</div><div class="line">                <span class="keyword">if</span> (sum[k - <span class="number">1</span>] - sum[j] == sum[nums.length - <span class="number">1</span>] - sum[k] &amp;&amp; set.contains(sum[k - <span class="number">1</span>] - sum[j])) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1838,7 +1844,7 @@ For all rows that have a black pixel at column C, they should be exactly the sam
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">433</span>
+                <span class="site-state-item-count">434</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
