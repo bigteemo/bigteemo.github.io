@@ -314,6 +314,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/11/2017-07-11-159-Longest-Substring-with-At-Most-Two-Distinct-Characters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/11/2017-07-11-159-Longest-Substring-with-At-Most-Two-Distinct-Characters/" itemprop="url">159. Longest Substring with At Most Two Distinct Characters</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T20:38:18-04:00">
+                2017-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a string, find the length of the longest substring T that contains at most 2 distinct characters.</p>
+<p>For example, Given s = “eceba”,</p>
+<p>T is “ece” which its length is 3.</p>
+<h3 id="解法1：O-N"><a href="#解法1：O-N" class="headerlink" title="解法1：O(N)"></a>解法1：O(N)</h3><p>这题是sliding window的一个例题。要掌握一下模板。这题和另一题at most k distinct characters的解法一致。<br>主要的思路就是维护一个hashmap存取每一个元素出现的次数，如果为１的话，就说明是新入的元素，总个数要＋１<br>同时维护一个start指针来标记左面的边界，每次找到一个符合标准的答案时，更新最长的长度。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstringTwoDistinct</span><span class="params">(String s)</span> </span>&#123;</div><div class="line"></div><div class="line">        HashMap&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>, start = <span class="number">0</span>, end = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (end &lt; s.length()) &#123;</div><div class="line">            <span class="keyword">char</span> current = s.charAt(end);</div><div class="line">            map.put(current, map.getOrDefault(current, <span class="number">0</span>) + <span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span> (map.get(current) == <span class="number">1</span>) &#123;</div><div class="line">                <span class="comment">// new character</span></div><div class="line">                count++;</div><div class="line">            &#125;</div><div class="line">            end++;  <span class="comment">// move end 1 position forward</span></div><div class="line">            <span class="keyword">while</span> (count &gt; <span class="number">2</span>) &#123;</div><div class="line">                <span class="keyword">char</span> prev = s.charAt(start);</div><div class="line">                map.put(prev, map.get(prev) -<span class="number">1</span> );</div><div class="line">                <span class="keyword">if</span> (map.get(prev) == <span class="number">0</span>) &#123;</div><div class="line">                    <span class="comment">// Removed one character</span></div><div class="line">                    count--;</div><div class="line">                &#125;</div><div class="line">                start++;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            res = Math.max(res, end - start);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/10/2017-07-10-221-Maximal-Square/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1662,159 +1808,6 @@ How to make sure the duplicated files you find are not false positive?
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/06/2017-07-06-468-Validate-IP-Address/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/06/2017-07-06-468-Validate-IP-Address/" itemprop="url">468. Validate IP Address</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T20:58:31-04:00">
-                2017-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Write a function to check whether an input string is a valid IPv4 address or IPv6 address or neither.</p>
-<p>IPv4 addresses are canonically represented in dot-decimal notation, which consists of four decimal numbers, each ranging from 0 to 255, separated by dots (“.”), e.g.,172.16.254.1;</p>
-<p>Besides, leading zeros in the IPv4 is invalid. For example, the address 172.16.254.01 is invalid.</p>
-<p>IPv6 addresses are represented as eight groups of four hexadecimal digits, each group representing 16 bits. The groups are separated by colons (“:”). For example, the address 2001:0db8:85a3:0000:0000:8a2e:0370:7334 is a valid one. Also, we could omit some leading zeros among four hexadecimal digits and some low-case characters in the address to upper-case ones, so 2001:db8:85a3:0:0:8A2E:0370:7334 is also a valid IPv6 address(Omit leading zeros and using upper cases).</p>
-<p>However, we don’t replace a consecutive group of zero value with a single empty group using two consecutive colons (::) to pursue simplicity. For example, 2001:0db8:85a3::8A2E:0370:7334 is an invalid IPv6 address.</p>
-<p>Besides, extra leading zeros in the IPv6 is also invalid. For example, the address 02001:0db8:85a3:0000:0000:8a2e:0370:7334 is invalid.</p>
-<p>Note: You may assume there is no extra space or special characters in the input string.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input: &quot;172.16.254.1&quot;</div><div class="line"></div><div class="line">Output: &quot;IPv4&quot;</div><div class="line"></div><div class="line">Explanation: This is a valid IPv4 address, return &quot;IPv4&quot;.</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input: &quot;2001:0db8:85a3:0:0:8A2E:0370:7334&quot;</div><div class="line"></div><div class="line">Output: &quot;IPv6&quot;</div><div class="line"></div><div class="line">Explanation: This is a valid IPv6 address, return &quot;IPv6&quot;.</div></pre></td></tr></table></figure></p>
-<p>Example 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input: &quot;256.256.256.256&quot;</div><div class="line"></div><div class="line">Output: &quot;Neither&quot;</div><div class="line"></div><div class="line">Explanation: This is neither a IPv4 address nor a IPv6 address.</div></pre></td></tr></table></figure></p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">validIPAddress</span><span class="params">(String IP)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (IP == <span class="keyword">null</span> || IP.length() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">"Neither"</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (IP.contains(<span class="string">":"</span>)) &#123;</div><div class="line">            <span class="keyword">return</span> IPV6(IP) ? <span class="string">"IPv6"</span> : <span class="string">"Neither"</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> IPV4(IP) ? <span class="string">"IPv4"</span> : <span class="string">"Neither"</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">IPV6</span><span class="params">(String ip)</span> </span>&#123;</div><div class="line">        String[] temp = ip.split(<span class="string">":"</span>,-<span class="number">1</span>);</div><div class="line">        <span class="keyword">if</span> (temp.length != <span class="number">8</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (String element : temp) &#123;</div><div class="line">            <span class="keyword">if</span> (element.isEmpty() || element.length() &gt; <span class="number">4</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;element.length();i++)&#123;</div><div class="line">                <span class="keyword">char</span> ch = element.charAt(i);</div><div class="line">                <span class="keyword">if</span>(!((ch &gt;= <span class="string">'0'</span> &amp;&amp; ch &lt;= <span class="string">'9'</span>) || (ch&gt;=<span class="string">'a'</span> &amp;&amp; ch&lt;=<span class="string">'f'</span>) || (ch&gt;=<span class="string">'A'</span> &amp;&amp;ch&lt;=<span class="string">'F'</span>))) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">IPV4</span><span class="params">(String ip)</span> </span>&#123;</div><div class="line">        String[] temp = ip.split(<span class="string">"\\."</span>,-<span class="number">1</span>);</div><div class="line">        <span class="keyword">if</span> (temp.length != <span class="number">4</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (String element : temp) &#123;</div><div class="line">            <span class="keyword">if</span> (element.isEmpty()) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (element.length() &gt; <span class="number">1</span> &amp;&amp; element.charAt(<span class="number">0</span>) == <span class="string">'0'</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;   <span class="comment">// leading zero is invalid</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (element.length() &gt; <span class="number">3</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (element.compareTo(<span class="string">"0"</span>) &lt; <span class="number">0</span> || element.compareTo(<span class="string">"255"</span>) &gt; <span class="number">0</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1865,7 +1858,7 @@ How to make sure the duplicated files you find are not false positive?
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">434</span>
+                <span class="site-state-item-count">435</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
