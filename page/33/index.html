@@ -314,6 +314,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/26/2016-12-26-leetcode-solution-Valid-Word-Square-422/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/26/2016-12-26-leetcode-solution-Valid-Word-Square-422/" itemprop="url">leetcode解题: Valid Word Square (422)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-26T17:37:04-05:00">
+                2016-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a sequence of words, check whether it forms a valid word square.</p>
+<p>A sequence of words forms a valid word square if the kth row and column read the exact same string, where 0 ≤ k &lt; max(numRows, numColumns).</p>
+<p>Note:<br>The number of words given is at least 1 and does not exceed 500.<br>Word length will be at least 1 and does not exceed 500.<br>Each word contains only lowercase English alphabet a-z.<br>Example 1:</p>
+<p>Input:<br>[<br>  “abcd”,<br>  “bnrt”,<br>  “crmy”,<br>  “dtye”<br>]</p>
+<p>Output:<br>true</p>
+<p>Explanation:<br>The first row and first column both read “abcd”.<br>The second row and second column both read “bnrt”.<br>The third row and third column both read “crmy”.<br>The fourth row and fourth column both read “dtye”.</p>
+<p>Therefore, it is a valid word square.<br>Example 2:</p>
+<p>Input:<br>[<br>  “abcd”,<br>  “bnrt”,<br>  “crm”,<br>  “dt”<br>]</p>
+<p>Output:<br>true</p>
+<p>Explanation:<br>The first row and first column both read “abcd”.<br>The second row and second column both read “bnrt”.<br>The third row and third column both read “crm”.<br>The fourth row and fourth column both read “dt”.</p>
+<p>Therefore, it is a valid word square.<br>Example 3:</p>
+<p>Input:<br>[<br>  “ball”,<br>  “area”,<br>  “read”,<br>  “lady”<br>]</p>
+<p>Output:<br>false</p>
+<p>Explanation:<br>The third row reads “read” while the third column reads “lead”.</p>
+<p>Therefore, it is NOT a valid word square.</p>
+<h3 id="解法1：-O-M-N"><a href="#解法1：-O-M-N" class="headerlink" title="解法1： O(M * N)"></a>解法1： O(M * N)</h3><p>就是遍历一遍每个字母，对每个字母判断是否有对应的字母。如果没有，则为false<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">validWordSquare</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; words)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> m = words.size();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; words[i].size(); ++j) &#123;</div><div class="line">                <span class="keyword">char</span> cur = words[i][j];</div><div class="line">                <span class="keyword">if</span> (j &gt;= m) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (words[j].size() &lt;= i) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (words[j][i] != words[i][j]) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validWordSquare</span><span class="params">(List&lt;String&gt; words)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (words == <span class="keyword">null</span> || words.size() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Only need to search for the top diagonal</span></div><div class="line">        <span class="keyword">int</span> n = words.size();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; words.get(i).length(); j++) &#123;</div><div class="line">                <span class="keyword">if</span> (j &gt;= n) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (words.get(j).length() &lt;= i || words.get(j).charAt(i) != words.get(i).charAt(j)) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/26/2016-12-26-leetcode-solution-Delete-Node-in-a-BST-450/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1657,156 +1815,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/24/2016-12-24-leetcode-solution-Convert-a-Number-to-Hexadecimal-405/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/24/2016-12-24-leetcode-solution-Convert-a-Number-to-Hexadecimal-405/" itemprop="url">leetcode解题: Convert a Number to Hexadecimal (405)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-24T10:34:06-05:00">
-                2016-12-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>iven an integer, write an algorithm to convert it to hexadecimal. For negative integer, two’s complement method is used.</p>
-<p>Note:</p>
-<p>All letters in hexadecimal (a-f) must be in lowercase.<br>The hexadecimal string must not contain extra leading 0s. If the number is zero, it is represented by a single zero character ‘0’; otherwise, the first character in the hexadecimal string will not be the zero character.<br>The given number is guaranteed to fit within the range of a 32-bit signed integer.<br>You must not use any method provided by the library which converts/formats the number to hex directly.<br>Example 1:</p>
-<p>Input:<br>26</p>
-<p>Output:<br>“1a”<br>Example 2:</p>
-<p>Input:<br>-1</p>
-<p>Output:<br>“ffffffff”</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>16进制每一位表示4个bit的信息，4个bit可以表示0到15的数字，0~9用阿拉伯数字，10~15分别用a ~ f 表示。 那么基本思路就是每一次获取最右边的4位数，然后转化为16进制的数字。然后右移直到数字变为0。<br>C++<br>要注意的是C++ 中如果用+ 操作在string 和 string上，只能char或者string，所以如果是int则要转化为char再进行操作。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">toHex</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (num == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">"0"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">string</span> res = <span class="string">""</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (num != <span class="number">0</span> &amp;&amp; count &lt; <span class="number">8</span>) &#123;</div><div class="line">            <span class="keyword">int</span> temp = num &amp; <span class="number">0xf</span>;</div><div class="line">            <span class="keyword">if</span> (temp &lt; <span class="number">10</span>) &#123;</div><div class="line">                res = to_string(temp) + res;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                res = <span class="keyword">char</span>(<span class="string">'a'</span> + temp - <span class="number">10</span>) + res;</div><div class="line">            &#125;</div><div class="line">            num = num &gt;&gt; <span class="number">4</span>;</div><div class="line">            ++count;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1857,7 +1865,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">432</span>
+                <span class="site-state-item-count">433</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

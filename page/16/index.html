@@ -314,6 +314,151 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/02/2017-07-02-22-Generate-Parentheses/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/02/2017-07-02-22-Generate-Parentheses/" itemprop="url">22. Generate Parentheses</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-02T16:29:09-04:00">
+                2017-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.</p>
+<p>For example, given n = 3, a solution set is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line"> &quot;((()))&quot;,</div><div class="line"> &quot;(()())&quot;,</div><div class="line"> &quot;(())()&quot;,</div><div class="line"> &quot;()(())&quot;,</div><div class="line"> &quot;()()()&quot;</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>比较经典的DFS题目,dfs的思想要掌握<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line"></div><div class="line">        helper(<span class="string">""</span>, res, n, n);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(String current, List&lt;String&gt; res, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (left == <span class="number">0</span> &amp;&amp; right == <span class="number">0</span>) &#123;</div><div class="line">            res.add(current);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (left &gt; <span class="number">0</span>) &#123;</div><div class="line">            helper(current + <span class="string">"("</span>, res, left - <span class="number">1</span>, right);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (right &gt; <span class="number">0</span> &amp;&amp; left &lt; right) &#123;</div><div class="line">            helper(current + <span class="string">")"</span>, res, left, right - <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/02/2017-07-02-151-Reverse-Words-in-a-String/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1644,157 +1789,6 @@ getRandom: Returns a random element from current collection of elements. The pro
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/01/2017-07-01-126-Word-Ladder-II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/01/2017-07-01-126-Word-Ladder-II/" itemprop="url">126. Word Ladder II</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-01T10:18:57-04:00">
-                2017-07-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given two words (beginWord and endWord), and a dictionary’s word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:</p>
-<p>   Only one letter can be changed at a time<br>   Each transformed word must exist in the word list. Note that beginWord is not a transformed word.</p>
-<p>For example,</p>
-<p>Given:<br>beginWord = “hit”<br>endWord = “cog”<br>wordList = [“hot”,”dot”,”dog”,”lot”,”log”,”cog”]</p>
-<p>Return<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [&quot;hit&quot;,&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;cog&quot;],</div><div class="line">  [&quot;hit&quot;,&quot;hot&quot;,&quot;lot&quot;,&quot;log&quot;,&quot;cog&quot;]</div><div class="line">]</div></pre></td></tr></table></figure></p>
-<p>Note:</p>
-<p>   Return an empty list if there is no such transformation sequence.<br>   All words have the same length.<br>   All words contain only lowercase alphabetic characters.<br>   You may assume no duplicates in the word list.<br>   You may assume beginWord and endWord are non-empty and are not the same.</p>
-<p>UPDATE (2017/1/20):<br>The wordList parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>这题挺繁琐的。思想不难，难的是优化。用到的几个知识点总结一下：<br>一个是建立邻接链表来给DFS使用，也就是说，先用一次bfs来遍历出字典中所有word的前驱word.　从start开始，第一步就找出所有能转换为start的word。以此类推。<br>同时，为了dfs中的优化，每一步时同时记录当前word能到达下一个word的最小步数。<br>这里用一个distance来记录。当开始跑dfs的时候，distance就可以用来判断下一个变化的word是不是最短路上的。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; findLadders(String beginWord, String endWord, List&lt;String&gt; wordList) &#123;</div><div class="line"></div><div class="line">        List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">        Map&lt;String, List&lt;String&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</div><div class="line">        Map&lt;String, Integer&gt; distance = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line"></div><div class="line">        Set&lt;String&gt; dict = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">        <span class="keyword">for</span> (String ss : wordList) &#123;</div><div class="line">            dict.add(ss);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!dict.contains(endWord)) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        dict.add(beginWord);</div><div class="line">        dict.add(endWord);</div><div class="line"></div><div class="line">        List&lt;String&gt; ladder = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        bfs(map, distance, beginWord, endWord, dict);</div><div class="line">        dfs(res, ladder, endWord, beginWord, map, distance);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(Map&lt;String, List&lt;String&gt;&gt; map, Map&lt;String, Integer&gt; distance, String start, String end, Set&lt;String&gt; dict)</span> </span>&#123;</div><div class="line"></div><div class="line">        Queue&lt;String&gt; q = <span class="keyword">new</span> LinkedList&lt;String&gt;();</div><div class="line">        q.offer(start);</div><div class="line">        distance.put(start, <span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="comment">// Create an adjacent list</span></div><div class="line">        <span class="keyword">for</span> (String s : dict) &#123;</div><div class="line">            map.put(s, <span class="keyword">new</span> ArrayList&lt;String&gt;());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!q.isEmpty()) &#123;</div><div class="line">            String current = q.poll();</div><div class="line"></div><div class="line">            List&lt;String&gt; candidates = getCandidates(current, dict);</div><div class="line">            <span class="keyword">for</span> (String candidate : candidates) &#123;</div><div class="line">                map.get(candidate).add(current);    <span class="comment">// reverse put</span></div><div class="line">                <span class="comment">// record the minimum length to the start point</span></div><div class="line">                <span class="keyword">if</span> (!distance.containsKey(candidate)) &#123;</div><div class="line">                    distance.put(candidate, distance.get(current) + <span class="number">1</span>);</div><div class="line">                    q.offer(candidate);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(List&lt;List&lt;String&gt;&gt; res, List&lt;String&gt; ladder, String current, String start, Map&lt;String, List&lt;String&gt;&gt; map,</span></span></div><div class="line"><span class="function"><span class="params">                    Map&lt;String, Integer&gt; distance)</span> </span>&#123;</div><div class="line"></div><div class="line">        ladder.add(current);</div><div class="line">        <span class="keyword">if</span> (current.equals(start)) &#123;</div><div class="line">            Collections.reverse(ladder);</div><div class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;String&gt;(ladder));</div><div class="line">            Collections.reverse(ladder);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">for</span> (String next : map.get(current)) &#123;</div><div class="line">                <span class="keyword">if</span> (distance.containsKey(next) &amp;&amp; distance.get(next) == distance.get(current) - <span class="number">1</span>) &#123;</div><div class="line">                    dfs(res, ladder, next, start, map, distance);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        ladder.remove(ladder.size() - <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> List&lt;String&gt; <span class="title">getCandidates</span><span class="params">(String word, Set&lt;String&gt; wordList)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; candidates = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">char</span> c = <span class="string">'a'</span>; c &lt;= <span class="string">'z'</span>; c++) &#123;</div><div class="line">                <span class="keyword">if</span> (c != word.charAt(i)) &#123;</div><div class="line">                    String modified = word.substring(<span class="number">0</span>, i) + c + word.substring(i + <span class="number">1</span>);</div><div class="line">                    <span class="keyword">if</span> (wordList.contains(modified)) &#123;</div><div class="line">                        candidates.add(modified);</div><div class="line">                        &#125;                    </div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> candidates;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1845,7 +1839,7 @@ getRandom: Returns a random element from current collection of elements. The pro
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">432</span>
+                <span class="site-state-item-count">433</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
