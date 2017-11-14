@@ -314,6 +314,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Max-Consecutive-Ones-485/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/12/2017-03-12-leetcode-solution-Max-Consecutive-Ones-485/" itemprop="url">leetcode解题: Max Consecutive Ones (485)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T14:19:42-04:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a binary array, find the maximum number of consecutive 1s in this array.</p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Input: [1,1,0,1,1,1]</div><div class="line">Output: 3</div><div class="line">Explanation: The first two digits or the last three digits are consecutive 1s.</div><div class="line">    The maximum number of consecutive 1s is 3.</div></pre></td></tr></table></figure></p>
+<p>Note:</p>
+<p>The input array will only contain 0 and 1.<br>The length of input array is a positive integer and will not exceed 10,000</p>
+<h3 id="解法1：O-N-一次遍历"><a href="#解法1：O-N-一次遍历" class="headerlink" title="解法1：O(N),一次遍历"></a>解法1：O(N),一次遍历</h3><p>dp的思想，dp[i] = dp[i - 1] + 1 if dp[i] == 1 else dp[i] = 0, 然后用一个res来记录当前遇到的最大值即可。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMaxConsecutiveOnes</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num: nums) &#123;</div><div class="line">            <span class="keyword">if</span> (num == <span class="number">1</span>) &#123;</div><div class="line">                ++count;</div><div class="line">                res = Math.max(res, count);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                count = <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Next-Greater-Element-I-496/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1689,155 +1835,6 @@ public class Solution {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/19/2017-02-19-Leetcode-solution-Best-time-to-buy-and-sell-stock-with-cooldown-309/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/19/2017-02-19-Leetcode-solution-Best-time-to-buy-and-sell-stock-with-cooldown-309/" itemprop="url">Leetcode解题: Best time to buy and sell stock with cooldown (309)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-19T09:27:06-05:00">
-                2017-02-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Say you have an array for which the ith element is the price of a given stock on day i.</p>
-<p>Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times) with the following restrictions:</p>
-<p>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).<br>After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)<br>Example:</p>
-<p>prices = [1, 2, 3, 0, 2]<br>maxProfit = 3<br>transactions = [buy, sell, cooldown, buy, sell]</p>
-<h3 id="解法1：DP-O-N-Time-O-N-Space"><a href="#解法1：DP-O-N-Time-O-N-Space" class="headerlink" title="解法1：DP O(N) Time + O(N) Space"></a>解法1：DP O(N) Time + O(N) Space</h3><p>这题主要要想到用两个数组来记录每一天的两种状态。一个是第i天持有股票，一个是第i天未持有股票。<br>用sell和buy代表两个数组。buy就是第i天持有股票的投资组合的最大市值。sell就是第i天未持有股票时的投资组合的最大市值。<br>那么初始状态sell[0] = 0, buy[0] = -prices[0]这是表示如果第一天持有股票的话一定是买入操作，那么需要花去prices[0]的钱。<br>那么每一天投资组合的演化可以得出下面的关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">第i天未持股的最大市值要么是上一天1）持股2）未持股。</div><div class="line">如果未持股则市值不变，如果持股那么因为第i天一定要卖掉，</div><div class="line">所以如果上一天持股的话则今天的最大市值只能是buy[i-1]+Prices[i]</div><div class="line">sell[i] = max(sell[i - 1], buy[i - 1] + prices[i])</div><div class="line">同理，</div><div class="line">buy[i] = max(buy[i - 1], sell[i - 2] - prices[i])</div></pre></td></tr></table></figure></p>
-<p>依此写出如下程序，如果要求的话可以对空间进一步优化成O(1)<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (prices.size() &lt;= <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> n = prices.size();</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; sell(n, <span class="number">0</span>);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; buy(n, <span class="number">0</span>);</div><div class="line"></div><div class="line">        buy[<span class="number">0</span>] = -prices[<span class="number">0</span>];</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</div><div class="line">            sell[i] = max(sell[i - <span class="number">1</span>], buy[i - <span class="number">1</span>] + prices[i]);</div><div class="line">            buy[i] = max(buy[i - <span class="number">1</span>], (i &gt; <span class="number">1</span>? sell[i - <span class="number">2</span>]:<span class="number">0</span>) - prices[i]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> sell[n - <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<h3 id="解法1：-另外一种解释"><a href="#解法1：-另外一种解释" class="headerlink" title="解法1： 另外一种解释"></a>解法1： 另外一种解释</h3><p>以下的说明直接来自leetcode discussion<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">1. Define States</div><div class="line"></div><div class="line">To represent the decision at index i:</div><div class="line"></div><div class="line">buy[i]: Max profit till index i. The series of transaction is ending with a buy.</div><div class="line">sell[i]: Max profit till index i. The series of transaction is ending with a sell.</div><div class="line">To clarify:</div><div class="line"></div><div class="line">Till index i, the buy / sell action must happen and must be the last action. It may not happen at index i. It may happen at i - 1, i - 2, ... 0.</div><div class="line">In the end n - 1, return sell[n - 1]. Apparently we cannot finally end up with a buy. In that case, we would rather take a rest at n - 1.</div><div class="line">For special case no transaction at all, classify it as sell[i], so that in the end, we can still return sell[n - 1]. Thanks @alex153 @kennethliaoke @anshu2.</div><div class="line">2. Define Recursion</div><div class="line"></div><div class="line">buy[i]: To make a decision whether to buy at i, we either take a rest, by just using the old decision at i - 1, or sell at/before i - 2, then buy at i, We cannot sell at i - 1, then buy at i, because of cooldown.</div><div class="line">sell[i]: To make a decision whether to sell at i, we either take a rest, by just using the old decision at i - 1, or buy at/before i - 1, then sell at i.</div><div class="line">So we get the following formula:</div><div class="line"></div><div class="line">buy[i] = Math.max(buy[i - 1], sell[i - 2] - prices[i]);   </div><div class="line">sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i]);</div><div class="line">3. Optimize to O(1) Space</div><div class="line"></div><div class="line">DP solution only depending on i - 1 and i - 2 can be optimized using O(1) space.</div><div class="line"></div><div class="line">Let b2, b1, b0 represent buy[i - 2], buy[i - 1], buy[i]</div><div class="line">Let s2, s1, s0 represent sell[i - 2], sell[i - 1], sell[i]</div><div class="line">Then arrays turn into Fibonacci like recursion:</div><div class="line"></div><div class="line">b0 = Math.max(b1, s2 - prices[i]);</div><div class="line">s0 = Math.max(s1, b1 + prices[i]);</div><div class="line">4. Write Code in 5 Minutes</div><div class="line"></div><div class="line">First we define the initial states at i = 0:</div><div class="line"></div><div class="line">We can buy. The max profit at i = 0 ending with a buy is -prices[0].</div><div class="line">We cannot sell. The max profit at i = 0 ending with a sell is 0.</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(prices == <span class="keyword">null</span> || prices.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> b0 = -prices[<span class="number">0</span>], b1 = b0;</div><div class="line">    <span class="keyword">int</span> s0 = <span class="number">0</span>, s1 = <span class="number">0</span>, s2 = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</div><div class="line">    	b0 = Math.max(b1, s2 - prices[i]);</div><div class="line">    	s0 = Math.max(s1, b1 + prices[i]);</div><div class="line">    	b1 = b0; s2 = s1; s1 = s0;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> s0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1888,7 +1885,7 @@ public class Solution {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">436</span>
+                <span class="site-state-item-count">437</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

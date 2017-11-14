@@ -314,6 +314,157 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/13/2017-07-13-68-Text-Justification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/13/2017-07-13-68-Text-Justification/" itemprop="url">68. Text Justification</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T18:02:44-04:00">
+                2017-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.</p>
+<p>You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ‘ ‘ when necessary so that each line has exactly L characters.</p>
+<p>Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.</p>
+<p>For the last line of text, it should be left justified and no extra space is inserted between words.</p>
+<p>For example,<br>words: [“This”, “is”, “an”, “example”, “of”, “text”, “justification.”]<br>L: 16.</p>
+<p>Return the formatted lines as:</p>
+<p>[<br>  “This    is    an”,<br>  “example  of text”,<br>  “justification.  “<br>]</p>
+<p>Note: Each word is guaranteed not to exceed L in length.</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>此题不难，也没有什么考点，可能就是考察编程能力和细心程度把。<br>思路大体就是先找出来每一行有哪些words,然后在分布空格。<br>分布空格的时候要从后往前分布，保证比较均匀且较多的空格在左面。<br>对于最后一行的处理要注意补齐空格。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">fullJustify</span><span class="params">(String[] words, <span class="keyword">int</span> maxWidth)</span> </span>&#123;</div><div class="line"></div><div class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">if</span> (words.length == <span class="number">0</span> || maxWidth &lt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="comment">// coding skill and detail-oriented mindset</span></div><div class="line">        <span class="keyword">int</span> currentLen = <span class="number">0</span>;</div><div class="line">        List&lt;String&gt; line = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">while</span> (i &lt; words.length) &#123;</div><div class="line">            <span class="comment">// need to know if it is the start of a line</span></div><div class="line">            <span class="keyword">if</span> ((line.isEmpty() ) || currentLen + <span class="number">1</span> + words[i].length() &lt;= maxWidth)             &#123;</div><div class="line">                currentLen += (line.isEmpty() ? <span class="number">0</span> : <span class="number">1</span> ) + words[i].length();    <span class="comment">// add a space</span></div><div class="line">                line.add(words[i]);</div><div class="line">                i++;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">// Convert current line into a string and push into res</span></div><div class="line">                res.add(justifyLine(line, maxWidth));</div><div class="line">                line = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">                currentLen = <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// treat last line</span></div><div class="line">        <span class="keyword">if</span> (!line.isEmpty()) &#123;</div><div class="line">            String lastLine = String.join(<span class="string">" "</span>, line);</div><div class="line">            <span class="keyword">if</span> (lastLine.length() &lt; maxWidth) &#123;</div><div class="line">                <span class="keyword">int</span> spaces = maxWidth - lastLine.length();</div><div class="line">                <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; spaces; i++) &#123;</div><div class="line">                    lastLine += <span class="string">" "</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            res.add(lastLine);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">justifyLine</span><span class="params">(List&lt;String&gt; words, <span class="keyword">int</span> maxWidth)</span> </span>&#123;</div><div class="line">        StringBuilder builder = <span class="keyword">new</span> StringBuilder();</div><div class="line"></div><div class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (String s : words) &#123;</div><div class="line">            len += s.length();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> spaces = maxWidth - len;</div><div class="line">        <span class="keyword">if</span> (words.size() == <span class="number">1</span>) &#123;</div><div class="line">            builder.append(words.get(<span class="number">0</span>));</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= spaces; i++) &#123;</div><div class="line">                builder.append(<span class="string">" "</span>);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// distribute evenly</span></div><div class="line">            List&lt;String&gt; temp = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = words.size() - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</div><div class="line">                <span class="keyword">int</span> average = spaces / i;</div><div class="line">                temp.add(words.get(i));</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> s = <span class="number">0</span>; s &lt; average; s++) &#123;</div><div class="line">                    temp.add(<span class="string">" "</span>);</div><div class="line">                &#125;</div><div class="line">                spaces -= average;                </div><div class="line">            &#125;</div><div class="line">            <span class="comment">// append last word</span></div><div class="line">            temp.add(words.get(<span class="number">0</span>));</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = temp.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">                builder.append(temp.get(i));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> builder.toString();</div><div class="line">    &#125;    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/13/2017-07-13-44-Wildcard-Matching/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1653,152 +1804,6 @@ Both the left and right subtrees must also be binary search trees.
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/11/2017-07-11-30-Substring-with-Concatenation-of-All-Words/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/11/2017-07-11-30-Substring-with-Concatenation-of-All-Words/" itemprop="url">30. Substring with Concatenation of All Words</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T20:58:29-04:00">
-                2017-07-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.</p>
-<p>For example, given:<br>s: “barfoothefoobarman”<br>words: [“foo”, “bar”]</p>
-<p>You should return the indices: [0,9].<br>(order does not matter).</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>也是滑动窗口的思路，第一层循环是对于起始点的遍历。起始点可以从0到word的长度－１。<br>之后就是一个词一个词的向右进。同时统计每一个词出现的次数。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">findSubstring</span><span class="params">(String s, String[] words)</span> </span>&#123;</div><div class="line"></div><div class="line">List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (words == <span class="keyword">null</span> || words.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Map&lt;String, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        Map&lt;String, Integer&gt; currentMap = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (String word : words) &#123;</div><div class="line">            map.put(word, map.getOrDefault(word, <span class="number">0</span>) + <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> len = s.length();</div><div class="line">        <span class="keyword">int</span> N = words.length;</div><div class="line">        <span class="keyword">int</span> M = words[<span class="number">0</span>].length();</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; i++) &#123;</div><div class="line">            <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">            <span class="keyword">int</span> start = i;  <span class="comment">// record the start index of the substring</span></div><div class="line">            <span class="keyword">int</span> left = start, right = left + M;</div><div class="line">            <span class="keyword">while</span> (right &lt;= len) &#123;</div><div class="line">                String current = s.substring(left, right);</div><div class="line">                <span class="keyword">if</span> (map.containsKey(current)) &#123;</div><div class="line">                    currentMap.put(current, currentMap.getOrDefault(current, <span class="number">0</span>) + <span class="number">1</span>);</div><div class="line">                    <span class="keyword">if</span> (currentMap.get(current) &lt;= map.get(current)) count++;    <span class="comment">// find a matched word</span></div><div class="line">                    <span class="keyword">while</span> (currentMap.get(current) &gt; map.get(current)) &#123;</div><div class="line">                        String temp = s.substring(start, start + M);</div><div class="line">                        currentMap.put(temp, currentMap.get(temp) - <span class="number">1</span>);</div><div class="line">                        start += M; <span class="comment">// update the start of the substring</span></div><div class="line">                        <span class="keyword">if</span> (currentMap.get(temp) &lt; map.get(temp)) count--;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span> (count == N) &#123;</div><div class="line">                        res.add(start);</div><div class="line">                        String temp = s.substring(start, start + M);</div><div class="line">                        currentMap.put(temp, currentMap.get(temp) - <span class="number">1</span>);</div><div class="line">                        count--;</div><div class="line">                        start += M; <span class="comment">// update the start of the substring</span></div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    count = <span class="number">0</span>;</div><div class="line">                    currentMap.clear();</div><div class="line">                    start = right;</div><div class="line">                &#125;</div><div class="line">                left = right;</div><div class="line">                right += M;</div><div class="line">            &#125;</div><div class="line">            currentMap.clear();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1849,7 +1854,7 @@ Both the left and right subtrees must also be binary search trees.
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">436</span>
+                <span class="site-state-item-count">437</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

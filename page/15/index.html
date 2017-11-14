@@ -314,6 +314,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/08/2017-07-08-555-Split-Concatenated-Strings/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/08/2017-07-08-555-Split-Concatenated-Strings/" itemprop="url">555. Split Concatenated Strings</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-08T21:24:59-04:00">
+                2017-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a list of strings, you could concatenate these strings together into a loop, where for each string you could choose to reverse it or not. Among all the possible loops, you need to find the lexicographically biggest string after cutting the loop, which will make the looped string into a regular one.</p>
+<p>Specifically, to find the lexicographically biggest string, you need to experience two phases:</p>
+<pre><code>Concatenate all the strings into a loop, where you can reverse some strings or not and connect them in the same order as given.
+Cut and make one breakpoint in any place of the loop, which will make the looped string into a regular one starting from the character at the cutpoint.
+</code></pre><p>And your job is to find the lexicographically biggest one among all the possible regular strings.</p>
+<p>Example:</p>
+<p>Input: “abc”, “xyz”<br>Output: “zyxcba”<br>Explanation: You can get the looped string “-abcxyz-“, “-abczyx-“, “-cbaxyz-“, “-cbazyx-“,<br>where ‘-‘ represents the looped status.<br>The answer string came from the fourth looped one,<br>where you could cut from the middle character ‘a’ and get “zyxcba”.</p>
+<p>Note:</p>
+<pre><code>The input strings will only contain lowercase letters.
+The total length of all the strings will not over 1,000.
+</code></pre><h3 id="解法1：O-N-2"><a href="#解法1：O-N-2" class="headerlink" title="解法1：O(N^2)　"></a>解法1：O(N^2)　</h3><p>此题参考了leetcode的解法：<br><figure class="highlight plain"><figcaption><span>order to understand how this solution works, firstly we'll look at some of the properties of the transformation involved. The first point to note is that the relative ordering of the strings doesn't change after applying the transformations(i.e. reversing and applying cuts).</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">The second property will be explained taking the help of an example. Consider the given list of strings: [s1,s2,s3,..,sj,..sn][s_1, s_2, s_3,..,s_j,..s_n][s​1​​,s​2​​,s​3​​,..,s​j​​,..s​n​​]. Now, assume that we choose sjs_js​j​​ to be the string on which the current cut is placed leading to the formation of two substrings from sjs_js​j​​, namely, say sjpres_&#123;jpre&#125;s​jpre​​, sjposts_&#123;jpost&#125;s​jpost​​. Thus, the concatenated string formed by such a cut will be: [sjpost,sj+1,...,sn,s1rev,s2rev,..,s(jpre)rev][s_&#123;jpost&#125;, s_&#123;j+1&#125;,..., s_n, s_&#123;1rev&#125;, s_&#123;2rev&#125;,.., s_&#123;(jpre)rev&#125;][s​jpost​​,s​j+1​​,...,s​n​​,s​1rev​​,s​2rev​​,..,s​(jpre)rev​​]. Here, sirevs_&#123;irev&#125;s​irev​​ means the reversed sis_is​i​​ string.</div><div class="line"></div><div class="line">The concatenated string formed follows the same pattern irrespective of where the cut is placed in sjs_js​j​​. But still, the relative ordering of the strings persists, even if we include the reverse operation as well.</div><div class="line"></div><div class="line">Now, if we consider only a single cut for the time being, in string sjs_js​j​​(not reversed) as discussed above, and allow for the reverse operation among the remaining strings, the lexicographically largest concatenated string will be given by: [sjpost,max(sj+1,s(j+1)rev),...,max(sn,s(n)rev),max(s1,s(1)rev),...,s(jpre)rev][s_&#123;jpost&#125;, \text&#123;max&#125;(s_&#123;j+1&#125;,s_&#123;(j+1)rev&#125;) ,..., \text&#123;max&#125;(s_&#123;n&#125;,s_&#123;(n)rev&#125;), \text&#123;max&#125;(s_&#123;1&#125;,s_&#123;(1)rev&#125;), ..., s_&#123;(jpre)rev&#125;][s​jpost​​,max(s​j+1​​,s​(j+1)rev​​),...,max(s​n​​,s​(n)rev​​),max(s​1​​,s​(1)rev​​),...,s​(jpre)rev​​]. Here, max\text&#123;max&#125;max refers to the lexicographic maximum operation.</div><div class="line"></div><div class="line">Thus, if a particular string sjs_js​j​​ is finalized for the cut, the largest lexicographic concatenated string is dependent only on whether the string sjs_js​j​​ is reversed or not, and also on the position of the cut. This happens because the reverse/not reverse operation for the rest of the strings is fixed for a chosen sjs_js​j​​ as shown above and thus, doesn&apos;t impact the final result.</div><div class="line"></div><div class="line">Based on the above observations, we follow the given procedure. For every given string, we replace the string with the lexicographically larger string out of the original string and the reversed one. After this, we pick up every new string(chosen as the string on which the cuts will be applied), and apply a cut at all the positions of the currently picked string and form the full concantenated string keeping the rest of the newly formed strings intact. We also reverse the current string and follow the same process. While doing this, we keep a track of the largest lexicographic string found so far.</div></pre></td></tr></table></figure></p>
+<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">splitLoopedString</span><span class="params">(String[] strs)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strs.length; i++) &#123;</div><div class="line">            String rev = <span class="keyword">new</span> StringBuilder(strs[i]).reverse().toString();</div><div class="line">            <span class="keyword">if</span> (strs[i].compareTo(rev) &lt; <span class="number">0</span>) &#123;</div><div class="line">                strs[i] = rev;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String res = <span class="string">""</span>;    <span class="comment">// store results</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strs.length; i++) &#123;</div><div class="line">            String rev = <span class="keyword">new</span> StringBuilder(strs[i]).reverse().toString();</div><div class="line">            <span class="keyword">for</span> (String str : <span class="keyword">new</span> String[] &#123;strs[i], rev&#125;) &#123;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; str.length(); k++) &#123;</div><div class="line">                    <span class="comment">// get the head</span></div><div class="line">                    StringBuilder builder = <span class="keyword">new</span> StringBuilder(str.substring(k));</div><div class="line">                    <span class="comment">// append i + 1 to n strings</span></div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; strs.length; j++) &#123;</div><div class="line">                        builder.append(strs[j]);</div><div class="line">                    &#125;</div><div class="line">                    <span class="comment">// append 0 to i -1 strings</span></div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</div><div class="line">                        builder.append(strs[j]);</div><div class="line">                    &#125;</div><div class="line">                    builder.append(str.substring(<span class="number">0</span>, k));</div><div class="line">                    <span class="keyword">if</span> (builder.toString().compareTo(res) &gt; <span class="number">0</span>) &#123;</div><div class="line">                        <span class="comment">// lexi order</span></div><div class="line">                        res = builder.toString();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/06/2017-07-06-609-Find-Duplicate-File-in-System/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1655,155 +1809,6 @@ How to make sure the duplicated files you find are not false positive?
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/05/2017-07-05-635-Design-Log-Storage-System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/2017-07-05-635-Design-Log-Storage-System/" itemprop="url">635. Design Log Storage System</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T22:47:59-04:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>You are given several logs that each log contains a unique id and timestamp. Timestamp is a string that has the following format: Year:Month:Day:Hour:Minute:Second, for example, 2017:01:01:23:59:59. All domains are zero-padded decimal numbers.</p>
-<p>Design a log storage system to implement the following functions:</p>
-<p>void Put(int id, string timestamp): Given a log’s unique id and timestamp, store the log in your storage system.</p>
-<p>int[] Retrieve(String start, String end, String granularity): Return the id of logs whose timestamps are within the range from start to end. Start and end all have the same format as timestamp. However, granularity means the time level for consideration. For example, start = “2017:01:01:23:59:59”, end = “2017:01:02:23:59:59”, granularity = “Day”, it means that we need to find the logs within the range from Jan. 1st 2017 to Jan. 2nd 2017.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">put(1, &quot;2017:01:01:23:59:59&quot;);</div><div class="line">put(2, &quot;2017:01:01:22:59:59&quot;);</div><div class="line">put(3, &quot;2016:01:01:00:00:00&quot;);</div><div class="line">retrieve(&quot;2016:01:01:01:01:01&quot;,&quot;2017:01:01:23:00:00&quot;,&quot;Year&quot;); // return [1,2,3], because you need to return all logs within 2016 and 2017.</div><div class="line">retrieve(&quot;2016:01:01:01:01:01&quot;,&quot;2017:01:01:23:00:00&quot;,&quot;Hour&quot;); // return [1,2], because you need to return all logs start from 2016:01:01:01 to 2017:01:01:23, where log 3 is left outside the range.</div></pre></td></tr></table></figure></p>
-<p>Note:<br>There will be at most 300 operations of Put or Retrieve.<br>Year ranges from [2000,2017]. Hour ranges from [00,23].<br>Output for Retrieve has no order required.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>用一个hashmap来存储log,这题的考点主要在retrieve上。retrieve的时候可以按照gra来截取相关的子串，然后和start, end直接比较大小就可以。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogSystem</span> </span>&#123;</div><div class="line"></div><div class="line">    HashMap&lt;Integer, String&gt; map;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LogSystem</span><span class="params">()</span> </span>&#123;</div><div class="line">        map = <span class="keyword">new</span> HashMap&lt;Integer, String&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> id, String timestamp)</span> </span>&#123;</div><div class="line">        map.put(id, timestamp);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">retrieve</span><span class="params">(String s, String e, String gra)</span> </span>&#123;</div><div class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        <span class="keyword">int</span> x = <span class="number">0</span>;</div><div class="line">        <span class="keyword">switch</span> (gra) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="string">"Year"</span>:</div><div class="line">                x = <span class="number">4</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">"Month"</span>:</div><div class="line">                x = <span class="number">7</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">"Day"</span>:</div><div class="line">                x = <span class="number">10</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">"Hour"</span>:</div><div class="line">                x = <span class="number">13</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">"Minute"</span>:</div><div class="line">                x = <span class="number">16</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">"Second"</span>:</div><div class="line">                x = <span class="number">19</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        String start = s.substring(<span class="number">0</span>, x);</div><div class="line">        String end = e.substring(<span class="number">0</span>, x);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> id : map.keySet()) &#123;</div><div class="line">            String record = map.get(id).substring(<span class="number">0</span>,x);</div><div class="line">            <span class="keyword">if</span> (record.compareTo(start) &gt;= <span class="number">0</span> &amp;&amp; record.compareTo(end) &lt;= <span class="number">0</span>) &#123;</div><div class="line">                res.add(id);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your LogSystem object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * LogSystem obj = new LogSystem();</span></div><div class="line"><span class="comment"> * obj.put(id,timestamp);</span></div><div class="line"><span class="comment"> * List&lt;Integer&gt; param_2 = obj.retrieve(s,e,gra);</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1854,7 +1859,7 @@ How to make sure the duplicated files you find are not false positive?
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">436</span>
+                <span class="site-state-item-count">437</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
