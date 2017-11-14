@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[23. Merge k Sorted List]]></title>
+    <url>%2F2017%2F11%2F13%2F23-Merge-k-Sorted-List%2F</url>
+    <content type="text"><![CDATA[Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity. 解法1： PriorityQueue, O(NlogM)M是queue的长度，N是所有node的总数。一个简单的PriorityQueue的应用。 123456789101112131415161718192021222324252627282930313233343536373839404142434445/** * Definition for singly-linked list. * public class ListNode &#123; * int val; * ListNode next; * ListNode(int x) &#123; val = x; &#125; * &#125; */class Solution &#123; public ListNode mergeKLists(ListNode[] lists) &#123; if (lists == null || lists.length == 0) &#123; return null; &#125; ListNode dummy = new ListNode(0); ListNode tail = dummy; Queue&lt;ListNode&gt; queue = new PriorityQueue&lt;&gt;((a,b) -&gt; a.val - b.val); for (int i = 0; i &lt; lists.length; i++) &#123; if (lists[i] != null) &#123; queue.offer(lists[i]); &#125; &#125; while (!queue.isEmpty()) &#123; ListNode next = queue.poll(); tail.next = next; tail = tail.next; // add another node if exist if (next.next != null) &#123; queue.offer(next.next); &#125; &#125; return dummy.next; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[10. Regular Expression Matching]]></title>
     <url>%2F2017%2F11%2F13%2F10-Regular-Expression-Matching%2F</url>
     <content type="text"><![CDATA[Implement regular expression matching with support for ‘.’ and ‘*’.12345678910111213141516&apos;.&apos; Matches any single character.&apos;*&apos; Matches zero or more of the preceding element.The matching should cover the entire input string (not partial).The function prototype should be:bool isMatch(const char *s, const char *p)Some examples:isMatch(&quot;aa&quot;,&quot;a&quot;) → falseisMatch(&quot;aa&quot;,&quot;aa&quot;) → trueisMatch(&quot;aaa&quot;,&quot;aa&quot;) → falseisMatch(&quot;aa&quot;, &quot;a*&quot;) → trueisMatch(&quot;aa&quot;, &quot;.*&quot;) → trueisMatch(&quot;ab&quot;, &quot;.*&quot;) → trueisMatch(&quot;aab&quot;, &quot;c*a*b&quot;) → true 解法1： DP O(MN)这题一开始拿到没想到可以用DP。如果从基础的递归开始思考的话会比较容易一点往dp的方向上想。而dp的状态方程也不太好想。参考了YouTube上的这个视频,讲的还是比较清楚的。首先，dp[i][j]表示的是前i个字符和前j个字符是否能match。那么如果s[i] == p[j]，又或者当前的pattern是”.”, 则可以轻松得出dp[i][j] = dp[i - 1][j - 1]如果是,那么就稍微麻烦一点。这里可以考虑的是两种情况：一个是不match前面的字符，这种情况下可以得到dp[i][j] = dp[i][j - 2]另外一个是match一个或者多个前面的字符，但是这种情况需要满足s[i] = p[j - 1].那么怎么表示match呢？可以的做法就是把当前s的位置的字符删除，变成s[i - 1]再和p[i]尝试match.举一个例子：aa 和a*。 如果在match第二个a的时候，可以退化成比较a和a*。而这个结果已经有了。 1234567891011121314151617181920212223242526272829303132333435363738class Solution &#123; public boolean isMatch(String s, String p) &#123; if (s == null &amp;&amp; p == null) return true; if (s == null || p == null) return false; if (s.length() == 0 &amp;&amp; p.length() == 0) return true; int m = s.length(); int n = p.length(); boolean[][] dp = new boolean[m + 1][n + 1]; dp[0][0] = true; for (int i = 2; i &lt;= n; i++) &#123; if (p.charAt(i - 1) == '*') &#123; dp[0][i] = dp[0][i - 2]; &#125; &#125; for (int i = 1; i &lt;=m ; i++) &#123; for (int j = 1; j &lt;= n; j++) &#123; if (p.charAt(j - 1) == '.' || (p.charAt(j - 1) == s.charAt(i - 1))) &#123; dp[i][j] = dp[i - 1][j - 1]; &#125; else if (p.charAt(j - 1) == '*') &#123; dp[i][j] = dp[i][j - 2]; // zero match of the previous value if (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1)) &#123; dp[i][j] |= dp[i - 1][j]; &#125; &#125; else &#123; dp[i][j] = false; &#125; &#125; &#125; return dp[m][n]; &#125;&#125;]]></content>

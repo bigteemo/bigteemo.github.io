@@ -314,6 +314,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/02/2017-07-02-606-Construct-String-from-Binary-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/02/2017-07-02-606-Construct-String-from-Binary-Tree/" itemprop="url">606. Construct String from Binary Tree</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-02T11:17:59-04:00">
+                2017-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>You need to construct a string consists of parenthesis and integers from a binary tree with the preorder traversing way.</p>
+<p>The null node needs to be represented by empty parenthesis pair “()”. And you need to omit all the empty parenthesis pairs that don’t affect the one-to-one mapping relationship between the string and the original binary tree.</p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Input: Binary tree: [1,2,3,4]</div><div class="line">       1</div><div class="line">     /   \</div><div class="line">    2     3</div><div class="line">   /    </div><div class="line">  4     </div><div class="line"></div><div class="line">Output: &quot;1(2(4))(3)&quot;</div><div class="line"></div><div class="line">Explanation: Originallay it needs to be &quot;1(2(4)())(3()())&quot;,</div><div class="line">but you need to omit all the unnecessary empty parenthesis pairs.</div><div class="line">And it will be &quot;1(2(4))(3)&quot;.</div></pre></td></tr></table></figure></p>
+<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Input: Binary tree: [1,2,3,null,4]</div><div class="line">       1</div><div class="line">     /   \</div><div class="line">    2     3</div><div class="line">     \  </div><div class="line">      4</div><div class="line"></div><div class="line">Output: &quot;1(2()(4))(3)&quot;</div><div class="line"></div><div class="line">Explanation: Almost the same as the first example,</div><div class="line">except we can&apos;t omit the first parenthesis pair to break the one-to-one mapping relationship between the input and the output.</div></pre></td></tr></table></figure></p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">tree2str</span><span class="params">(TreeNode t)</span> </span>&#123;</div><div class="line"></div><div class="line">        StringBuilder builder = <span class="keyword">new</span> StringBuilder();        </div><div class="line">        helper(builder, t);</div><div class="line">        <span class="keyword">return</span> builder.toString();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(StringBuilder builder, TreeNode t)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (t != <span class="keyword">null</span>) &#123;</div><div class="line">            builder.append(Integer.toString(t.val));</div><div class="line">            <span class="keyword">if</span> (t.left != <span class="keyword">null</span> || t.right != <span class="keyword">null</span>) &#123;</div><div class="line">                builder.append(<span class="string">"("</span>);</div><div class="line">                helper(builder, t.left);</div><div class="line">                builder.append(<span class="string">")"</span>);</div><div class="line">                <span class="keyword">if</span> (t.right != <span class="keyword">null</span>) &#123;</div><div class="line">                    builder.append(<span class="string">"("</span>);</div><div class="line">                    helper(builder, t.right);</div><div class="line">                    builder.append(<span class="string">")"</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/02/2017-07-02-408-Valid-Word-Abbreviation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1635,156 +1782,6 @@ getRandom: Returns a random element from current collection of elements. The pro
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/06/27/2017-06-27-4-Median-of-Two-Sorted-Array/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/27/2017-06-27-4-Median-of-Two-Sorted-Array/" itemprop="url">4. Median of Two Sorted Array</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T21:56:39-04:00">
-                2017-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>There are two sorted arrays nums1 and nums2 of size m and n respectively.</p>
-<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nums1 = [1, 3]</div><div class="line">nums2 = [2]</div><div class="line"></div><div class="line">The median is 2.0</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nums1 = [1, 2]</div><div class="line">nums2 = [3, 4]</div><div class="line"></div><div class="line">The median is (2 + 3)/2 = 2.5</div></pre></td></tr></table></figure></p>
-<h3 id="解法1：-Math"><a href="#解法1：-Math" class="headerlink" title="解法1： Math"></a>解法1： Math</h3><p>参考这篇<a href="https://discuss.leetcode.com/topic/4996/share-my-o-log-min-m-n-solution-with-explanation" target="_blank" rel="external">解释</a><br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2)</span> </span>&#123;</div><div class="line"></div><div class="line">            <span class="keyword">int</span> m = nums1.length;</div><div class="line">            <span class="keyword">int</span> n = nums2.length;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (m &gt; n) &#123;</div><div class="line">                <span class="keyword">return</span> findMedianSortedArrays(nums2, nums1);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">int</span> start = <span class="number">0</span>, end = m, half = (m + n + <span class="number">1</span>) / <span class="number">2</span>;</div><div class="line">            <span class="comment">// Satisfy both condition, calculate the medium</span></div><div class="line">            <span class="keyword">int</span> max_of_left = <span class="number">0</span>, min_of_right = <span class="number">0</span>, i = <span class="number">0</span>, j = <span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span> (start &lt;= end) &#123;</div><div class="line">                i = (start + end) / <span class="number">2</span>;</div><div class="line">                j = half- i;</div><div class="line">                <span class="keyword">if</span> (i &lt; m &amp;&amp; j &gt; <span class="number">0</span> &amp;&amp; nums2[j - <span class="number">1</span>] &gt; nums1[i]) &#123;</div><div class="line">                    start = i + <span class="number">1</span>;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; j &lt; n &amp;&amp; nums1[i - <span class="number">1</span>] &gt; nums2[j]) &#123;</div><div class="line">                    end = i - <span class="number">1</span>;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</div><div class="line">                        max_of_left = nums2[j - <span class="number">1</span>];</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</div><div class="line">                        max_of_left = nums1[i - <span class="number">1</span>];</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        max_of_left = Math.max(nums1[i - <span class="number">1</span>], nums2[j - <span class="number">1</span>]);</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">           <span class="comment">// Check if the total number of elements is odd or even</span></div><div class="line">            <span class="keyword">if</span> ((m + n) % <span class="number">2</span> == <span class="number">1</span>) &#123;</div><div class="line">                <span class="keyword">return</span> max_of_left;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (i == m) &#123;</div><div class="line">                min_of_right = nums2[j];</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j == n) &#123;</div><div class="line">                min_of_right = nums1[i];</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                min_of_right = Math.min(nums1[i], nums2[j]);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> (max_of_left + min_of_right)/<span class="number">2.0</span>;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-Kth-Value"><a href="#解法2：-Kth-Value" class="headerlink" title="解法2： Kth Value"></a>解法2： Kth Value</h3><p>这个解法比较好理解一点，也不容易错，要考虑的edge case容易一些。<br>基本的思想就是先要写出一个find kth element in a two sorted array的function。<br>这个function可以用递归的方式实现，而每一次递归，两个array都需要去掉当中一个的一半。<br>想法就是：<br>如果第一个array的长度是0，那么第k个一定在第二个array的k-1位置。<br>如果k==1，那么第k个就是当前比较的array的第一个的最小值<br>如果都不是，那么可以把两个array都砍两半。假设是A和B。<br>比较A和B的中点，一个是pa = k/2，另一个就是k - pa， 为的是保证左右两半都是k个数。<br>然后比较这两个数，如果mA &lt; mB，则说明前pa个数都不是第k个数的备选，可以抛掉。相反同理<br>如果ma == mB，则说明已经找到第k个数，返回即可。</p>
-<p>等kth function写出来之后，就可以按照总长度是奇数还是偶数。<br>如果是奇数，就直接求total / 2的数，<br>如果是偶徐，需要把中间两个数的平均数返回。<br>总的时间复杂度是O(logM + logN) = O(logMN)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> m = nums1.length;</div><div class="line">        <span class="keyword">int</span> n = nums2.length;</div><div class="line">        <span class="keyword">int</span> total = m + n;</div><div class="line">        <span class="keyword">if</span> (total % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> (findKth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, total / <span class="number">2</span>) + findKth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, total / <span class="number">2</span> + <span class="number">1</span>)) / <span class="number">2.0</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, total / <span class="number">2</span> + <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">findKth</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span> i, <span class="keyword">int</span>[] nums2, <span class="keyword">int</span> j, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> len1 = nums1.length - i;</div><div class="line">        <span class="keyword">int</span> len2 = nums2.length - j;</div><div class="line">        <span class="keyword">if</span> (len1 &gt; len2) &#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums2, j, nums1, i, k);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>) <span class="keyword">return</span> nums2[j + k - <span class="number">1</span>];</div><div class="line">        <span class="keyword">if</span> (k == <span class="number">1</span>) <span class="keyword">return</span> Math.min(nums1[i], nums2[j]);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> pa = Math.min(len1, k / <span class="number">2</span>);</div><div class="line">        <span class="keyword">int</span> pb = k - pa;</div><div class="line">        <span class="keyword">if</span> (nums1[i + pa - <span class="number">1</span>] &lt; nums2[j + pb - <span class="number">1</span>]) &#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums1, i + pa, nums2, j, k - pa);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums1[i + pa - <span class="number">1</span>] &gt; nums2[j + pb - <span class="number">1</span>]) &#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums1, i, nums2, j + pb, k - pb);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> nums1[i + pa - <span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1835,7 +1832,7 @@ getRandom: Returns a random element from current collection of elements. The pro
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">437</span>
+                <span class="site-state-item-count">438</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

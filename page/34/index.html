@@ -314,6 +314,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/24/2016-12-24-leetcode-solution-Populkating-next-right-pointers-in-each-node-II-117/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/24/2016-12-24-leetcode-solution-Populkating-next-right-pointers-in-each-node-II-117/" itemprop="url">leetcode解题: Populating next right pointers in each node II (117)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-24T14:07:28-05:00">
+                2016-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Follow up for problem “Populating Next Right Pointers in Each Node”.</p>
+<p>What if the given tree could be any binary tree? Would your previous solution still work?</p>
+<p>Note:</p>
+<p>You may only use constant extra space.<br>For example,<br>Given the following binary tree,<br>         1<br>       /  \<br>      2    3<br>     / \    \<br>    4   5    7<br>After calling your function, the tree should look like:<br>         1 -&gt; NULL<br>       /  \<br>      2 -&gt; 3 -&gt; NULL<br>     / \    \<br>    4-&gt; 5 -&gt; 7 -&gt; NULL</p>
+<h3 id="解法1：-BFS，-O（N）-Time-O（N）-Space"><a href="#解法1：-BFS，-O（N）-Time-O（N）-Space" class="headerlink" title="解法1： BFS， O（N） Time + O（N） Space"></a>解法1： BFS， O（N） Time + O（N） Space</h3><p>运用此前<a href="http://bigteemo.github.io/2016/12/24/leetcode-solution-Populating-Next-right-pointers-in-each-node-116/">perfect tree</a>的解法，此题任然有效。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">connect</span><span class="params">(TreeLinkNode *root)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!root) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">queue</span>&lt;TreeLinkNode*&gt; q;</div><div class="line">    q.push(root);</div><div class="line">    <span class="keyword">while</span>(!q.empty()) &#123;</div><div class="line">        <span class="keyword">int</span> number = q.size();</div><div class="line">        TreeLinkNode* prev = <span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; number; ++i) &#123;</div><div class="line">            TreeLinkNode* cur = q.front();</div><div class="line">            q.pop();</div><div class="line">            cur-&gt;next = prev;</div><div class="line">            prev = cur;</div><div class="line">            <span class="keyword">if</span> (cur-&gt;right) &#123;</div><div class="line">                q.push(cur-&gt;right);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (cur-&gt;left) &#123;</div><div class="line">                q.push(cur-&gt;left);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<h3 id="解法2：-Iterative，-O（N）-Time-O（1）-Space"><a href="#解法2：-Iterative，-O（N）-Time-O（1）-Space" class="headerlink" title="解法2： Iterative， O（N） Time + O（1） Space"></a>解法2： Iterative， O（N） Time + O（1） Space</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span><span class="params">(TreeLinkNode root)</span> </span>&#123;</div><div class="line">        TreeLinkNode dummy = <span class="keyword">new</span> TreeLinkNode(<span class="number">0</span>);   <span class="comment">// point to the next level's first node</span></div><div class="line">        TreeLinkNode prev = dummy;</div><div class="line">        <span class="keyword">while</span> (root != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) &#123;</div><div class="line">                prev.next = root.left;</div><div class="line">                prev = prev.next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (root.right != <span class="keyword">null</span>) &#123;</div><div class="line">                prev.next = root.right;</div><div class="line">                prev = prev.next;</div><div class="line">            &#125;</div><div class="line">            root = root.next;</div><div class="line">            <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="comment">// end of current level, move to the next level</span></div><div class="line">                root = dummy.next;</div><div class="line">                prev = dummy;</div><div class="line">                dummy.next = <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/24/2016-12-24-leetcode-solution-Populating-Next-right-pointers-in-each-node-116/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1648,151 +1796,6 @@ ___5__          ___1__
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/21/2016-12-21-leetcode-solution-Factorial-Trailing-Zeroes-172/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/21/2016-12-21-leetcode-solution-Factorial-Trailing-Zeroes-172/" itemprop="url">leetcode解题: Factorial Trailing Zeroes (172)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-21T21:29:26-05:00">
-                2016-12-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an integer n, return the number of trailing zeroes in n!.</p>
-<p>Note: Your solution should be in logarithmic time complexity.</p>
-<h3 id="解法1：-O（N），-N-is-number-of-5"><a href="#解法1：-O（N），-N-is-number-of-5" class="headerlink" title="解法1： O（N）， N is number of 5"></a>解法1： O（N）， N is number of 5</h3><p>一道老题了， 主要就是有一个5就会对应一个trailing zero， 题目要求的就变成从1到n有多少个数含有5的因子。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">trailingZeroes</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n &lt; <span class="number">5</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</div><div class="line">            count += n / <span class="number">5</span>;</div><div class="line">            n = n / <span class="number">5</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1843,7 +1846,7 @@ ___5__          ___1__
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">437</span>
+                <span class="site-state-item-count">438</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
