@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[25. Reverse Nodes in k-Group]]></title>
+    <url>%2F2017%2F11%2F13%2F25-Reverse-Nodes-in-k-Group%2F</url>
+    <content type="text"><![CDATA[Given a linked list, reverse the nodes of a linked list k at a time and return its modified list. k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is. You may not alter the values in the nodes, only nodes itself may be changed. Only constant memory is allowed. For example,Given this linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5 For k = 2, you should return: 2-&gt;1-&gt;4-&gt;3-&gt;5 For k = 3, you should return: 3-&gt;2-&gt;1-&gt;4-&gt;5 解法1： O(N)考点是基本的linkedlist操作，每次找出一个要反转的subList的头的前一个node和他的尾巴node,反转了之后再把新subList接回原来的list就可以了。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657/** * Definition for singly-linked list. * public class ListNode &#123; * int val; * ListNode next; * ListNode(int x) &#123; val = x; &#125; * &#125; */class Solution &#123; public ListNode reverseKGroup(ListNode head, int k) &#123; if (head == null) return null; if (k &lt;= 1) return head; ListNode dummy = new ListNode(0); dummy.next = head; ListNode tail = dummy; while (tail != null &amp;&amp; tail.next != null) &#123; int count = 0; // first find the end of the sub list ListNode subHead = tail; while (tail != null &amp;&amp; count &lt; k) &#123; ++count; tail = tail.next; &#125; // tail point to the end of the subList if (tail == null) break; ListNode next = tail.next; tail.next = null; ListNode subRealHead = subHead.next; ListNode temp = reverse(subRealHead); subHead.next = temp; // connect the new head to front subRealHead.next = next; // connect the new tail to end tail = subRealHead; // set tail to be the last element in the current subList &#125; return dummy.next; &#125; private ListNode reverse(ListNode head) &#123; ListNode prev = null; while (head != null) &#123; ListNode next = head.next; head.next = prev; prev = head; head = next; &#125; return prev; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[23. Merge k Sorted List]]></title>
     <url>%2F2017%2F11%2F13%2F23-Merge-k-Sorted-List%2F</url>
     <content type="text"><![CDATA[Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity. 解法1： PriorityQueue, O(NlogM)M是queue的长度，N是所有node的总数。一个简单的PriorityQueue的应用。 123456789101112131415161718192021222324252627282930313233343536373839404142434445/** * Definition for singly-linked list. * public class ListNode &#123; * int val; * ListNode next; * ListNode(int x) &#123; val = x; &#125; * &#125; */class Solution &#123; public ListNode mergeKLists(ListNode[] lists) &#123; if (lists == null || lists.length == 0) &#123; return null; &#125; ListNode dummy = new ListNode(0); ListNode tail = dummy; Queue&lt;ListNode&gt; queue = new PriorityQueue&lt;&gt;((a,b) -&gt; a.val - b.val); for (int i = 0; i &lt; lists.length; i++) &#123; if (lists[i] != null) &#123; queue.offer(lists[i]); &#125; &#125; while (!queue.isEmpty()) &#123; ListNode next = queue.poll(); tail.next = next; tail = tail.next; // add another node if exist if (next.next != null) &#123; queue.offer(next.next); &#125; &#125; return dummy.next; &#125;&#125;]]></content>

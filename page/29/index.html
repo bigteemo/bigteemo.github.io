@@ -314,6 +314,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/23/2017-01-23-leetcode-solution-Flatten-Nested-List-Iterator-341/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/23/2017-01-23-leetcode-solution-Flatten-Nested-List-Iterator-341/" itemprop="url">leetcode解题: Flatten Nested List Iterator (341)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-23T20:42:45-05:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a nested list of integers, implement an iterator to flatten it.</p>
+<p>Each element is either an integer, or a list – whose elements may also be integers or other lists.</p>
+<p>Example 1:<br>Given the list [[1,1],2,[1,1]],</p>
+<p>By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].</p>
+<p>Example 2:<br>Given the list [1,[4,[6]]],</p>
+<p>By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].</p>
+<h3 id="解法1：-Stack，-O-N-Time-O-N-Space-N-is-the-number-of-total-items"><a href="#解法1：-Stack，-O-N-Time-O-N-Space-N-is-the-number-of-total-items" class="headerlink" title="解法1： Stack， O(N) Time, O(N) Space, N is the number of total items"></a>解法1： Stack， O(N) Time, O(N) Space, N is the number of total items</h3><p>这题是用iteration的办法解决递归的问题，一般此类问题容易想到用stack解决。这题哪里可以用stack呢？每一个nestedInteger都可能是一个list of nestedInteger， 那么我们对于每一个元素，如果是单数，则任务完成，如果是一个list， 那么我们把所有的元素都推入栈中，直到第一个元素是单数或者到遍历结束为止。 由于栈是FILO, 所以每次推入的时候需要从后往前推。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * // This is the interface that allows for creating nested lists.</span></div><div class="line"><span class="comment"> * // You should not implement it, or speculate about its implementation</span></div><div class="line"><span class="comment"> * class NestedInteger &#123;</span></div><div class="line"><span class="comment"> *   public:</span></div><div class="line"><span class="comment"> *     // Return true if this NestedInteger holds a single integer, rather than a nested list.</span></div><div class="line"><span class="comment"> *     bool isInteger() const;</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *     // Return the single integer that this NestedInteger holds, if it holds a single integer</span></div><div class="line"><span class="comment"> *     // The result is undefined if this NestedInteger holds a nested list</span></div><div class="line"><span class="comment"> *     int getInteger() const;</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *     // Return the nested list that this NestedInteger holds, if it holds a nested list</span></div><div class="line"><span class="comment"> *     // The result is undefined if this NestedInteger holds a single integer</span></div><div class="line"><span class="comment"> *     const vector&lt;NestedInteger&gt; &amp;getList() const;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NestedIterator</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    NestedIterator(<span class="built_in">vector</span>&lt;NestedInteger&gt; &amp;nestedList) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nestedList.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</div><div class="line">            s.push(nestedList[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">next</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> res = s.top().getInteger();</div><div class="line">        s.pop();</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span> (!s.empty()) &#123;</div><div class="line">            <span class="keyword">if</span> (s.top().isInteger()) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">vector</span>&lt;NestedInteger&gt; cur = s.top().getList();</div><div class="line">            s.pop();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = cur.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</div><div class="line">                s.push(cur[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="built_in">stack</span>&lt;NestedInteger&gt; s;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your NestedIterator object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * NestedIterator i(nestedList);</span></div><div class="line"><span class="comment"> * while (i.hasNext()) cout &lt;&lt; i.next();</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * // This is the interface that allows for creating nested lists.</span></div><div class="line"><span class="comment"> * // You should not implement it, or speculate about its implementation</span></div><div class="line"><span class="comment"> * public interface NestedInteger &#123;</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *     // <span class="doctag">@return</span> true if this NestedInteger holds a single integer, rather than a nested list.</span></div><div class="line"><span class="comment"> *     public boolean isInteger();</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *     // <span class="doctag">@return</span> the single integer that this NestedInteger holds, if it holds a single integer</span></div><div class="line"><span class="comment"> *     // Return null if this NestedInteger holds a nested list</span></div><div class="line"><span class="comment"> *     public Integer getInteger();</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> *     // <span class="doctag">@return</span> the nested list that this NestedInteger holds, if it holds a nested list</span></div><div class="line"><span class="comment"> *     // Return null if this NestedInteger holds a single integer</span></div><div class="line"><span class="comment"> *     public List&lt;NestedInteger&gt; getList();</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NestedIterator</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    Stack&lt;NestedInteger&gt; stack;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NestedIterator</span><span class="params">(List&lt;NestedInteger&gt; nestedList)</span> </span>&#123;</div><div class="line">        stack = <span class="keyword">new</span> Stack&lt;NestedInteger&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nestedList.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">            stack.push(nestedList.get(i));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">next</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> res = stack.pop().getInteger();</div><div class="line">        <span class="keyword">return</span> res;        </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</div><div class="line">            <span class="keyword">if</span> (stack.peek().isInteger()) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            NestedInteger top = stack.pop();</div><div class="line">            List&lt;NestedInteger&gt; list = top.getList();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = list.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">                stack.push(list.get(i));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your NestedIterator object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * NestedIterator i = new NestedIterator(nestedList);</span></div><div class="line"><span class="comment"> * while (i.hasNext()) v[f()] = i.next();</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/23/2017-01-23-leetcode-solution-Letter-Combinations-of-a-Phone-Number-17/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1615,159 +1765,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/14/2017-01-14-leetcode-solution-Gray-Code-89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/14/2017-01-14-leetcode-solution-Gray-Code-89/" itemprop="url">Leetcode解题: Gray Code (89)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-14T09:55:32-05:00">
-                2017-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>The gray code is a binary numeral system where two successive values differ in only one bit.</p>
-<p>Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.</p>
-<p>For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">00 - 0</div><div class="line">01 - 1</div><div class="line">11 - 3</div><div class="line">10 - 2</div></pre></td></tr></table></figure></p>
-<p>Note:<br>For a given n, a gray code sequence is not uniquely defined.</p>
-<p>For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.</p>
-<p>For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.</p>
-<h3 id="解法1：-Recursive-O-2-N"><a href="#解法1：-Recursive-O-2-N" class="headerlink" title="解法1： Recursive O(2^N)"></a>解法1： Recursive O(2^N)</h3><p>这题一开始没有思路， 对于没思路的可以考虑多写几个最简单的情况的结果来找规律。本题就是一个列子。如果我们把n = 1， n = 2, n = 3的结果写出来就一目了然了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">n = 1</div><div class="line">0</div><div class="line">1</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">n = 2</div><div class="line">00</div><div class="line">01</div><div class="line">11</div><div class="line">10</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">n = 3</div><div class="line">000</div><div class="line">001</div><div class="line">011</div><div class="line">010</div><div class="line">110</div><div class="line">111</div><div class="line">101</div><div class="line">100</div></pre></td></tr></table></figure>
-<p>可以发现，对于n的结果，有2^n个数，前2^n-1个数来自于n-1的结果，后一半的数是把n-1的结果倒序后最高位（n)位上加1即可。<br>有了这个结论，写程序就比较简单了。复杂度应该是O（2^N)</p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; grayCode(<span class="keyword">int</span> n) &#123;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;<span class="number">0</span>&#125;;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</div><div class="line">           <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;<span class="number">0</span>,<span class="number">1</span>&#125;;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; previous = grayCode(n - <span class="number">1</span>);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        </div><div class="line">        <span class="comment">// add previous level</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; previous.size(); ++i) &#123;</div><div class="line">            res.push_back(previous[i]);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = previous.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</div><div class="line">            <span class="comment">// add one to the high bits</span></div><div class="line">            <span class="keyword">int</span> temp =  previous[i] | (<span class="number">1</span> &lt;&lt; n - <span class="number">1</span>);</div><div class="line">            res.push_back(temp);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1818,7 +1815,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">438</span>
+                <span class="site-state-item-count">439</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
