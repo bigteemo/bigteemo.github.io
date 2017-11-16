@@ -314,6 +314,456 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/11/05/2016-11-05-Connect-to-remote-MySQL-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/05/2016-11-05-Connect-to-remote-MySQL-server/" itemprop="url">Connect to remote MySQL server</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-05T22:37:15-04:00">
+                2016-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术总结/" itemprop="url" rel="index">
+                    <span itemprop="name">技术总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>家里有两台台式机，一台干脆专门用来下data，配置了一下MySQL,从另一台电脑上成功连接，把大概的步骤记录一下。</p>
+<ul>
+<li><p>打开 3306 端口<br>….MySQL的默认端口是3306,需要配置firewall来开放端口，如果是Windows机可以参考<a href="http://www.thewindowsclub.com/block-open-port-windows-8-firewall" target="_blank" rel="external">这篇文章</a>。</p>
+</li>
+<li><p>建立远程连接的用户<br>…. 添加用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'myuser'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'mypass'</span>;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'myuser'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'mypass'</span>;</div></pre></td></tr></table></figure>
+<p>….设定用户的权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'myuser'</span>@<span class="string">'localhost'</span>;</div><div class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'myuser'</span>@<span class="string">'%'</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>连接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u USERNAME -h HOST_IP -p</div></pre></td></tr></table></figure>
+</li>
+<li><p>基本操作</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// <span class="keyword">Show</span> all <span class="keyword">databases</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">database</span>;</div><div class="line">// Switch to a table</div><div class="line"><span class="keyword">use</span> DATABASE_NAMME;</div><div class="line">// <span class="keyword">Show</span> all <span class="keyword">tables</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Reference：<br><a href="http://stackoverflow.com/questions/16287559/mysql-adding-user-for-remote-access" target="_blank" rel="external">http://stackoverflow.com/questions/16287559/mysql-adding-user-for-remote-access</a><br><a href="http://stackoverflow.com/questions/15872543/access-remote-database-from-command-line" target="_blank" rel="external">http://stackoverflow.com/questions/15872543/access-remote-database-from-command-line</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/10/02/2016-10-02-leetcode-solution-Maximum-Depth-of-Binary-Tree-104/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/10/02/2016-10-02-leetcode-solution-Maximum-Depth-of-Binary-Tree-104/" itemprop="url">leetcode解题: Maximum Depth of Binary Tree (104)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-02T23:27:39-04:00">
+                2016-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a binary tree, find its maximum depth.</p>
+<p>The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
+<h3 id="解法1：Recursion-with-O-N-time"><a href="#解法1：Recursion-with-O-N-time" class="headerlink" title="解法1：Recursion with O(N) time"></a>解法1：Recursion with O(N) time</h3><p>Divide and Conquer, 递归的思路，空Node的depth为0，任意一个Node的depth为左面和右面的最大的depth+1, i.e. maxDepth(i) = Max(maxDepth(left), maxDepth(right)) + 1<br>注意C++中空值是NULL, java是null<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> max(maxDepth(root-&gt;left), maxDepth(root-&gt;right)) + <span class="number">1</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> Math.max(maxDepth(root.left), maxDepth(root.right)) + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2-Non-recursion"><a href="#解法2-Non-recursion" class="headerlink" title="解法2: Non-recursion"></a>解法2: Non-recursion</h3><p>我们只需要修改一个非递归的树的遍历算法就可以了，<a href="http://articles.leetcode.com/maximum-height-of-binary-tree" target="_blank" rel="external">这篇文章</a>详细讲了思路</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/10/02/2016-10-02-leetcode-solution-Single-Number-136/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/10/02/2016-10-02-leetcode-solution-Single-Number-136/" itemprop="url">leetcode解题: Single Number (136)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-02T23:21:18-04:00">
+                2016-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
+<p>Note:<br>Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
+<h3 id="解法1：O-N-time-with-O-1-space-N-is-the-number-of-elements"><a href="#解法1：O-N-time-with-O-1-space-N-is-the-number-of-elements" class="headerlink" title="解法1：O(N) time with O(1) space, N is the number of elements"></a>解法1：O(N) time with O(1) space, N is the number of elements</h3><p>运用XOR是一个抵消运算符，A XOR A 出来是一个0，所以对所有的数字做XOR之后重复的都消掉了，只剩下单独的一个。C++中vector的method是vector.size(),和java中array的array.length注意区分。</p>
+<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result = nums[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.size(); i++) &#123;</div><div class="line">            result ^= nums[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result = nums[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</div><div class="line">            result ^= nums[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/10/02/2016-10-02-leetcode-solution-Sum-of-Two-Integers-371/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1326,458 +1776,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/20/2016-07-20-leetcode-solution-counting-bits-338/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/20/2016-07-20-leetcode-solution-counting-bits-338/" itemprop="url">leetcode解题: counting bits (338)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T16:48:45-04:00">
-                2016-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate the number of 1’s in their binary representation and return them as an array.</p>
-<p>Example:<br>For num = 5 you should return [0,1,1,2,1,2].</p>
-<p>Follow up:</p>
-<p>It is very easy to come up with a solution with run time O(n*sizeof(integer)). But can you do it in linear time O(n) /possibly in a single pass?<br>Space complexity should be O(n).<br>Can you do it like a boss? Do it without using any builtin function like __builtin_popcount in c++ or in any other language.<br>Hint:</p>
-<p>You should make use of what you have produced already.<br>Divide the numbers in ranges like [2-3], [4-7], [8-15] and so on. And try to generate new range from previous.<br>Or does the odd/even status of the number help you in calculating the number of 1s?</p>
-<h3 id="解法1：-找规律-Memorization-One-pass-O-N-Time"><a href="#解法1：-找规律-Memorization-One-pass-O-N-Time" class="headerlink" title="解法1： 找规律 + Memorization, One pass O(N) Time"></a>解法1： 找规律 + Memorization, One pass O(N) Time</h3><p>这题需要多写几个数出来找一下规律:<br>如果我们把0到15的二进制表达式写出来，并且把对应的set bit的个数写出来，我们可以得到如下：</p>
-<h2 id="0-0000-0"><a href="#0-0000-0" class="headerlink" title="0    0000    0"></a>0    0000    0</h2><h2 id="1-0001-1"><a href="#1-0001-1" class="headerlink" title="1    0001    1"></a>1    0001    1</h2><p>2    0010    1</p>
-<h2 id="3-0011-2"><a href="#3-0011-2" class="headerlink" title="3    0011    2"></a>3    0011    2</h2><p>4    0100    1<br>5    0101    2<br>6    0110    2</p>
-<h2 id="7-0111-3"><a href="#7-0111-3" class="headerlink" title="7    0111    3"></a>7    0111    3</h2><p>8    1000    1<br>9    1001    2<br>10   1010    2<br>11   1011    3<br>12   1100    2<br>13   1101    3<br>14   1110    3<br>15   1111    4</p>
-<p>观察后联系hint,发现偶数X的bit数是X/2的bit数，奇数X的bit数是X/2的bit数+1，于是可以得到一个O(N)的算法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</div><div class="line">   </div><div class="line">   <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[num + <span class="number">1</span>];</div><div class="line">   <span class="comment">// dp[0] is 0</span></div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">            dp[i] = dp[i / <span class="number">2</span>];</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            dp[i] = dp[i / <span class="number">2</span>] + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dp;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-找规律-Memorization-One-pass-O-N-Time"><a href="#解法2：-找规律-Memorization-One-pass-O-N-Time" class="headerlink" title="解法2： 找规律 + Memorization, One pass O(N) Time"></a>解法2： 找规律 + Memorization, One pass O(N) Time</h3><p>另一种规律，我们使用i &amp; (i - 1) 来看对应的结果。</p>
-<h2 id="0-0000-0-N-A"><a href="#0-0000-0-N-A" class="headerlink" title="0    0000    0    N/A"></a>0    0000    0    N/A</h2><h2 id="1-0001-1-0000"><a href="#1-0001-1-0000" class="headerlink" title="1    0001    1    0000"></a>1    0001    1    0000</h2><p>2    0010    1    0000</p>
-<h2 id="3-0011-2-0010"><a href="#3-0011-2-0010" class="headerlink" title="3    0011    2    0010"></a>3    0011    2    0010</h2><p>4    0100    1    0000<br>5    0101    2    0100<br>6    0110    2    0100</p>
-<h2 id="7-0111-3-0110"><a href="#7-0111-3-0110" class="headerlink" title="7    0111    3    0110"></a>7    0111    3    0110</h2><p>8    1000    1    0000<br>9    1001    2    1000<br>10   1010    2    1000<br>11   1011    3    1010<br>12   1100    2    1000<br>13   1101    3    1100<br>14   1110    3    1100<br>15   1111    4    1110</p>
-<p>更加简化的一个规律是dp[i] = dp[i &amp; (i - 1)] + 1, 比如15, 15 &amp; 14 = ‘1110’， ’1110‘的bits是3，所以15的bits是4<br>那么就可以得到如下的程序。这个程序更简短。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</div><div class="line">   </div><div class="line">   <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[num + <span class="number">1</span>];</div><div class="line">   <span class="comment">// dp[0] is 0</span></div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) &#123;</div><div class="line">        dp[i] = dp[i &amp; (i - <span class="number">1</span>)] + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dp;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/20/2016-07-20-leetcode-solution-Perfect-Squares-279/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/20/2016-07-20-leetcode-solution-Perfect-Squares-279/" itemprop="url">leetcode解题: Perfect Squares (279)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T16:22:59-04:00">
-                2016-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, …) which sum to n.<br>For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.</p>
-<h3 id="解法1：DP-O-N-2-with-O-N-空间"><a href="#解法1：DP-O-N-2-with-O-N-空间" class="headerlink" title="解法1：DP O(N^2) with O(N) 空间"></a>解法1：DP O(N^2) with O(N) 空间</h3><p>如果用暴力的方法想：对于一个数字N，我们可以从1开始试， 因为1是一个perfect square,那么求出N - 1的解，假设为X，则N的解就是X+1<br>我们从1开始尝试所有可能的组合，然后求出了一系列的解之后挑选最小的值。但这样做的话复杂率特别高，应该是指数级的<br>实际上可以发现，这里有很多overlapping的问题，比如我们求12的最小值，那么如果第一个选择的值是4，则剩下的为8.<br>当我们在前面选择第一个值为2时，子问题变为寻找10 - 2 = 10的最小值，而当我们求10的最小值的时候可能已经求过了8的最小平方数。<br>所以我们可以想到用dp/memorization的方法去解决这个问题。</p>
-<ol>
-<li>建立dp数组dp[N], N是要求的数字，dp数组中存储的是对应的这个数字n，他的最小平方和数。</li>
-<li>初始化,将所有perfect square的数字都设为1</li>
-<li>对于非perfect square的数字，dp[i] = Min(dp[j] + dp[i - j], j = 1 … i / 2),也就是说,dp[12] = Min of (dp[1] + dp[11], dp[2] + dp[10], …)<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numSquares</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (n &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (n == <span class="number">0</span> ) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];  </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i*i &lt;= n; i++) &#123;</div><div class="line">        dp[i*i] = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (dp[i] != <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">int</span> res = Integer.MAX_VALUE;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i/<span class="number">2</span>; j++) &#123;</div><div class="line">                <span class="keyword">int</span> temp = dp[j] + dp[i - j];</div><div class="line">                res = Math.min(temp, res);</div><div class="line">            &#125;</div><div class="line">            dp[i] = res;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dp[n];</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/07/20/2016-07-20-leetcode-solution-Minimum-Path-Sum-64/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/20/2016-07-20-leetcode-solution-Minimum-Path-Sum-64/" itemprop="url">leetcode解题: Minimum Path Sum (64)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T16:06:39-04:00">
-                2016-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.<br>Note: You can only move either down or right at any point in time.</p>
-<h3 id="解法1：DP-O-N-2-with-O-N-空间"><a href="#解法1：DP-O-N-2-with-O-N-空间" class="headerlink" title="解法1：DP O(N^2) with O(N) 空间"></a>解法1：DP O(N^2) with O(N) 空间</h3><p>也是很直接的dp, dp[i][j]表示的是到(i,j)点的最小路径和。dp[i][j] = Min(dp[i - 1][j], dp[i][j -1]) + A[i][j]<br>最后的结果便是dp[n - 1][m - 1], 用滚动数组节省内存空间<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minPathSum</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (grid == <span class="keyword">null</span> || grid.length == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> nrow = grid.length;</div><div class="line">    <span class="keyword">int</span> ncol = grid[<span class="number">0</span>].length;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[ncol];</div><div class="line">    dp[<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>];</div><div class="line">    </div><div class="line">    <span class="comment">// Initialize the dp array</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; ncol; j++) &#123;</div><div class="line">        dp[j] = dp[j - <span class="number">1</span>] + grid[<span class="number">0</span>][j];</div><div class="line">    &#125;</div><div class="line">        </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i =  <span class="number">1</span>; i &lt; nrow; i++) &#123;</div><div class="line">        dp[<span class="number">0</span>] += grid[i][<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; ncol; j++) &#123;</div><div class="line">            dp[j] = Math.min(dp[j], dp[j - <span class="number">1</span>]) + grid[i][j];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dp[ncol - <span class="number">1</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1823,7 +1826,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">440</span>
+                <span class="site-state-item-count">443</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

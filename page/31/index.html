@@ -314,6 +314,444 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/09/2017-01-09-leetcode-solution-Permutation-Sequence-60/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/09/2017-01-09-leetcode-solution-Permutation-Sequence-60/" itemprop="url">leetcode解题: Permutation Sequence (60)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-09T21:39:10-05:00">
+                2017-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>The set [1,2,3,…,n] contains a total of n! unique permutations.</p>
+<p>By listing and labeling all of the permutations in order,<br>We get the following sequence (ie, for n = 3):</p>
+<p>“123”<br>“132”<br>“213”<br>“231”<br>“312”<br>“321”<br>Given n and k, return the kth permutation sequence.</p>
+<p>Note: Given n will be between 1 and 9 inclusive.</p>
+<h3 id="解法1：-Math"><a href="#解法1：-Math" class="headerlink" title="解法1： Math"></a>解法1： Math</h3><p>数学题，解法就不重复了，第一位取值每(n - 1)!变化一位，第二位取值每（n - 2)% 变化一位。 通过k / (n - i)! 算出来的是index， 这就意味着每次取完一个数以后要把那个数删除。</p>
+<p>C++<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">c++ 里面vector的初始化如果用vector&lt;int&gt; (n, initial_value)的形式要注意是“（”， 不是“&#123;“， 花括号是给了一组初始的array</div></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">getPermutation</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; number ;</div><div class="line">        <span class="keyword">int</span> perm = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</div><div class="line">            number.push_back(i);</div><div class="line">            perm *= i;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        k--;</div><div class="line">        <span class="built_in">string</span> res;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">            perm /= (n - i);</div><div class="line">            <span class="keyword">int</span> choosed = k / perm;</div><div class="line">            k %= perm;</div><div class="line">            res += to_string(number[choosed]);</div><div class="line">            number.erase(number.begin() + choosed);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/09/2017-01-09-leetcode-solution-Binary-Tree-Upside-Down-156/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/09/2017-01-09-leetcode-solution-Binary-Tree-Upside-Down-156/" itemprop="url">leetcode解题: Binary Tree Upside Down (156)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-09T21:20:36-05:00">
+                2017-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a binary tree where all the right nodes are either leaf nodes with a sibling (a left node that shares the same parent node) or empty, flip it upside down and turn it into a tree where the original right nodes turned into left leaf nodes. Return the new root.</p>
+<p>For example:<br>Given a binary tree {1,2,3,4,5},<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    1</div><div class="line">   / \</div><div class="line">  2   3</div><div class="line"> / \</div><div class="line">4   5</div></pre></td></tr></table></figure></p>
+<p>return the root of the binary tree [4,5,2,#,#,3,1].<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  4</div><div class="line"> / \</div><div class="line">5   2</div><div class="line">   / \</div><div class="line">  3   1</div></pre></td></tr></table></figure></p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>用分治的方法思考比较容易， 题目的意思是只有两种情况，一种是没有右子树，但可能有左子树，一种是有右子树但一定也有左子树。<br>变换之后，right tree变成left， root变成left， 而原来的left也需要进行upside down的变化。最后他的root是最终的root， 而他的最右子树变成了现在root和right的parent<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * struct TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode *left;</span></div><div class="line"><span class="comment"> *     TreeNode *right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">res</span> &#123;</span></div><div class="line">    TreeNode* root;</div><div class="line">    TreeNode* tail;</div><div class="line">    res(TreeNode* r, TreeNode* t):root(r),tail(t) &#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">TreeNode* <span class="title">upsideDownBinaryTree</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        res result = helper(root);</div><div class="line">        <span class="keyword">return</span> result.root;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">res <span class="title">helper</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!root) &#123;</div><div class="line">            <span class="keyword">return</span> res(<span class="literal">NULL</span>, <span class="literal">NULL</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</div><div class="line">            <span class="keyword">return</span> res(root, root);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        res left = helper(root-&gt;left);</div><div class="line">        left.tail-&gt;left = root-&gt;right;</div><div class="line">        left.tail-&gt;right = root;</div><div class="line">        root-&gt;left = <span class="literal">NULL</span>;</div><div class="line">        root-&gt;right = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res(left.root, root);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">NodeMark</span> </span>&#123;</div><div class="line">        TreeNode root;</div><div class="line">        TreeNode tail;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">NodeMark</span><span class="params">(TreeNode root, TreeNode tail)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.root = root;</div><div class="line">            <span class="keyword">this</span>.tail = tail;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">upsideDownBinaryTree</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> root;</div><div class="line"></div><div class="line">        NodeMark temp = helper(root);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> temp.root;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> NodeMark <span class="title">helper</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> NodeMark(<span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> NodeMark(root, root);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        NodeMark left = helper(root.left);</div><div class="line">        left.tail.left = root.right;</div><div class="line">        left.tail.right = root;</div><div class="line">        root.left = <span class="keyword">null</span>;</div><div class="line">        root.right = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> NodeMark(left.root, root);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/07/2017-01-07-leetcode-solution-Contains-Duplicate-II-219/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/07/2017-01-07-leetcode-solution-Contains-Duplicate-II-219/" itemprop="url">leetcode解题: Contains Duplicate II (219)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-07T11:27:54-05:00">
+                2017-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/07/2017-01-07-leetcode-solution-Length-of-Last-Word-58/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1336,451 +1774,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/03/2017-01-03-leetcode-solution-Bulls-and-Cows-299/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/03/2017-01-03-leetcode-solution-Bulls-and-Cows-299/" itemprop="url">leetcode解题: Bulls and Cows (299)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T20:46:54-05:00">
-                2017-01-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>You are playing the following Bulls and Cows game with your friend: You write down a number and ask your friend to guess what the number is. Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called “bulls”) and how many digits match the secret number but locate in the wrong position (called “cows”). Your friend will use successive guesses and hints to eventually derive the secret number.</p>
-<p>For example:</p>
-<p>Secret number:  “1807”<br>Friend’s guess: “7810”<br>Hint: 1 bull and 3 cows. (The bull is 8, the cows are 0, 1 and 7.)<br>Write a function to return a hint according to the secret number and friend’s guess, use A to indicate the bulls and B to indicate the cows. In the above example, your function should return “1A3B”.</p>
-<p>Please note that both secret number and friend’s guess may contain duplicate digits, for example:</p>
-<p>Secret number:  “1123”<br>Friend’s guess: “0111”<br>In this case, the 1st 1 in friend’s guess is a bull, the 2nd or 3rd 1 is a cow, and your function should return “1A1B”.<br>You may assume that the secret number and your friend’s guess only contain digits, and their lengths are always equal.</p>
-<h3 id="解法1：-O（N-Time-一次遍历"><a href="#解法1：-O（N-Time-一次遍历" class="headerlink" title="解法1： O（N) Time , 一次遍历"></a>解法1： O（N) Time , 一次遍历</h3><p>参考了[这个][1]的解法， 只需要一次遍历即可。思路是按位一个个遍历，如果碰到一样的字符则bull加1。 如果碰到不一样的字符，secret的字符对应的+1， guess对应的减1。这样就同时保存了secret和guess出现的字符的情况。 如果后续碰到如果secret字符对应的次数为负，则证明在guess中出现过； 如果guess字符对应的次数为正，则说明在secret中出现过。 这样的话就能记录一次cow。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">getHint</span><span class="params">(<span class="built_in">string</span> secret, <span class="built_in">string</span> guess)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">map</span>(<span class="number">10</span>, <span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> bulls, cows;</div><div class="line"></div><div class="line">        bulls = cows = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; secret.size(); ++i) &#123;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (secret[i] == guess[i]) &#123;</div><div class="line">                ++bulls;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="built_in">map</span>[secret[i] - <span class="string">'0'</span>] &lt; <span class="number">0</span>) &#123;</div><div class="line">                    ++cows;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (<span class="built_in">map</span>[guess[i] - <span class="string">'0'</span>] &gt; <span class="number">0</span>) &#123;</div><div class="line">                    ++cows;</div><div class="line">                &#125;</div><div class="line">                <span class="built_in">map</span>[secret[i] -<span class="string">'0'</span>]++;</div><div class="line">                <span class="built_in">map</span>[guess[i] - <span class="string">'0'</span>]--;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> to_string(bulls) + <span class="string">"A"</span> + to_string(cows) + <span class="string">"B"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHint</span><span class="params">(String secret, String guess)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] map = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</div><div class="line"></div><div class="line">        <span class="keyword">int</span> bull = <span class="number">0</span>, cow = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; secret.length(); i++) &#123;</div><div class="line">            <span class="keyword">if</span> (secret.charAt(i) == guess.charAt(i)) &#123;</div><div class="line">                bull++;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span> (map[secret.charAt(i) - <span class="string">'0'</span>] &lt; <span class="number">0</span>) &#123;</div><div class="line">                    cow++;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (map[guess.charAt(i) - <span class="string">'0'</span>] &gt; <span class="number">0</span>) &#123;</div><div class="line">                    cow++;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                map[secret.charAt(i) - <span class="string">'0'</span>]++;</div><div class="line">                map[guess.charAt(i) - <span class="string">'0'</span>]--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> Integer.toString(bull) + <span class="string">"A"</span> + Integer.toString(cow) + <span class="string">"B"</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/03/2017-01-03-leetcode-solution-Implement-Trie-Prefix-Tree-208/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/03/2017-01-03-leetcode-solution-Implement-Trie-Prefix-Tree-208/" itemprop="url">leetcode解题: Implement Trie (Prefix Tree) (208)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T20:41:29-05:00">
-                2017-01-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Implement a trie with insert, search, and startsWith methods.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>本题主要是考察Trie树的基本概念，可以参考<a href="https://en.wikipedia.org/wiki/Trie" target="_blank" rel="external">Wiki</a>的解释。 实现的时候，每一个node的children可以用一个map来实现，做insert或者是search的时候可以用一个current的指针从root开始不停的往下搜索。<br>比较直观，并没有难度。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// Initialize your data structure here.</span></div><div class="line">    TrieNode() &#123;</div><div class="line">        isWord = <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt; children;</div><div class="line">    <span class="keyword">bool</span> isWord;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Trie() &#123;</div><div class="line">        root = <span class="keyword">new</span> TrieNode();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Inserts a word into the trie.</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="built_in">string</span> word)</span> </span>&#123;</div><div class="line">        TrieNode* cur = root;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c: word) &#123;</div><div class="line">            <span class="keyword">if</span> (!cur-&gt;children.count(c)) &#123;</div><div class="line">                cur-&gt;children[c] = <span class="keyword">new</span> TrieNode();</div><div class="line">            &#125;</div><div class="line">            cur = cur-&gt;children[c];</div><div class="line">        &#125;</div><div class="line">        cur-&gt;isWord = <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Returns if the word is in the trie.</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="built_in">string</span> word)</span> </span>&#123;</div><div class="line">        TrieNode* cur = root;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c: word) &#123;</div><div class="line">            <span class="keyword">if</span> (!cur-&gt;children.count(c)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">            cur = cur-&gt;children[c];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> cur-&gt;isWord;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Returns if there is any word in the trie</span></div><div class="line">    <span class="comment">// that starts with the given prefix.</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">startsWith</span><span class="params">(<span class="built_in">string</span> prefix)</span> </span>&#123;</div><div class="line">        TrieNode* cur = root;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c: prefix) &#123;</div><div class="line">            <span class="keyword">if</span> (!cur-&gt;children.count(c)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">            cur = cur-&gt;children[c];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    TrieNode* root;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// Your Trie object will be instantiated and called as such:</span></div><div class="line"><span class="comment">// Trie trie;</span></div><div class="line"><span class="comment">// trie.insert("somestring");</span></div><div class="line"><span class="comment">// trie.search("key");</span></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span> </span>&#123;</div><div class="line">    Map&lt;Character, TrieNode&gt; map;</div><div class="line">    <span class="keyword">boolean</span> isWord;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.map = <span class="keyword">new</span> HashMap&lt;Character, TrieNode&gt;();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> TrieNode root;</div><div class="line">    <span class="comment">/** Initialize your data structure here. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.root = <span class="keyword">new</span> TrieNode();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/** Inserts a word into the trie. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span> </span>&#123;</div><div class="line">        TrieNode current = root;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : word.toCharArray()) &#123;</div><div class="line">            <span class="keyword">if</span> (!current.map.containsKey(c)) &#123;</div><div class="line">                current.map.put(c, <span class="keyword">new</span> TrieNode());</div><div class="line">            &#125;</div><div class="line">            current = current.map.get(c);</div><div class="line">        &#125;</div><div class="line">        current.isWord = <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/** Returns if the word is in the trie. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span> </span>&#123;</div><div class="line">        TrieNode current = root;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : word.toCharArray()) &#123;</div><div class="line">            <span class="keyword">if</span> (!current.map.containsKey(c)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            current = current.map.get(c);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> current.isWord;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span> </span>&#123;</div><div class="line">        TrieNode current = root;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c: prefix.toCharArray()) &#123;</div><div class="line">            <span class="keyword">if</span> (!current.map.containsKey(c)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            current = current.map.get(c);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your Trie object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * Trie obj = new Trie();</span></div><div class="line"><span class="comment"> * obj.insert(word);</span></div><div class="line"><span class="comment"> * boolean param_2 = obj.search(word);</span></div><div class="line"><span class="comment"> * boolean param_3 = obj.startsWith(prefix);</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/01/01/2017-01-01-leetcode-solution-House-Robber-III-337/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/01/2017-01-01-leetcode-solution-House-Robber-III-337/" itemprop="url">leetcode解题: House Robber III (337)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-01T23:02:41-05:00">
-                2017-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the “root.” Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that “all houses in this place forms a binary tree”. It will automatically contact the police if two directly-linked houses were broken into on the same night.</p>
-<p>Determine the maximum amount of money the thief can rob tonight without alerting the police.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  3</div><div class="line"> / \</div><div class="line">2   3</div><div class="line"> \   \</div><div class="line">  3   1</div></pre></td></tr></table></figure></p>
-<p>Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.<br>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    3</div><div class="line">   / \</div><div class="line">  4   5</div><div class="line"> / \   \</div><div class="line">1   3   1</div></pre></td></tr></table></figure></p>
-<p>Maximum amount of money the thief can rob = 4 + 5 = 9.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>参考了<a href="http://www.cnblogs.com/grandyang/p/5275096.html" target="_blank" rel="external">这个</a>帖子的解法3。 对于每一个节点，存在两种可能， 取或者不取。 那么可以用一个帮助函数，每一次计算的时候保存这两种情况的值。<br>用一个vector保存，v[0]表示从这个点出发，不包含这个点最大的可取值， v<a href="http://www.cnblogs.com/grandyang/p/5275096.html" target="_blank" rel="external">1</a>表示从这个点出发并且包含这个点可取的最大值。<br>那么对于一个root， 分别计算left和right的vector，再按取或者不取的情况计算出root的vector。<br>如果取root的值，那一定不能取left和right的值， 所以最大取值是left<a href="http://www.cnblogs.com/grandyang/p/5275096.html" target="_blank" rel="external">1</a> + right<a href="http://www.cnblogs.com/grandyang/p/5275096.html" target="_blank" rel="external">1</a> + val<br>如果不取root的值，那可以取left和right的值， 这也等价于两颗树，对这两颗树取这个问题的最大值，就是left两种情况的最大值+right两种情况的最大值。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * struct TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode *left;</span></div><div class="line"><span class="comment"> *     TreeNode *right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp = helper(root);</div><div class="line">        <span class="keyword">return</span> max(temp[<span class="number">0</span>], temp[<span class="number">1</span>]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; helper(TreeNode* root) &#123;</div><div class="line">        <span class="keyword">if</span> (!root) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">2</span>, <span class="number">0</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; left = helper(root-&gt;left);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; right = helper(root-&gt;right);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res(<span class="number">2</span>,<span class="number">0</span>);</div><div class="line">        res[<span class="number">0</span>] = max(left[<span class="number">0</span>], left[<span class="number">1</span>]) + max(right[<span class="number">0</span>], right[<span class="number">1</span>]);</div><div class="line">        res[<span class="number">1</span>] = left[<span class="number">0</span>] + right[<span class="number">0</span>] + root-&gt;val;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">MarkedTreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> take;</div><div class="line">        <span class="keyword">int</span> notake;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MarkedTreeNode</span><span class="params">(<span class="keyword">int</span> take, <span class="keyword">int</span> notake)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.take = take;</div><div class="line">            <span class="keyword">this</span>.notake = notake;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">        MarkedTreeNode res = helper(root);</div><div class="line">        <span class="keyword">return</span> Math.max(res.take, res.notake);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> MarkedTreeNode <span class="title">helper</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">new</span> MarkedTreeNode(<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">        MarkedTreeNode left = helper(root.left);</div><div class="line">        MarkedTreeNode right = helper(root.right);</div><div class="line">        <span class="keyword">int</span> take = root.val + left.notake + right.notake;</div><div class="line">        <span class="keyword">int</span> notake = Math.max(left.notake, left.take) + Math.max(right.notake, right.take);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MarkedTreeNode(take, notake);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1826,7 +1824,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">440</span>
+                <span class="site-state-item-count">443</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

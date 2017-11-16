@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[76. Minimum Window Substring]]></title>
+    <url>%2F2017%2F11%2F15%2F76-Minimum-Window-Substring%2F</url>
+    <content type="text"><![CDATA[解法1：lang: java12]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[65. Valid Number]]></title>
+    <url>%2F2017%2F11%2F15%2F65-Valid-Number%2F</url>
+    <content type="text"><![CDATA[Validate if a given string is numeric. Some examples:“0” =&gt; true“ 0.1 “ =&gt; true“abc” =&gt; false“1 a” =&gt; false“2e10” =&gt; trueNote: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one. Update (2015-02-10):The signature of the C++ function had been updated. If you still see your function signature accepts a const char * argument, please click the reload button to reset your code definition. 解法1： DFA第一次遇到可以用DFA(finite automata)做的题，终于学到的理论知识也有可以用的地方了。用dfa做的时候的点在于首先要换出图，然后识别出valid的state,最后判断一下是否落在state中就可以了。实现起来比较简单。 12345678910111213141516171819202122232425262728293031323334353637383940414243class Solution &#123; public boolean isNumber(String s) &#123; if (s == null || s.length() == 0 || s.trim().length() == 0) &#123; return false; &#125; s = s.trim(); int state = 1; boolean hasNum = false; for (int i = 0; i &lt; s.length(); i++) &#123; char ch = s.charAt(i); if (Character.isDigit(ch)) &#123; hasNum = true; if (state &lt;= 3) &#123; state = 3; &#125; else if (state &lt;= 5) &#123; state = 5; &#125; else if (state &lt;= 8) &#123; state = 8; &#125; &#125; else if (ch == '.') &#123; if (state &lt; 3) state = 4; else if (state == 3) state = 5; else return false; &#125; else if (ch == 'e') &#123; if (state == 3) state = 6; else if (state == 5) state = 6; else return false; &#125; else if (ch == '+' || ch == '-') &#123; if (state == 1) state = 2; else if (state == 6) state = 7; else return false; &#125; else &#123; return false; &#125; &#125; return state == 3 || state == 5 || state == 8; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[32. Longest Valid Parentheses]]></title>
+    <url>%2F2017%2F11%2F15%2F32-Longest-Valid-Parentheses%2F</url>
+    <content type="text"><![CDATA[Given a string containing just the characters ‘(‘ and ‘)’, find the length of the longest valid (well-formed) parentheses substring. For “(()”, the longest valid parentheses substring is “()”, which has length = 2. Another example is “)()())”, where the longest valid parentheses substring is “()()”, which has length = 4. 解法1： DP用一个array,dp[i]表示的是0 … i子串里lvp。首先如果要valid,那么最后一个字符一定是). 这就是说我们只需要在看到)的时候判断一下当前最长的子串。那么可以得到如下的推算公式。如果i字符是(，那么如果i-1是(,则代表有一个valid的子串，dp[i] = dp[i - 2] + 2如果i字符是)，那么先要看i - 1位置的最长子串，然后看这个子串的前一个字符是否是(，如果是那么我们又凑满了一个valid的子串。dp[i] = dp[i - 1] + dp[i - dp[i - 1] - 2] + 2 123456789101112131415161718class Solution &#123; public int longestValidParentheses(String s) &#123; int res = 0; int[] dp = new int[s.length()]; for (int i = 1; i &lt; s.length(); i++) &#123; if (s.charAt(i) == ')') &#123; if (s.charAt(i - 1) == '(') &#123; dp[i] = (i &gt;= 2 ? dp[i - 2] : 0) + 2; &#125; else if (i &gt; dp[i - 1] &amp;&amp; s.charAt(i - dp[i - 1] - 1) == '(') &#123; dp[i] = dp[i - 1] + (i - dp[i - 1] &gt;= 2 ? dp[i - dp[i - 1] - 2]: 0) + 2; &#125; &#125; res = Math.max(res, dp[i]); &#125; return res; &#125;&#125; 解法２: Stack123456789101112131415161718192021222324252627282930class Solution &#123; public int longestValidParentheses(String s) &#123; if (s == null || s.length() == 0) &#123; return 0; &#125; Stack&lt;Integer&gt; stack = new Stack&lt;&gt;(); int start = -1; int res = 0; for (int i = 0; i &lt; s.length(); i++) &#123; if (s.charAt(i) == '(') &#123; stack.push(i); &#125; else &#123; if (!stack.isEmpty()) &#123; stack.pop(); if (stack.isEmpty()) &#123; res = Math.max(res, i - start); &#125; else &#123; res = Math.max(res, i - stack.peek()); &#125; &#125; else &#123; start = i; // because if a string starts with ) it will never become valid &#125; &#125; &#125; return res; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[30. Substring with Concatenation of All Words]]></title>
     <url>%2F2017%2F11%2F13%2F30-Substring-with-Concatenation-of-All-Words%2F</url>
     <content type="text"><![CDATA[You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters. For example, given:s: “barfoothefoobarman”words: [“foo”, “bar”] You should return the indices: [0,9].(order does not matter). 解法1： HashMap ＋ 一次遍历 用HashMap记录每一个word出现的次数，然后对每一个起始点进行遍历。复杂度应该是O(NL), N是字符串的长度，L是字符串数组的个数。12345678910111213141516171819202122232425262728class Solution &#123; public static List&lt;Integer&gt; findSubstring(String S, String[] L) &#123; List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;(); if (S == null || L == null || L.length == 0) return res; int len = L[0].length(); // length of each word Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;(); // map for L for (String w : L) map.put(w, map.containsKey(w) ? map.get(w) + 1 : 1); for (int i = 0; i &lt;= S.length() - len * L.length; i++) &#123; Map&lt;String, Integer&gt; copy = new HashMap&lt;String, Integer&gt;(map); for (int j = 0; j &lt; L.length; j++) &#123; // checkc if match String str = S.substring(i + j*len, i + j*len + len); // next word if (copy.containsKey(str)) &#123; // is in remaining words int count = copy.get(str); if (count == 1) copy.remove(str); else copy.put(str, count - 1); if (copy.isEmpty()) &#123; // matches res.add(i); break; &#125; &#125; else break; // not in L &#125; &#125; return res; &#125;&#125;]]></content>
