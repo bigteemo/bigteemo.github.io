@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[99. Recover Binary Search Tree]]></title>
+    <url>%2F2017%2F11%2F23%2F99-Recover-Binary-Search-Tree%2F</url>
+    <content type="text"><![CDATA[Two elements of a binary search tree (BST) are swapped by mistake. Recover the tree without changing its structure. Note:A solution using O(n) space is pretty straight forward. Could you devise a constant space solution? 解法1： In-order Traversal O(N)BST的很重要的性质就是对他进行in order traversal的话，得到的是一个有序数组。那么可以按照in order traversal,找到第一个node使得node.val &gt;= node.successor.val和最后一个node使得node.predecessor.val &gt;= node.val就可以了 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849/** * Definition for a binary tree node. * public class TreeNode &#123; * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) &#123; val = x; &#125; * &#125; */class Solution &#123; TreeNode first = null; TreeNode second = null; TreeNode prev = null; public void recoverTree(TreeNode root) &#123; if (root == null) return; inOrder(root); if (first == null || second == null) return; int temp = first.val; first.val = second.val; second.val = temp; return; &#125; private void inOrder(TreeNode root) &#123; if (root == null) return; inOrder(root.left); if (prev != null &amp;&amp; prev.val &gt;= root.val) &#123; if (first == null) &#123; first = prev; &#125; if (first != null) &#123; second = root; &#125; &#125; prev = root; inOrder(root.right); &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[97. Interleaving String]]></title>
     <url>%2F2017%2F11%2F23%2F97-Interleaving-String%2F</url>
     <content type="text"><![CDATA[Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2. For example,Given:s1 = “aabcc”,s2 = “dbbca”, When s3 = “aadbbcbcac”, return true.When s3 = “aadbbbaccc”, return false. 解法1： DP O(len_s1 * len_s2) Time and space拿到题目似乎就是用dp来做，其他没有比较好的办法可以套。那么就从小问题开始。如果一个string是空，那么s3必须和另一个string相等。如果用dp[i][j] 表示的是前i个字符和前j个字符组成的string可以是前(i+j)的interleave，那么就可以知道i+j上的字符一定要么等于s1的第i个字符或者是s2的第j个字符。同时，如果这个条件满足，则就考虑dp[i -1][j]或者dp[i][j - 1]是否为真就可以了。 123456789101112131415161718192021222324252627282930313233class Solution &#123; public boolean isInterleave(String s1, String s2, String s3) &#123; int len1 = s1.length(); int len2 = s2.length(); if (s3.length() != s1.length() + s2.length()) return false; boolean[][] dp = new boolean[len1 + 1][len2 + 1]; dp[0][0] = true; for (int col = 1; col &lt;= len2; col++) &#123; dp[0][col] = s2.substring(0, col).equals(s3.substring(0, col)); &#125; for (int row = 1; row &lt;= len1; row++) &#123; dp[row][0] = s1.substring(0, row).equals(s3.substring(0,row)); &#125; for (int i = 1; i &lt;= len1; i++) &#123; for (int j = 1; j &lt;= len2; j++) &#123; int len = i + j; if (s3.charAt(len - 1) == s1.charAt(i - 1) &amp;&amp; dp[i - 1][j]) &#123; dp[i][j] = true; &#125; if (s3.charAt(len - 1) == s2.charAt(j - 1) &amp;&amp; dp[i][j - 1]) &#123; dp[i][j] = true; &#125; &#125; &#125; return dp[len1][len2]; &#125;&#125;]]></content>
