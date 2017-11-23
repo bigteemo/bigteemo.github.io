@@ -314,6 +314,157 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/08/13/2017-08-13-314-Binary-Tree-Vertical-Order-Traversal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/13/2017-08-13-314-Binary-Tree-Vertical-Order-Traversal/" itemprop="url">314. Binary Tree Vertical Order Traversal</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-13T14:29:57-04:00">
+                2017-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a binary tree, return the vertical order traversal of its nodes’ values. (ie, from top to bottom, column by column).</p>
+<p>If two nodes are in the same row and column, the order should be from left to right.</p>
+<p>Examples:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Given binary tree [3,9,20,null,null,15,7],</div><div class="line">   3</div><div class="line">  /\</div><div class="line"> /  \</div><div class="line"> 9  20</div><div class="line">    /\</div><div class="line">   /  \</div><div class="line">  15   7</div></pre></td></tr></table></figure></p>
+<p>return its vertical order traversal as:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [9],</div><div class="line">  [3,15],</div><div class="line">  [20],</div><div class="line">  [7]</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>Given binary tree [3,9,8,4,0,1,7],<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    3</div><div class="line">   /\</div><div class="line">  /  \</div><div class="line">  9   8</div><div class="line"> /\  /\</div><div class="line">/  \/  \</div><div class="line">4  01   7</div></pre></td></tr></table></figure></p>
+<p>return its vertical order traversal as:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [4],</div><div class="line">  [9],</div><div class="line">  [3,0,1],</div><div class="line">  [8],</div><div class="line">  [7]</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>Given binary tree [3,9,8,4,0,1,7,null,null,null,2,5] (0’s right child is 2 and 1’s left child is 5),<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">    3</div><div class="line">   /\</div><div class="line">  /  \</div><div class="line">  9   8</div><div class="line"> /\  /\</div><div class="line">/  \/  \</div><div class="line">4  01   7</div><div class="line">   /\</div><div class="line">  /  \</div><div class="line">  5   2</div></pre></td></tr></table></figure></p>
+<p>return its vertical order traversal as:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [4],</div><div class="line">  [9,5],</div><div class="line">  [3,0,1],</div><div class="line">  [8,2],</div><div class="line">  [7]</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>一种BFS的增强用法<br>在每次push一个node到一个queue的同时，维护另外一个queue，记录相对应的node的信息<br>用一个hashmap记录每一个col对应的答案。<br>然后min，max记录col的范围，之后把map里的数字再按顺序读取就可以了<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; verticalOrder(TreeNode root) &#123;</div><div class="line"></div><div class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Map&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();  <span class="comment">// record each column's result</span></div><div class="line">        Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;(); <span class="comment">// used for bfs search</span></div><div class="line">        Queue&lt;Integer&gt; column = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();  <span class="comment">// used for bfs search, update each node's column number</span></div><div class="line"></div><div class="line">        queue.offer(root);</div><div class="line">        column.offer(<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> min = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">            TreeNode current = queue.poll();</div><div class="line">            <span class="keyword">int</span> col = column.poll();</div><div class="line"></div><div class="line">            min = Math.min(col, min);</div><div class="line">            max = Math.max(col, max);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (!map.containsKey(col)) &#123;</div><div class="line">                map.put(col, <span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            map.get(col).add(current.val);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (current.left != <span class="keyword">null</span>) &#123;</div><div class="line">                queue.offer(current.left);</div><div class="line">                column.offer(col - <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (current.right != <span class="keyword">null</span>) &#123;</div><div class="line">                queue.offer(current.right);</div><div class="line">                column.offer(col + <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = min; i &lt;= max; i++) &#123;</div><div class="line">            res.add(map.get(i));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/08/13/2017-08-13-50-Pow-x-n/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1624,157 +1775,6 @@ The given binary tree has at least one tree node.
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/23/2017-07-23-582-Kill-Process/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/2017-07-23-582-Kill-Process/" itemprop="url">582. Kill Process</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T10:00:18-04:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given n processes, each process has a unique PID (process id) and its PPID (parent process id).</p>
-<p>Each process only has one parent process, but may have one or more children processes. This is just like a tree structure. Only one process has PPID that is 0, which means this process has no parent process. All the PIDs will be distinct positive integers.</p>
-<p>We use two list of integers to represent a list of processes, where the first list contains PID for each process and the second list contains the corresponding PPID.</p>
-<p>Now given the two lists, and a PID representing a process you want to kill, return a list of PIDs of processes that will be killed in the end. You should assume that when a process is killed, all its children processes will be killed. No order is required for the final answer.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">pid =  [1, 3, 10, 5]</div><div class="line">ppid = [3, 0, 5, 3]</div><div class="line">kill = 5</div><div class="line">Output: [5,10]</div><div class="line">Explanation:</div><div class="line">           3</div><div class="line">         /   \</div><div class="line">        1     5</div><div class="line">             /</div><div class="line">            10</div><div class="line">Kill 5 will also kill 10.</div></pre></td></tr></table></figure></p>
-<p>Note:</p>
-<pre><code>The given kill id is guaranteed to be one of the given PIDs.
-n &gt;= 1.
-</code></pre><h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>先把问题条件转化为一个图，然后对图做一个BFS就可以了。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">killProcess</span><span class="params">(List&lt;Integer&gt; pid, List&lt;Integer&gt; ppid, <span class="keyword">int</span> kill)</span> </span>&#123;</div><div class="line"></div><div class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        <span class="keyword">if</span> (pid == <span class="keyword">null</span> || ppid == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (pid.size() != ppid.size()) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Convert to a graph</span></div><div class="line">        HashMap&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, List&lt;Integer&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pid.size(); i++) &#123;</div><div class="line">            <span class="keyword">int</span> child  = pid.get(i);</div><div class="line">            <span class="keyword">int</span> parent = ppid.get(i);</div><div class="line">            <span class="keyword">if</span> (!map.containsKey(parent)) &#123;</div><div class="line">                List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">                temp.add(child);</div><div class="line">                map.put(parent, temp);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                map.get(parent).add(child);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// do a bfs on the graph to get all childs</span></div><div class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line">        queue.offer(kill);</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">            <span class="keyword">int</span> size = queue.size();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">                <span class="keyword">int</span> id = queue.poll();</div><div class="line">                res.add(id);</div><div class="line">                List&lt;Integer&gt; children = map.get(id);</div><div class="line">                <span class="keyword">if</span> (children != <span class="keyword">null</span>) &#123; <span class="comment">// important! check if there exists children</span></div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> c : children) &#123;</div><div class="line">                        queue.offer(c);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1825,7 +1825,7 @@ n &gt;= 1.
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">446</span>
+                <span class="site-state-item-count">447</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
