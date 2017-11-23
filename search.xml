@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[37. Sudoku Solver]]></title>
+    <url>%2F2017%2F11%2F23%2F37-Sudoku-Solver%2F</url>
+    <content type="text"><![CDATA[Write a program to solve a Sudoku puzzle by filling the empty cells. Empty cells are indicated by the character ‘.’. You may assume that there will be only one unique solution. A sudoku puzzle… …and its solution numbers marked in red. 解法1： DFS, O(9^N)N是空格子的总数就是一个比较直接的dfs的题。对于每一个空格子尝试从１到９，然后检查是否是valid，如果是则继续，如果不是就填回原来的数字。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647class Solution &#123; public void solveSudoku(char[][] board) &#123; if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) &#123; return; &#125; solve(board); &#125; private boolean solve(char[][] board) &#123; for (int i = 0; i &lt; board.length; i++) &#123; for (int j = 0; j &lt; board[0].length; j++) &#123; if (board[i][j] == '.') &#123; // fill up 1 to 9 for (char ch = '1'; ch &lt;= '9'; ch++) &#123; if (isValid(board, i, j, ch)) &#123; board[i][j] = ch; boolean next = solve(board); if (next) &#123; return true; &#125; else &#123; board[i][j] = '.'; &#125; &#125; &#125; return false; &#125; &#125; &#125; return true; &#125; private boolean isValid(char[][] board, int row, int col, char ch) &#123; for (int i = 0; i &lt; 9; i++) &#123; if (board[i][col] != '.' &amp;&amp; board[i][col] == ch) return false; if (board[row][i] != '.' &amp;&amp; board[row][i] == ch) return false; // check the small matrix int matrixRow = (row / 3) * 3 + i / 3; int matrixCol = (col / 3) * 3 + i % 3; if (board[matrixRow][matrixCol] != '.' &amp;&amp; board[matrixRow][matrixCol] == ch) return false; &#125; return true; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[460. LFU Cache]]></title>
+    <url>%2F2017%2F11%2F19%2F460-LFU-Cache%2F</url>
+    <content type="text"><![CDATA[Design and implement a data structure for Least Frequently Used (LFU) cache. It should support the following operations: get and put. get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.put(key, value) - Set or insert the value if the key is not already present. When the cache reaches its capacity, it should invalidate the least frequently used item before inserting a new item. For the purpose of this problem, when there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be evicted. Follow up:Could you do both operations in O(1) time complexity? Example:123456789101112LFUCache cache = new LFUCache( 2 /* capacity */ );cache.put(1, 1);cache.put(2, 2);cache.get(1); // returns 1cache.put(3, 3); // evicts key 2cache.get(2); // returns -1 (not found)cache.get(3); // returns 3.cache.put(4, 4); // evicts key 1.cache.get(1); // returns -1 (not found)cache.get(3); // returns 3cache.get(4); // returns 4 解法1：12]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[76. Minimum Window Substring]]></title>
     <url>%2F2017%2F11%2F15%2F76-Minimum-Window-Substring%2F</url>
     <content type="text"><![CDATA[Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n). For example,S = “ADOBECODEBANC”T = “ABC”Minimum window is “BANC”. Note:If there is no such window in S that covers all characters in T, return the empty string “”. If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S. 解法1： Sliding Window直接用Sliding Window的模板来做。维护一个map来存每一个字符出现的次数,用一个指针start记录substring的左边界然后遍历就可以了。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253class Solution &#123; public String minWindow(String s, String t) &#123; // sliding window problem if (t == null || t.length() == 0) &#123; return ""; &#125; if (s == null || s.length() == 0) &#123; return ""; &#125; // Map&lt;Character, Integer&gt; map = new HashMap&lt;&gt;(); for (char ch : t.toCharArray()) &#123; map.put(ch, map.getOrDefault(ch, 0) + 1); &#125; int count = t.length(); int start = 0; int minLen = Integer.MAX_VALUE; String res = ""; for (int i = 0; i &lt; s.length(); i++) &#123; char ch = s.charAt(i); if (map.containsKey(ch)) &#123; map.put(ch, map.get(ch) - 1); // decrease by one if (map.get(ch) &gt;= 0) &#123; count--; &#125; while (count == 0) &#123; // update result string int len = i - start + 1; if (len &lt; minLen) &#123; minLen = len; res = s.substring(start, i + 1); &#125; char temp = s.charAt(start); if (map.containsKey(temp)) &#123; map.put(temp, map.get(temp) + 1); if (map.get(temp) &gt; 0) &#123; count++; &#125; &#125; start++; // move start &#125; &#125; &#125; return res; &#125;&#125;]]></content>

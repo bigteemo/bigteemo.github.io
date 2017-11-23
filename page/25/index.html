@@ -314,6 +314,296 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/27/2017-03-27-leetcode-solution-Add-Two-Numbers-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/27/2017-03-27-leetcode-solution-Add-Two-Numbers-2/" itemprop="url">leetcode解题: Add Two Numbers (2)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-27T21:41:40-04:00">
+                2017-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
+<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
+<p>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 0 -&gt; 8</p>
+<h3 id="解法1：O-N-M-Time-O-1-Space"><a href="#解法1：O-N-M-Time-O-1-Space" class="headerlink" title="解法1：O(N + M) Time + O(1) Space"></a>解法1：O(N + M) Time + O(1) Space</h3><p>这题的坑是leetocde的OJ可能会TLE，要用tail.next = new ListNode(temp)就可以过了。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for singly-linked list.</span></div><div class="line"><span class="comment"> * public class ListNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     ListNode next;</span></div><div class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</div><div class="line">        </div><div class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode tail = dummy;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">while</span> (l1 != <span class="keyword">null</span> &amp;&amp; l2 != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">int</span> val = l1.val + l2.val + carry;</div><div class="line">            <span class="keyword">int</span> digit = val % <span class="number">10</span>;</div><div class="line">            carry = val / <span class="number">10</span>;</div><div class="line">            ListNode temp = <span class="keyword">new</span> ListNode(digit);</div><div class="line">            tail.next = temp;</div><div class="line">            tail = tail.next;</div><div class="line">            l1 = l1.next;</div><div class="line">            l2 = l2.next;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">while</span> (l1 != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">int</span> val = l1.val + carry;</div><div class="line">            <span class="keyword">int</span> digit = val  % <span class="number">10</span>;</div><div class="line">            carry = val / <span class="number">10</span>;</div><div class="line">            tail.next = <span class="keyword">new</span> ListNode(digit);</div><div class="line">            tail = tail.next;</div><div class="line">            l1 = l1.next;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">while</span> (l2 != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">int</span> val = l2.val + carry;</div><div class="line">            <span class="keyword">int</span> digit = val % <span class="number">10</span>;</div><div class="line">            carry = val / <span class="number">10</span>;</div><div class="line">            tail.next = <span class="keyword">new</span> ListNode(digit);</div><div class="line">            tail = tail.next;</div><div class="line">            l2 = l2.next;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (carry != <span class="number">0</span>) &#123;</div><div class="line">            tail.next = <span class="keyword">new</span> ListNode(carry);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dummy.next;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/27/2017-03-27-leetcode-solution-Group-Anagrams-49/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/27/2017-03-27-leetcode-solution-Group-Anagrams-49/" itemprop="url">leetcode解题: Group Anagrams (49)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-27T21:28:06-04:00">
+                2017-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an array of strings, group anagrams together.</p>
+<p>For example, given: [“eat”, “tea”, “tan”, “ate”, “nat”, “bat”],<br>Return:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [&quot;ate&quot;, &quot;eat&quot;,&quot;tea&quot;],</div><div class="line">  [&quot;nat&quot;,&quot;tan&quot;],</div><div class="line">  [&quot;bat&quot;]</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>Note: All inputs will be in lower-case.</p>
+<h3 id="解法1：HashMap-O-N-Time-O-N-Space"><a href="#解法1：HashMap-O-N-Time-O-N-Space" class="headerlink" title="解法1：HashMap, O(N) Time + O(N) Space"></a>解法1：HashMap, O(N) Time + O(N) Space</h3><p>因为anagram是表示排序后A,B的字母一样，那么就可以用一个hashmap存储每一个group， group的key就是排序后的string。<br>string排序在java中并没有自带的函数，可以先转换成chararray，然后用Arrays.sort来排序。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) &#123;</div><div class="line">        List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</div><div class="line">        <span class="keyword">if</span> (strs == <span class="keyword">null</span> || strs.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line">        HashMap&lt;String, ArrayList&lt;String&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;String, ArrayList&lt;String&gt;&gt;();</div><div class="line">        <span class="keyword">for</span> (String str: strs) &#123;</div><div class="line">            String temp = sorted(str);</div><div class="line">            <span class="keyword">if</span> (!map.containsKey(temp)) &#123;</div><div class="line">                ArrayList&lt;String&gt; collection = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">                collection.add(str);</div><div class="line">                map.put(temp, collection);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                map.get(temp).add(str);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (String key : map.keySet()) &#123;</div><div class="line">            res.add(map.get(key));</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sorted</span><span class="params">(String x)</span> </span>&#123;</div><div class="line">        <span class="keyword">char</span>[] temp = x.toCharArray();</div><div class="line">        Arrays.sort(temp);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(temp);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/27/2017-03-27-leetcode-solution-Word-Ladder-127/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1482,307 +1772,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Relative-Ranks-506/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/12/2017-03-12-leetcode-solution-Relative-Ranks-506/" itemprop="url">leetcode解题: Relative Ranks (506)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T22:22:19-04:00">
-                2017-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given scores of N athletes, find their relative ranks and the people with the top three highest scores, who will be awarded medals: “Gold Medal”, “Silver Medal” and “Bronze Medal”.</p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Input: [5, 4, 3, 2, 1]</div><div class="line">Output: [&quot;Gold Medal&quot;, &quot;Silver Medal&quot;, &quot;Bronze Medal&quot;, &quot;4&quot;, &quot;5&quot;]</div><div class="line">Explanation: The first three athletes got the top three highest scores, so they got &quot;Gold Medal&quot;, &quot;Silver Medal&quot; and &quot;Bronze Medal&quot;. </div><div class="line">For the left two athletes, you just need to output their relative ranks according to their scores.</div></pre></td></tr></table></figure></p>
-<p>Note:<br>N is a positive integer and won’t exceed 10,000.<br>All the scores of athletes are guaranteed to be unique.</p>
-<h3 id="解法1：Priority-Queue"><a href="#解法1：Priority-Queue" class="headerlink" title="解法1：Priority Queue"></a>解法1：Priority Queue</h3><p>这里感觉是要用一个带下标的排序，那么我们可以自己实现一个带下标的排序，或者可以使用已有的可排序的数据结构。对于可排序的比较熟悉的就是PriorityQueue了。<br>每一个放入的元素都会自动排序，那么我们只需要全部放入然后一个个读出同时判断是第几个元素就可以解决medal的归属问题。<br>用一个辅助class记录data和index，同时实现一个comparator，来比较这两个pair。</p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">pair</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> data;</div><div class="line">    <span class="keyword">int</span> index;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">pair</span><span class="params">(<span class="keyword">int</span> d, <span class="keyword">int</span> i)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.data = d;</div><div class="line">        <span class="keyword">this</span>.index = i;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> String[] findRelativeRanks(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">        Comparator&lt;pair&gt; comparator = <span class="keyword">new</span> Comparator&lt;pair&gt;() &#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(pair a, pair b)</span> </span>&#123;</div><div class="line">                <span class="keyword">if</span> (a.data &lt; b.data) &#123;</div><div class="line">                    <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a.data == b.data) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        PriorityQueue&lt;pair&gt; queue = <span class="keyword">new</span> PriorityQueue&lt;pair&gt;(nums.length, comparator);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; ++i) &#123;</div><div class="line">            queue.offer(<span class="keyword">new</span> pair(nums[i], i));</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        String[] res = <span class="keyword">new</span> String[nums.length];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; ++i) &#123;</div><div class="line">            pair temp = queue.peek();</div><div class="line">            <span class="keyword">if</span> (queue.size() &gt; <span class="number">3</span>) &#123;</div><div class="line">                res[temp.index] = Integer.toString(queue.size());</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (queue.size() == <span class="number">3</span>) &#123;</div><div class="line">                res[temp.index] = <span class="string">"Bronze Medal"</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (queue.size() == <span class="number">2</span>) &#123;</div><div class="line">                res[temp.index] = <span class="string">"Silver Medal"</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                res[temp.index] = <span class="string">"Gold Medal"</span>;</div><div class="line">            &#125;</div><div class="line">            queue.poll();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Minesweeper-529/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/12/2017-03-12-leetcode-solution-Minesweeper-529/" itemprop="url">leetcode解题: Minesweeper (529)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T15:11:58-04:00">
-                2017-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Let’s play the minesweeper game (Wikipedia, online game)!</p>
-<p>You are given a 2D char matrix representing the game board. ‘M’ represents an unrevealed mine, ‘E’ represents an unrevealed empty square, ‘B’ represents a revealed blank square that has no adjacent (above, below, left, right, and all 4 diagonals) mines, digit (‘1’ to ‘8’) represents how many mines are adjacent to this revealed square, and finally ‘X’ represents a revealed mine.</p>
-<p>Now given the next click position (row and column indices) among all the unrevealed squares (‘M’ or ‘E’), return the board after revealing this position according to the following rules:</p>
-<p>If a mine (‘M’) is revealed, then the game is over - change it to ‘X’.<br>If an empty square (‘E’) with no adjacent mines is revealed, then change it to revealed blank (‘B’) and all of its adjacent unrevealed squares should be revealed recursively.<br>If an empty square (‘E’) with at least one adjacent mine is revealed, then change it to a digit (‘1’ to ‘8’) representing the number of adjacent mines.<br>Return the board when no more squares will be revealed.<br>Example 1:<br>Input:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[&apos;E&apos;, &apos;E&apos;, &apos;E&apos;, &apos;E&apos;, &apos;E&apos;],</div><div class="line"> [&apos;E&apos;, &apos;E&apos;, &apos;M&apos;, &apos;E&apos;, &apos;E&apos;],</div><div class="line"> [&apos;E&apos;, &apos;E&apos;, &apos;E&apos;, &apos;E&apos;, &apos;E&apos;],</div><div class="line"> [&apos;E&apos;, &apos;E&apos;, &apos;E&apos;, &apos;E&apos;, &apos;E&apos;]]</div></pre></td></tr></table></figure></p>
-<p>Click : [3,0]</p>
-<p>Output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[&apos;B&apos;, &apos;1&apos;, &apos;E&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;1&apos;, &apos;M&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;1&apos;, &apos;1&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;B&apos;, &apos;B&apos;, &apos;B&apos;, &apos;B&apos;]]</div></pre></td></tr></table></figure></p>
-<p>Explanation:<br><img src="https://leetcode.com/static/images/problemset/minesweeper_example_1.png" alt="alt text" title="explanation"><br>Example 2:<br>Input:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[&apos;B&apos;, &apos;1&apos;, &apos;E&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;1&apos;, &apos;M&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;1&apos;, &apos;1&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;B&apos;, &apos;B&apos;, &apos;B&apos;, &apos;B&apos;]]</div></pre></td></tr></table></figure></p>
-<p>Click : [1,2]</p>
-<p>Output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[&apos;B&apos;, &apos;1&apos;, &apos;E&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;1&apos;, &apos;X&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;1&apos;, &apos;1&apos;, &apos;1&apos;, &apos;B&apos;],</div><div class="line"> [&apos;B&apos;, &apos;B&apos;, &apos;B&apos;, &apos;B&apos;, &apos;B&apos;]]</div></pre></td></tr></table></figure></p>
-<p>Explanation:<br><img src="https://leetcode.com/static/images/problemset/minesweeper_example_2.png" alt="alt text" title="explanation"></p>
-<p>Note:<br>The range of the input matrix’s height and width is [1,50].<br>The click position will only be an unrevealed square (‘M’ or ‘E’), which also means the input board contains at least one clickable square.<br>The input board won’t be a stage when game is over (some mines have been revealed).<br>For simplicity, not mentioned rules should be ignored in this problem. For example, you don’t need to reveal all the unrevealed mines when the game is over, consider any cases that you will win the game or flag any squares.</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>题目看起来很复杂，其实实现起来比较简单。就一步步按照他的规则来就可以。主要是考察了DFS或者是BFS的应用。这里我用了DFS的解法，对于每一个click的方块。如果是地雷，那么直接return了。<br>如果不是地雷，那么统计一下周围地雷的个数。如果是空的，那么就对所有相邻的都做一遍DFS，如果是有地雷则直接范围地雷的个数。</p>
-<p>Java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    // defines the 8 directions it can point to</div><div class="line">    private int[][] directions = &#123;&#123;0,1&#125;,&#123;0,-1&#125;,&#123;1,0&#125;,&#123;-1,0&#125;,&#123;-1,1&#125;,&#123;1,1&#125;,&#123;1,-1&#125;,&#123;-1,-1&#125;&#125;;</div><div class="line">    public char[][] updateBoard(char[][] board, int[] click) &#123;</div><div class="line">        </div><div class="line">        if (board.length == 0 || board[0].length == 0) &#123;</div><div class="line">            return board;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        dfs(board, click[0], click[1]);</div><div class="line">        </div><div class="line">        return board;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    private void dfs(char[][] board, int i, int j) &#123;</div><div class="line">        if (board[i][j] == &apos;M&apos;) &#123;</div><div class="line">            board[i][j] = &apos;X&apos;;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        if (board[i][j] == &apos;E&apos;) &#123;</div><div class="line">            int n = getNumberOfMines(board, i, j);</div><div class="line">            if (n == 0) &#123;</div><div class="line">                board[i][j] = &apos;B&apos;;</div><div class="line">                // doing dfs for each direction</div><div class="line">                for (int[] direction: directions) &#123;</div><div class="line">                    int x = i + direction[0];</div><div class="line">                    int y = j + direction[1];</div><div class="line">                    if (x &lt; 0 || x &gt;= board.length || y &lt; 0 || y &gt;= board[0].length || board[x][y] == &apos;M&apos;) &#123;</div><div class="line">                        continue;</div><div class="line">                    &#125;</div><div class="line">                    dfs(board, x, y);</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                board[i][j] = (char)(n + &apos;0&apos;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    private int getNumberOfMines(char[][] board, int i, int j) &#123;</div><div class="line">        int n = board.length;</div><div class="line">        int m = board[0].length;</div><div class="line">        int count = 0;</div><div class="line">        for (int[] direction: directions) &#123;</div><div class="line">            int x = i + direction[0];</div><div class="line">            int y = j + direction[1];</div><div class="line">            if (x &lt; 0 || x &gt;= n || y &lt; 0 || y &gt;= m) &#123;</div><div class="line">                continue;</div><div class="line">            &#125;</div><div class="line">            if (board[x][y] == &apos;M&apos;) &#123;</div><div class="line">                ++count;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return count;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1833,7 +1822,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">443</span>
+                <span class="site-state-item-count">445</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
