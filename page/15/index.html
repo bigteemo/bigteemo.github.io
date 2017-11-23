@@ -314,6 +314,161 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/11/2017-07-11-351-Android-Unlock-Patterns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/11/2017-07-11-351-Android-Unlock-Patterns/" itemprop="url">351. Android Unlock Patterns</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T21:05:23-04:00">
+                2017-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an Android 3x3 key lock screen and two integers m and n, where 1 ≤ m ≤ n ≤ 9, count the total number of unlock patterns of the Android lock screen, which consist of minimum of m keys and maximum n keys.</p>
+<p>Rules for a valid pattern:</p>
+<p>   Each pattern must connect at least m keys and at most n keys.<br>   All the keys must be distinct.<br>   If the line connecting two consecutive keys in the pattern passes through any other keys, the other keys must have previously selected in the pattern. No jumps through non selected key is allowed.<br>   The order of keys used matters.<br><img src="https://leetcode.com/static/images/problemset/android-unlock.png" alt="alt text"><br>Explanation:</p>
+<p>| 1 | 2 | 3 |<br>| 4 | 5 | 6 |<br>| 7 | 8 | 9 |</p>
+<p>Invalid move: 4 - 1 - 3 - 6<br>Line 1 - 3 passes through key 2 which had not been selected in the pattern.</p>
+<p>Invalid move: 4 - 1 - 9 - 2<br>Line 1 - 9 passes through key 5 which had not been selected in the pattern.</p>
+<p>Valid move: 2 - 4 - 1 - 3 - 6<br>Line 1 - 3 is valid because it passes through key 2, which had been selected in the pattern</p>
+<p>Valid move: 6 - 5 - 4 - 1 - 9 - 2<br>Line 1 - 9 is valid because it passes through key 5, which had been selected in the pattern.</p>
+<p>Example:<br>Given m = 1, n = 1, return 9.</p>
+<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>这题一拿到感觉是dp或者是dfs的题目。用dp想不出状态方程看来只能用dfs试一下。<br>dfs的话最核心的思想就是每次往目标前进一步，如果成功则再继续探寻。<br>这个问题的一部是要看上一步和当前一步是否构成一个合适的movement.<br>一定是：<br>１．　相邻的<br>２．　对线的<br>３．　不相邻但是当中的数字已经被访问过了</p>
+<p>那么用一个数组维护访问过的数字，同时维护一个上次访问的数字和当前的数字，以便判断一个move是否合适。<br>对于每一个数字进行dfs遍历，每前进一步就把所剩的步数－１．<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfPatterns</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++) &#123;</div><div class="line">            <span class="keyword">boolean</span>[] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">9</span>]; <span class="comment">// initialize the array</span></div><div class="line">            sum += dfs(visited, -<span class="number">1</span>, i);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isValidMove</span><span class="params">(<span class="keyword">boolean</span>[] visited, <span class="keyword">int</span> last, <span class="keyword">int</span> current)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (visited[current]) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (last == -<span class="number">1</span>) &#123;</div><div class="line">            <span class="comment">// First move, always true</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ((last + current) % <span class="number">2</span> == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> row_last = last / <span class="number">3</span>;</div><div class="line">        <span class="keyword">int</span> row_current = current / <span class="number">3</span>;</div><div class="line">        <span class="keyword">int</span> col_last = last % <span class="number">3</span>;</div><div class="line">        <span class="keyword">int</span> col_current = current % <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="comment">//         if (row_last == row_current &amp;&amp; (Math.abs(col_last - col_current) == 1)) &#123;</span></div><div class="line"><span class="comment">//             return true;</span></div><div class="line"><span class="comment">//         &#125;</span></div><div class="line"></div><div class="line"><span class="comment">//         if (col_last == col_current &amp;&amp; (Math.abs(row_last - row_current) == 1)) &#123;</span></div><div class="line"><span class="comment">//             return true;</span></div><div class="line"><span class="comment">//         &#125;</span></div><div class="line"></div><div class="line">        <span class="keyword">int</span> mid = (last + current) / <span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span> (mid == <span class="number">4</span>) &#123;</div><div class="line">            <span class="keyword">return</span> visited[mid];    <span class="comment">// diagonal</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (row_last != row_current &amp;&amp; col_last != col_current) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> visited[mid];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">dfs</span><span class="params">(<span class="keyword">boolean</span>[] visited, <span class="keyword">int</span> last, <span class="keyword">int</span> len)</span> </span>&#123;</div><div class="line">        <span class="comment">// last is the last visited number</span></div><div class="line">        <span class="comment">// len is the remaining length of required key string</span></div><div class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// record the sum</span></div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) &#123;</div><div class="line">            <span class="comment">// Move from last to i</span></div><div class="line">            <span class="keyword">if</span> (isValidMove(visited, last, i)) &#123;</div><div class="line">                visited[i] = <span class="keyword">true</span>;</div><div class="line">                sum += dfs(visited, i, len - <span class="number">1</span>);</div><div class="line">                visited[i] = <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2："><a href="#解法2：" class="headerlink" title="解法2："></a>解法2：</h3><p>由于可能的跳跃是有限的，可以用一个table来存储合法的跳跃path。这样可以简化很多检查一个move是否合法的code。<br>每次DFS的时候从一个点开始，找出可能的path。同时利用对称性，1,3,7,9是一样的；2,4,6,8是一样的。5单独一个。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="comment">// cur: the current position</span></div><div class="line">    <span class="comment">// remain: the steps remaining</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">DFS</span><span class="params">(<span class="keyword">boolean</span> vis[], <span class="keyword">int</span>[][] skip, <span class="keyword">int</span> cur, <span class="keyword">int</span> remain)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(remain &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(remain == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        vis[cur] = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">int</span> rst = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">9</span>; ++i) &#123;</div><div class="line">            <span class="comment">// If vis[i] is not visited and (two numbers are adjacent or skip number is already visited)</span></div><div class="line">            <span class="keyword">if</span>(!vis[i] &amp;&amp; (skip[cur][i] == <span class="number">0</span> || (vis[skip[cur][i]]))) &#123;</div><div class="line">                rst += DFS(vis, skip, i, remain - <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        vis[cur] = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">return</span> rst;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfPatterns</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="comment">// Skip array represents number to skip between two pairs</span></div><div class="line">        <span class="keyword">int</span> skip[][] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>][<span class="number">10</span>];</div><div class="line">        skip[<span class="number">1</span>][<span class="number">3</span>] = skip[<span class="number">3</span>][<span class="number">1</span>] = <span class="number">2</span>;</div><div class="line">        skip[<span class="number">1</span>][<span class="number">7</span>] = skip[<span class="number">7</span>][<span class="number">1</span>] = <span class="number">4</span>;</div><div class="line">        skip[<span class="number">3</span>][<span class="number">9</span>] = skip[<span class="number">9</span>][<span class="number">3</span>] = <span class="number">6</span>;</div><div class="line">        skip[<span class="number">7</span>][<span class="number">9</span>] = skip[<span class="number">9</span>][<span class="number">7</span>] = <span class="number">8</span>;</div><div class="line">        skip[<span class="number">1</span>][<span class="number">9</span>] = skip[<span class="number">9</span>][<span class="number">1</span>] = skip[<span class="number">2</span>][<span class="number">8</span>] = skip[<span class="number">8</span>][<span class="number">2</span>] = skip[<span class="number">3</span>][<span class="number">7</span>] = skip[<span class="number">7</span>][<span class="number">3</span>] = skip[<span class="number">4</span>][<span class="number">6</span>] = skip[<span class="number">6</span>][<span class="number">4</span>] = <span class="number">5</span>;</div><div class="line">        <span class="keyword">boolean</span> vis[] = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">10</span>];</div><div class="line">        <span class="keyword">int</span> rst = <span class="number">0</span>;</div><div class="line">        <span class="comment">// DFS search each length from m to n</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = m; i &lt;= n; ++i) &#123;</div><div class="line">            rst += DFS(vis, skip, <span class="number">1</span>, i - <span class="number">1</span>) * <span class="number">4</span>;    <span class="comment">// 1, 3, 7, 9 are symmetric</span></div><div class="line">            rst += DFS(vis, skip, <span class="number">2</span>, i - <span class="number">1</span>) * <span class="number">4</span>;    <span class="comment">// 2, 4, 6, 8 are symmetric</span></div><div class="line">            rst += DFS(vis, skip, <span class="number">5</span>, i - <span class="number">1</span>);        <span class="comment">// 5</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> rst;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/11/2017-07-11-30-Substring-with-Concatenation-of-All-Words/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1632,157 +1787,6 @@ CDATA_CONTENT may contain any characters. The function of cdata is to forbid the
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/07/08/2017-07-08-539-Minimum-Time-Difference/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/08/2017-07-08-539-Minimum-Time-Difference/" itemprop="url">539. Minimum Time Difference</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-08T21:42:30-04:00">
-                2017-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a list of 24-hour clock time points in “Hour:Minutes” format, find the minimum minutes difference between any two time points in the list.</p>
-<p>Example 1:</p>
-<p>Input: [“23:59”,”00:00”]<br>Output: 1</p>
-<p>Note:</p>
-<pre><code>The number of time points in the given list is at least 2 and won&apos;t exceed 20000.
-The input time is legal and ranges from 00:00 to 23:59.
-</code></pre><h3 id="解法1：-O-NlogN"><a href="#解法1：-O-NlogN" class="headerlink" title="解法1： O(NlogN)"></a>解法1： O(NlogN)</h3><p>很直观的就是把array转化为分钟数的数组，然后两两比较，同时别忘了比较头和尾巴。</p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMinDifference</span><span class="params">(List&lt;String&gt; timePoints)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (timePoints == <span class="keyword">null</span> || timePoints.size() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] times = <span class="keyword">new</span> <span class="keyword">int</span>[timePoints.size()];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; timePoints.size(); i++) &#123;</div><div class="line">            <span class="keyword">int</span> seperator = timePoints.get(i).indexOf(<span class="string">":"</span>);</div><div class="line">            <span class="keyword">int</span> hour = Integer.parseInt(timePoints.get(i).substring(<span class="number">0</span>, seperator));</div><div class="line">            <span class="keyword">int</span> minute = Integer.parseInt(timePoints.get(i).substring(seperator + <span class="number">1</span>));</div><div class="line">            times[i] = hour * <span class="number">60</span> + minute;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Arrays.sort(times);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> res = Integer.MAX_VALUE;</div><div class="line">        <span class="keyword">int</span> time24 = <span class="number">24</span> * <span class="number">60</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; times.length - <span class="number">1</span>; i++) &#123;</div><div class="line">            res = Math.min(res, Math.min(Math.abs(time24 + times[i] - times[i + <span class="number">1</span>]), Math.abs(times[i+<span class="number">1</span>] - times[i])));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        res = Math.min(res, Math.min(Math.abs(time24 + times[<span class="number">0</span>] - times[times.length - <span class="number">1</span>]), Math.abs(times[<span class="number">0</span>] - times[times.length - <span class="number">1</span>])));</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解法2：-O-N"><a href="#解法2：-O-N" class="headerlink" title="解法2： O(N)"></a>解法2： O(N)</h3><p>借鉴了bucket sort 的解法，因为这里分钟数的总个数是固定的。可以用一个60 * 24 = 1440的数组来记录每一个分钟数是否出现。<br>如果一个分钟数出现两次，那么最小值一定是0.<br>同时需要维护一个first和last来记录第一个和最后一个出现过的分钟数。<br>最后比较一下相邻出现过的分钟数以及头尾就可以了。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1833,7 +1837,7 @@ The input time is legal and ranges from 00:00 to 23:59.
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">447</span>
+                <span class="site-state-item-count">448</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -314,6 +314,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Detect-Capital-520/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/12/2017-03-12-leetcode-solution-Detect-Capital-520/" itemprop="url">leetcode解题: Detect Capital (520)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T14:19:57-04:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a word, you need to judge whether the usage of capitals in it is right or not.</p>
+<p>We define the usage of capitals in a word to be right when one of the following cases holds:</p>
+<p>All letters in this word are capitals, like “USA”.<br>All letters in this word are not capitals, like “leetcode”.<br>Only the first letter in this word is capital if it has more than one letter, like “Google”.<br>Otherwise, we define that this word doesn’t use capitals in a right way.<br>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: &quot;USA&quot;</div><div class="line">Output: True</div></pre></td></tr></table></figure></p>
+<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: &quot;FlaG&quot;</div><div class="line">Output: False</div></pre></td></tr></table></figure></p>
+<p>Note: The input will be a non-empty word consisting of uppercase and lowercase latin letters.</p>
+<h3 id="解法1：Regex-表达式"><a href="#解法1：Regex-表达式" class="headerlink" title="解法1：Regex 表达式"></a>解法1：Regex 表达式</h3><p>感觉这个做法比较像作弊。。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">detectCapitalUse</span><span class="params">(String word)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> word.matches(<span class="string">"[A-Z]+|[a-z]+|[A-Z][a-z]+"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2-常规解法"><a href="#解法2-常规解法" class="headerlink" title="解法2: 常规解法"></a>解法2: 常规解法</h3><p>常规的想法，可以判断是否都是大写或者都是小写，或者第2个字母开始是否都是小写。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">detectCapitalUse</span><span class="params">(String word)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (word.equals(word.toUpperCase())) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (word.equals(word.toLowerCase())) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (word.substring(<span class="number">1</span>).equals(word.substring(<span class="number">1</span>).toLowerCase())) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Max-Consecutive-Ones-485/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1687,154 +1835,6 @@ public class Solution {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/02/20/2017-02-20-Leetcode-solution-Range-Sum-Query-2D-Immutable/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/20/2017-02-20-Leetcode-solution-Range-Sum-Query-2D-Immutable/" itemprop="url">Leetcode解题: Range Sum Query 2D - Immutable</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-20T10:13:24-05:00">
-                2017-02-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).</p>
-<p><img src="https://leetcode.com/static/images/courses/range_sum_query_2d.png" alt="alt text" title="Logo Title Text 1"><br>The above rectangle (with the red border) is defined by (row1, col1) = (2, 1) and (row2, col2) = (4, 3), which contains sum = 8.</p>
-<p>Example:<br>Given matrix = [<br>  [3, 0, 1, 4, 2],<br>  [5, 6, 3, 2, 1],<br>  [1, 2, 0, 1, 5],<br>  [4, 1, 0, 1, 7],<br>  [1, 0, 3, 0, 5]<br>]</p>
-<p>sumRegion(2, 1, 4, 3) -&gt; 8<br>sumRegion(1, 1, 2, 2) -&gt; 11<br>sumRegion(1, 2, 2, 4) -&gt; 12<br>Note:<br>You may assume that the matrix does not change.<br>There are many calls to sumRegion function.<br>You may assume that row1 ≤ row2 and col1 ≤ col2.</p>
-<h3 id="解法1：DP-O-N-2-Initialization-O-1-Function-Call"><a href="#解法1：DP-O-N-2-Initialization-O-1-Function-Call" class="headerlink" title="解法1：DP: O(N^2) Initialization, O(1) Function Call"></a>解法1：DP: O(N^2) Initialization, O(1) Function Call</h3><p>这题不难，题目意思是里面的程序会要call很多次。如果不做优化的话每次的成本都是O(N^2).<br>如果我们先预处理一下，把每一个点的累计和存储一下，就是说dp[i][j]是从[0][0]到[i][j]的和。<br>那么当要计算子矩阵的和的时候，我们可以得到如下的关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sum[i][j] = dp[i][j] - dp[i][j-1] - dp[i-1][j] + dp[i-1][j-1]</div></pre></td></tr></table></figure></p>
-<p>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumMatrix</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    NumMatrix(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; matrix) &#123;</div><div class="line">        <span class="comment">// initialize dp</span></div><div class="line">        dp = matrix;    <span class="comment">// copy assignment operator</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix.size(); ++i) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; matrix[i].size(); ++j) &#123;</div><div class="line">                dp[i][j] = (i == <span class="number">0</span>?<span class="number">0</span>: dp[i - <span class="number">1</span>][j]) + (j == <span class="number">0</span>?<span class="number">0</span>:dp[i][j - <span class="number">1</span>]) </div><div class="line">                - (i &gt; <span class="number">0</span> &amp;&amp; j &gt; <span class="number">0</span>?dp[i <span class="number">-1</span>][j - <span class="number">1</span>]: <span class="number">0</span>) + matrix[i][j];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRegion</span><span class="params">(<span class="keyword">int</span> row1, <span class="keyword">int</span> col1, <span class="keyword">int</span> row2, <span class="keyword">int</span> col2)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> dp[row2][col2] - (row1 &gt; <span class="number">0</span>? dp[row1 - <span class="number">1</span>][col2]: <span class="number">0</span>) - (col1 &gt; <span class="number">0</span> ? dp[row2][col1 - <span class="number">1</span>]: <span class="number">0</span>) + (row1 &gt; <span class="number">0</span> &amp;&amp; col1 &gt;<span class="number">0</span> ? dp[row1 - <span class="number">1</span>][col1 - <span class="number">1</span>]: <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your NumMatrix object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * NumMatrix obj = new NumMatrix(matrix);</span></div><div class="line"><span class="comment"> * int param_1 = obj.sumRegion(row1,col1,row2,col2);</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure></p>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1885,7 +1885,7 @@ public class Solution {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">447</span>
+                <span class="site-state-item-count">448</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

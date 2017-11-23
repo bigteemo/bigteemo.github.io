@@ -314,6 +314,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/11/23/87-Scramble-String/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/23/87-Scramble-String/" itemprop="url">87. Scramble String</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T10:38:14-05:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.</p>
+<p>Below is one possible representation of s1 = “great”:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    great</div><div class="line">   /    \</div><div class="line">  gr    eat</div><div class="line"> / \    /  \</div><div class="line">g   r  e   at</div><div class="line">           / \</div><div class="line">          a   t</div></pre></td></tr></table></figure></p>
+<p>To scramble the string, we may choose any non-leaf node and swap its two children.</p>
+<p>For example, if we choose the node “gr” and swap its two children, it produces a scrambled string “rgeat”.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    rgeat</div><div class="line">   /    \</div><div class="line">  rg    eat</div><div class="line"> / \    /  \</div><div class="line">r   g  e   at</div><div class="line">           / \</div><div class="line">          a   t</div></pre></td></tr></table></figure></p>
+<p>We say that “rgeat” is a scrambled string of “great”.</p>
+<p>Similarly, if we continue to swap the children of nodes “eat” and “at”, it produces a scrambled string “rgtae”.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    rgtae</div><div class="line">   /    \</div><div class="line">  rg    tae</div><div class="line"> / \    /  \</div><div class="line">r   g  ta  e</div><div class="line">       / \</div><div class="line">      t   a</div></pre></td></tr></table></figure></p>
+<p>We say that “rgtae” is a scrambled string of “great”.</p>
+<p>Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.</p>
+<h3 id="解法1：-递归-O-2-n"><a href="#解法1：-递归-O-2-n" class="headerlink" title="解法1： 递归　O(2^n)"></a>解法1： 递归　O(2^n)</h3><p>尝试每一个可能的split point，然后查看对于某一个切口i,可能可以分成的４个substring是否是scramble string.<br>时间复杂度是O(2^N)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isScramble</span><span class="params">(String s1, String s2)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (s1.equals(s2)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (s1.length() != s2.length()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] chars = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s1.length(); i++) &#123;</div><div class="line">            chars[(<span class="keyword">int</span>)s1.charAt(i)]++;</div><div class="line">            chars[(<span class="keyword">int</span>)s2.charAt(i)]--;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (chars[i] != <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; s1.length(); i++) &#123;</div><div class="line">            <span class="keyword">if</span> (isScramble(s1.substring(<span class="number">0</span>, i), s2.substring(<span class="number">0</span>, i))</div><div class="line">                &amp;&amp; isScramble(s1.substring(i), s2.substring(i)))</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            <span class="keyword">if</span> (isScramble(s1.substring(<span class="number">0</span>, i), s2.substring(s2.length() - i))</div><div class="line">               &amp;&amp; isScramble(s1.substring(i), s2.substring(<span class="number">0</span>, s2.length() - i)))</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="解法２-DP"><a href="#解法２-DP" class="headerlink" title="解法２: DP"></a>解法２: DP</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isScramble</span><span class="params">(String s1, String s2)</span> </span>&#123;  </div><div class="line">  <span class="keyword">int</span> len = s1.length();  </div><div class="line">  <span class="keyword">if</span> (len != s2.length()) <span class="keyword">return</span> <span class="keyword">false</span>;  </div><div class="line">  <span class="keyword">if</span> (s1.equals(s2)) <span class="keyword">return</span> <span class="keyword">true</span>;  </div><div class="line"></div><div class="line">  <span class="comment">// a table of matches  </span></div><div class="line">  <span class="comment">// T[i][j][k] = true iff s2.substring(j,j+k+1) is a scambled string of s1.substring(i,i+k+1)  </span></div><div class="line">  <span class="keyword">boolean</span>[][][] scrambled = <span class="keyword">new</span> <span class="keyword">boolean</span>[len][len][len];  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; len; ++i) &#123;  </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j &lt; len; ++j) &#123;  </div><div class="line">      scrambled[i][j][<span class="number">0</span>] = (s1.charAt(i) == s2.charAt(j));  </div><div class="line">    &#125;  </div><div class="line">  &#125;  </div><div class="line"></div><div class="line">  <span class="comment">// dynamically fill up the table  </span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">1</span>; k &lt; len; ++k) &#123; <span class="comment">// k: length  </span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; len - k; ++i) &#123; <span class="comment">// i: index in s1  </span></div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j &lt; len - k; ++j) &#123; <span class="comment">// j: index in s2  </span></div><div class="line">        scrambled[i][j][k] = <span class="keyword">false</span>;  </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> p=<span class="number">0</span>; p &lt; k; ++p) &#123; <span class="comment">// p: split into [0..p] and [p+1..k]  </span></div><div class="line">          <span class="keyword">if</span> ((scrambled[i][j][p] &amp;&amp; scrambled[i+p+<span class="number">1</span>][j+p+<span class="number">1</span>][k-p-<span class="number">1</span>])  </div><div class="line">              || (scrambled[i][j+k-p][p] &amp;&amp; scrambled[i+p+<span class="number">1</span>][j][k-p-<span class="number">1</span>])) &#123;  </div><div class="line">            scrambled[i][j][k] = <span class="keyword">true</span>;  </div><div class="line">            <span class="keyword">break</span>;  </div><div class="line">          &#125;  </div><div class="line">        &#125;  </div><div class="line">      &#125;  </div><div class="line">    &#125;  </div><div class="line">  &#125;  </div><div class="line"></div><div class="line">  <span class="keyword">return</span> scrambled[<span class="number">0</span>][<span class="number">0</span>][len-<span class="number">1</span>];  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/11/23/52-N-Queens-II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1623,150 +1775,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/11/13/23-Merge-k-Sorted-List/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/13/23-Merge-k-Sorted-List/" itemprop="url">23. Merge k Sorted List</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-13T22:03:48-05:00">
-                2017-11-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
-<h3 id="解法1：-PriorityQueue-O-NlogM"><a href="#解法1：-PriorityQueue-O-NlogM" class="headerlink" title="解法1： PriorityQueue, O(NlogM)"></a>解法1： PriorityQueue, O(NlogM)</h3><p>M是queue的长度，N是所有node的总数。<br>一个简单的PriorityQueue的应用。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for singly-linked list.</span></div><div class="line"><span class="comment"> * public class ListNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     ListNode next;</span></div><div class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">mergeKLists</span><span class="params">(ListNode[] lists)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (lists == <span class="keyword">null</span> || lists.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode tail = dummy;</div><div class="line"></div><div class="line">        Queue&lt;ListNode&gt; queue = <span class="keyword">new</span> PriorityQueue&lt;&gt;((a,b) -&gt; a.val - b.val);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lists.length; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (lists[i] != <span class="keyword">null</span>) &#123;</div><div class="line">                queue.offer(lists[i]);            </div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">            ListNode next = queue.poll();</div><div class="line">            tail.next = next;</div><div class="line">            tail = tail.next;</div><div class="line">            <span class="comment">// add another node if exist</span></div><div class="line">            <span class="keyword">if</span> (next.next != <span class="keyword">null</span>) &#123;</div><div class="line">                queue.offer(next.next);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> dummy.next;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1817,7 +1825,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">447</span>
+                <span class="site-state-item-count">448</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
