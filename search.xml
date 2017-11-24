@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[132. Palindrome Partitioning II]]></title>
+    <url>%2F2017%2F11%2F24%2F132-Palindrome-Partitioning-II%2F</url>
+    <content type="text"><![CDATA[Given a string s, partition s such that every substring of the partition is a palindrome. Return the minimum cuts needed for a palindrome partitioning of s. For example, given s = “aab”,Return 1 since the palindrome partitioning [“aa”,”b”] could be produced using 1 cut. 解法1： DP O(n^2) Time + O(n^2) Space用一个二维数组pal[i][j]表示，子字符串s[i,j]是否为一个palindrome。同时用一个dp数组dp[i]表示的是[0, i]的字符串的最小cut那么我们可以不停的尝试每一个子字符串[j, i]，如果[j,i]为palindrom，那么他的最小cut就是dp[j - 1] + 1, 不停的变换j就可以求的对应的dp[i]的最小值。 12345678910111213141516171819202122232425262728class Solution &#123; public int minCut(String s) &#123; if (s == null || s.length() == 0) &#123; return 0; &#125; int n = s.length(); boolean[][] pal = new boolean[n][n]; int[] dp = new int[n]; // dp[i] is the min cut for str [0, i] for (int i = 0; i &lt; n; i++) &#123; dp[i] = i; &#125; for (int i = 1; i &lt; n; i++) &#123; for (int j = i; j &gt;= 0; j--) &#123; if (s.charAt(i) == s.charAt(j) &amp;&amp; (i - j + 1 &lt;= 2 || pal[j + 1][i - 1])) &#123; pal[j][i] = true; dp[i] = Math.min(dp[i], j == 0 ? 0 : dp[j - 1] + 1); &#125; &#125; &#125; return dp[n - 1]; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[124. Binary Tree Maximum Path Sum]]></title>
     <url>%2F2017%2F11%2F24%2F124-Binary-Tree-Maximum-Path-Sum%2F</url>
     <content type="text"><![CDATA[Given a binary tree, find the maximum path sum. For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root. For example:Given the below binary tree,123 1 / \2 3 Return 6. 解法1： Divide &amp; Conquer O(N)对于一个node有左右两边的path,经过这一点的path可以有的情况是,往左，往右，自己，或者从左往右。如果以left或者right为顶点的maxPath为负数的话，那么包含当前点的maxPath一定不用包含负数的left或者right 1234567891011121314151617181920212223242526272829303132/** * Definition for a binary tree node. * public class TreeNode &#123; * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) &#123; val = x; &#125; * &#125; */class Solution &#123; int res = Integer.MIN_VALUE; public int maxPathSum(TreeNode root) &#123; if (root == null) return 0; helper(root); return res; &#125; private int helper(TreeNode root) &#123; if (root == null) return 0; int left = Math.max(0, helper(root.left)); int right = Math.max(0, helper(root.right)); res = Math.max(res, left + right + root.val); return Math.max(left, right) + root.val; &#125;&#125;]]></content>

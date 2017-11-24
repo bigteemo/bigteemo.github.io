@@ -314,6 +314,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/29/2016-12-29-leetcode-solution-Flatten-Binary-Tree-to-Linked-List-114/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/29/2016-12-29-leetcode-solution-Flatten-Binary-Tree-to-Linked-List-114/" itemprop="url">leetcode解题: Flatten Binary Tree to Linked List (114)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-29T19:15:28-05:00">
+                2016-12-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a binary tree, flatten it to a linked list in-place.</p>
+<p>For example,<br>Given</p>
+<pre><code>    1
+   / \
+  2   5
+ / \   \
+3   4   6
+</code></pre><p>The flattened tree should look like:<br>   1<br>    \<br>     2<br>      \<br>       3<br>        \<br>         4<br>          \<br>           5<br>            \<br>             6</p>
+<h3 id="解法1：-Divide-amp-Conquer"><a href="#解法1：-Divide-amp-Conquer" class="headerlink" title="解法1： Divide &amp; Conquer"></a>解法1： Divide &amp; Conquer</h3><p>思路是对于每一个节点，如果有left和right两个child, 对left和right分别做flatten的话，只需要把left的child和right的root相连，同时把left的root设为NULL. 然后把root和left的root相连就得到了flatten的list。<br>具体实现起来的时候，可以建立一个辅助的struct来存储每一个节点对应的flatten之后的root和child。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * struct TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode *left;</span></div><div class="line"><span class="comment"> *     TreeNode *right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">NodePair</span> &#123;</span></div><div class="line">  TreeNode* root;</div><div class="line">  TreeNode* child;</div><div class="line">  NodePair(TreeNode* r, TreeNode* c):root(r),child(c) &#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">flatten</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!root) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        NodePair res = helper(root);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">        <span class="function">NodePair <span class="title">helper</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!root) &#123;</div><div class="line">            <span class="keyword">return</span> NodePair(<span class="literal">NULL</span>, <span class="literal">NULL</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;</div><div class="line">            <span class="keyword">return</span> NodePair(root, root);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        NodePair left = helper(root-&gt;left);</div><div class="line">        NodePair right = helper(root-&gt;right);</div><div class="line"></div><div class="line">        <span class="comment">// Combine</span></div><div class="line">        root-&gt;left = <span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">if</span> (!left.root) &#123;</div><div class="line">            root-&gt;right = right.root;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            root-&gt;right = left.root;</div><div class="line">            left.child-&gt;left = <span class="literal">NULL</span>;</div><div class="line">            left.child-&gt;right = right.root;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> NodePair(root, right.child?right.child:left.child);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
+<h3 id="解法2：-Preorder-traversal"><a href="#解法2：-Preorder-traversal" class="headerlink" title="解法2： Preorder traversal"></a>解法2： Preorder traversal</h3><p>从给的例子可以看到，最后的顺序是一个preorder traversal。 那么我们可以先进行preorder， 然后把vector中的node都连接起来。<br>C++<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">flatten</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!root) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">vector</span>&lt;TreeNode*&gt; nodes;</div><div class="line">        preorder(nodes, root);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nodes.size() - <span class="number">1</span>; ++i) &#123;</div><div class="line">            nodes[i]-&gt;left = <span class="literal">NULL</span>;</div><div class="line">            nodes[i]-&gt;right = nodes[i + <span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        nodes[nodes.size() - <span class="number">1</span>]-&gt;left = nodes[nodes.size() - <span class="number">1</span>]-&gt;right = <span class="literal">NULL</span>;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(<span class="built_in">vector</span>&lt;TreeNode*&gt;&amp; nodes, TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!root) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        nodes.push_back(root);</div><div class="line">        preorder(nodes, root-&gt;left);</div><div class="line">        preorder(nodes, root-&gt;right);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="解法3：-Iterative"><a href="#解法3：-Iterative" class="headerlink" title="解法3： Iterative"></a>解法3： Iterative</h3><p>基本思想就是从上往下，如果有left child就把最右端的接到right child上，然后把left child移到左边。然后再按照路劲往下一个node，也就是说<code>root = root.right</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flatten</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (root != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (root.left != <span class="keyword">null</span>) &#123;</div><div class="line">                TreeNode prev = root.left;</div><div class="line">                <span class="keyword">while</span> (prev.right != <span class="keyword">null</span>) &#123;</div><div class="line">                    prev = prev.right;</div><div class="line">                &#125;</div><div class="line">                prev.right = root.right;</div><div class="line">                root.right = root.left;</div><div class="line">                root.left = <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">            root = root.right;  <span class="comment">// go down along the path</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/28/2016-12-28-leetcode-solution-Merge-Sorted-Array-88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1650,171 +1803,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2016/12/26/2016-12-26-leetcode-solution-Delete-Node-in-a-BST-450/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/26/2016-12-26-leetcode-solution-Delete-Node-in-a-BST-450/" itemprop="url">leetcode解题: Delete Node in a BST (450)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-26T17:12:08-05:00">
-                2016-12-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST.</p>
-<p>Basically, the deletion can be divided into two stages:</p>
-<p>Search for a node to remove.<br>If the node is found, delete the node.<br>Note: Time complexity should be O(height of tree).</p>
-<p>Example:</p>
-<p>root = [5,3,6,2,4,null,7]<br>key = 3</p>
-<pre><code>5
-</code></pre><p>   / \<br>  3   6<br> / \   \<br>2   4   7</p>
-<p>Given key to delete is 3. So we find the node with value 3 and delete it.</p>
-<p>One valid answer is [5,4,6,2,null,null,7], shown in the following BST.</p>
-<pre><code>5
-</code></pre><p>   / \<br>  4   6<br> /     \<br>2       7</p>
-<p>Another valid answer is [5,2,6,null,4,null,7].</p>
-<pre><code>5
-</code></pre><p>   / \<br>  2   6<br>   \   \<br>    4   7</p>
-<h3 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h3><p>此题比较复杂，参考了<a href="http://www.algolist.net/Data_structures/Binary_search_tree/Removal" target="_blank" rel="external">这篇</a>的解法。主要的思路是把要删除的节点分情况讨论。<br>基本的思路是： 对于一个要删除的节点，找出大于他的最小的node作为新的子root，或者是选出小于他的最大的node作为新的root。<br>解决此题的步骤如下：</p>
-<ol>
-<li>找出要删除的节点的父节点。</li>
-<li>如果删除节点是leaf， 那么直接把父节点相应的连接设为null</li>
-<li>如果删除节点只有一个子树， 那么把父节点指向唯一的那个子树</li>
-<li>如果删除节点有两个子树， 那么找出大于删除节点的最小节点（设为x), 然后把删除节点的数值设为x的值，然后重新运行一遍删除操作。</li>
-<li>上一步中，程序一定会终止因为最左节点一定是只有小于等于1个子节点。<br>等找出最小的大于他的node的时候（也就是右子树的最左节点）， 要分<br>C++<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * struct TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode *left;</span></div><div class="line"><span class="comment"> *     TreeNode *right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></div><div class="line"><span class="comment"> * &#125;;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">TreeNode* <span class="title">deleteNode</span><span class="params">(TreeNode* root, <span class="keyword">int</span> key)</span> </span>&#123;</div><div class="line">        TreeNode* dummy = <span class="keyword">new</span> TreeNode(<span class="number">0</span>);</div><div class="line">        dummy-&gt;left = root;</div><div class="line">        </div><div class="line">        TreeNode* parent = findNode(dummy, root, key);</div><div class="line">        TreeNode* node;</div><div class="line">        <span class="keyword">if</span> (parent-&gt;left &amp;&amp; parent-&gt;left-&gt;val == key) &#123;</div><div class="line">            node = parent-&gt;left;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;right &amp;&amp; parent-&gt;right-&gt;val == key) &#123;</div><div class="line">            node = parent-&gt;right;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// can't find the node</span></div><div class="line">            <span class="keyword">return</span> dummy-&gt;left;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        deleteNode(parent, node);</div><div class="line">        </div><div class="line">        TreeNode* res = dummy-&gt;left;</div><div class="line">        <span class="keyword">delete</span> dummy;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function">TreeNode* <span class="title">findNode</span><span class="params">(TreeNode* parent, TreeNode* cur,<span class="keyword">int</span> key)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!cur || cur-&gt;val == key) &#123;</div><div class="line">            <span class="keyword">return</span> parent;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (cur-&gt;val &lt; key) &#123;</div><div class="line">            <span class="keyword">return</span> findNode(cur, cur-&gt;right, key);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> findNode(cur, cur-&gt;left, key);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">(TreeNode* parent, TreeNode* node)</span> </span>&#123;</div><div class="line">        <span class="comment">// delete the node, giving the parent</span></div><div class="line">         <span class="keyword">if</span> (!node-&gt;right) &#123;</div><div class="line">            <span class="keyword">if</span> (parent-&gt;left == node) &#123;</div><div class="line">                parent-&gt;left = node-&gt;left;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                parent-&gt;right = node-&gt;left;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!node-&gt;left) &#123;</div><div class="line">            <span class="keyword">if</span> (parent-&gt;left == node) &#123;</div><div class="line">                parent-&gt;left = node-&gt;right;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                parent-&gt;right = node-&gt;right;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            TreeNode* father = node;</div><div class="line">            TreeNode* child = node-&gt;right;</div><div class="line">            <span class="keyword">while</span> (child-&gt;left) &#123;</div><div class="line">                father = child;</div><div class="line">                child = child-&gt;left;</div><div class="line">            &#125;</div><div class="line">            node-&gt;val = child-&gt;val;</div><div class="line">            deleteNode(father, child);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1865,7 +1853,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">451</span>
+                <span class="site-state-item-count">452</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
