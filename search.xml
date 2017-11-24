@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[124. Binary Tree Maximum Path Sum]]></title>
+    <url>%2F2017%2F11%2F24%2F124-Binary-Tree-Maximum-Path-Sum%2F</url>
+    <content type="text"><![CDATA[Given a binary tree, find the maximum path sum. For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root. For example:Given the below binary tree,123 1 / \2 3 Return 6. 解法1： Divide &amp; Conquer O(N)对于一个node有左右两边的path,经过这一点的path可以有的情况是,往左，往右，自己，或者从左往右。如果以left或者right为顶点的maxPath为负数的话，那么包含当前点的maxPath一定不用包含负数的left或者right 1234567891011121314151617181920212223242526272829303132/** * Definition for a binary tree node. * public class TreeNode &#123; * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) &#123; val = x; &#125; * &#125; */class Solution &#123; int res = Integer.MIN_VALUE; public int maxPathSum(TreeNode root) &#123; if (root == null) return 0; helper(root); return res; &#125; private int helper(TreeNode root) &#123; if (root == null) return 0; int left = Math.max(0, helper(root.left)); int right = Math.max(0, helper(root.right)); res = Math.max(res, left + right + root.val); return Math.max(left, right) + root.val; &#125;&#125;]]></content>
+      <categories>
+        <category>刷题总结</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[99. Recover Binary Search Tree]]></title>
     <url>%2F2017%2F11%2F23%2F99-Recover-Binary-Search-Tree%2F</url>
     <content type="text"><![CDATA[Two elements of a binary search tree (BST) are swapped by mistake. Recover the tree without changing its structure. Note:A solution using O(n) space is pretty straight forward. Could you devise a constant space solution? 解法1： In-order Traversal O(N)BST的很重要的性质就是对他进行in order traversal的话，得到的是一个有序数组。那么可以按照in order traversal,找到第一个node使得node.val &gt;= node.successor.val和最后一个node使得node.predecessor.val &gt;= node.val就可以了 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849/** * Definition for a binary tree node. * public class TreeNode &#123; * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) &#123; val = x; &#125; * &#125; */class Solution &#123; TreeNode first = null; TreeNode second = null; TreeNode prev = null; public void recoverTree(TreeNode root) &#123; if (root == null) return; inOrder(root); if (first == null || second == null) return; int temp = first.val; first.val = second.val; second.val = temp; return; &#125; private void inOrder(TreeNode root) &#123; if (root == null) return; inOrder(root.left); if (prev != null &amp;&amp; prev.val &gt;= root.val) &#123; if (first == null) &#123; first = prev; &#125; if (first != null) &#123; second = root; &#125; &#125; prev = root; inOrder(root.right); &#125;&#125;]]></content>
