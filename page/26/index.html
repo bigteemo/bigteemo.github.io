@@ -314,6 +314,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/27/2017-03-27-leetcode-solution-Word-Ladder-127/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/27/2017-03-27-leetcode-solution-Word-Ladder-127/" itemprop="url">Leetcode解题: Word Ladder (127)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-27T20:52:42-04:00">
+                2017-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given two words (beginWord and endWord), and a dictionary’s word list, find the length of shortest transformation sequence from beginWord to endWord, such that:</p>
+<p>Only one letter can be changed at a time.<br>Each transformed word must exist in the word list. Note that beginWord is not a transformed word.<br>For example,</p>
+<p>Given:<br>beginWord = “hit”<br>endWord = “cog”<br>wordList = [“hot”,”dot”,”dog”,”lot”,”log”,”cog”]<br>As one shortest transformation is “hit” -&gt; “hot” -&gt; “dot” -&gt; “dog” -&gt; “cog”,<br>return its length 5.</p>
+<p>Note:<br>Return 0 if there is no such transformation sequence.<br>All words have the same length.<br>All words contain only lowercase alphabetic characters.<br>You may assume no duplicates in the word list.<br>You may assume beginWord and endWord are non-empty and are not the same.</p>
+<h3 id="解法1：BFS-Time-O-26LN"><a href="#解法1：BFS-Time-O-26LN" class="headerlink" title="解法1：BFS, Time O(26LN)"></a>解法1：BFS, Time O(26<em>L</em>N)</h3><p>求最小路径，用BFS比较自然可以想到。关键是怎么构建一个图. 我们把每一个word改变一个字母，检查是否在已知的dict中。由于查询用hashtable是最快的，这里需要考虑用一个hashset来存放dict。<br>然后用一个BFS遍历就可以了。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(String beginWord, String endWord, List&lt;String&gt; wordList)</span> </span>&#123;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (wordList == <span class="keyword">null</span> || wordList.size() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (beginWord.equals(endWord)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">// To boost lookup</span></div><div class="line">        Set&lt;String&gt; dict = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">        <span class="keyword">for</span> (String word: wordList) &#123;</div><div class="line">            dict.add(word);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        Queue&lt;String&gt; queue = <span class="keyword">new</span> LinkedList&lt;String&gt;();</div><div class="line">        Set&lt;String&gt; visited = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">        </div><div class="line">        queue.offer(beginWord);</div><div class="line">        visited.add(beginWord);</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> res = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(!queue.isEmpty()) &#123;</div><div class="line">            ++res;</div><div class="line">            <span class="keyword">int</span> size = queue.size();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; ++i) &#123;</div><div class="line">                String current = queue.poll();</div><div class="line">                List&lt;String&gt; next = getNextWords(current, dict);</div><div class="line">                <span class="keyword">for</span> (String candidate: next) &#123;</div><div class="line">                    <span class="keyword">if</span> (candidate.equals(endWord)) &#123;</div><div class="line">                        <span class="keyword">return</span> res;</div><div class="line">                    &#125;              </div><div class="line">                    <span class="keyword">if</span> (!visited.contains(candidate)) &#123;</div><div class="line">                        queue.offer(candidate);</div><div class="line">                        visited.add(candidate);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">replace</span><span class="params">(String origin, <span class="keyword">int</span> index, <span class="keyword">char</span> c)</span> </span>&#123;</div><div class="line">        <span class="keyword">char</span>[] temp = origin.toCharArray();</div><div class="line">        temp[index] = c;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(temp);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getNextWords</span><span class="params">(String origin, Set&lt;String&gt; dict)</span> </span>&#123;</div><div class="line">        </div><div class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> i = <span class="string">'a'</span>; i &lt;= <span class="string">'z'</span>; ++i) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; origin.length(); ++j) &#123;</div><div class="line">                <span class="keyword">if</span> (origin.charAt(j) == i) &#123;</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                &#125;</div><div class="line">                String temp = replace(origin, j, i);</div><div class="line">                <span class="keyword">if</span> (dict.contains(temp)) &#123;</div><div class="line">                    res.add(temp);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/26/2017-03-26-leetcode-solution-Search-a-2D-Matrix-II-240/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1637,153 +1783,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/03/12/2017-03-12-leetcode-solution-Lonely-Pixel-531/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/12/2017-03-12-leetcode-solution-Lonely-Pixel-531/" itemprop="url">Leetcode解题: Lonely Pixel (531)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T15:11:39-04:00">
-                2017-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a picture consisting of black and white pixels, find the number of black lonely pixels.</p>
-<p>The picture is represented by a 2D char array consisting of ‘B’ and ‘W’, which means black and white pixels respectively.</p>
-<p>A black lonely pixel is character ‘B’ that located at a specific position where the same row and same column don’t have any other black pixels.</p>
-<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Input: </div><div class="line">[[&apos;W&apos;, &apos;W&apos;, &apos;B&apos;],</div><div class="line"> [&apos;W&apos;, &apos;B&apos;, &apos;W&apos;],</div><div class="line"> [&apos;B&apos;, &apos;W&apos;, &apos;W&apos;]]</div><div class="line"></div><div class="line">Output: 3</div><div class="line">Explanation: All the three &apos;B&apos;s are black lonely pixels.</div></pre></td></tr></table></figure></p>
-<p>Note:<br>The range of width and height of the input 2D array is [1,500].</p>
-<h3 id="解法1：O-MN-Time-O-M-N-Space"><a href="#解法1：O-MN-Time-O-M-N-Space" class="headerlink" title="解法1：O(MN) Time + O(M + N) Space"></a>解法1：O(MN) Time + O(M + N) Space</h3><p>用两个数组分别记录每一行， 每一列的pixel的个数，然后遍历一遍矩阵，对于每一个B的位置查看当前行列的B的个数。<br>Java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findLonelyPixel</span><span class="params">(<span class="keyword">char</span>[][] picture)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (picture.length == <span class="number">0</span> || picture[<span class="number">0</span>].length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> n = picture.length;</div><div class="line">        <span class="keyword">int</span> m = picture[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">int</span>[] row = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        <span class="keyword">int</span>[] col = <span class="keyword">new</span> <span class="keyword">int</span>[m];</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</div><div class="line">                <span class="keyword">if</span> (picture[i][j] == <span class="string">'B'</span>) &#123;</div><div class="line">                    row[i]++;</div><div class="line">                    col[j]++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n;++i) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</div><div class="line">                <span class="keyword">if</span> (picture[i][j] == <span class="string">'B'</span>) &#123;</div><div class="line">                    <span class="keyword">if</span> (row[i] == <span class="number">1</span> &amp;&amp; col[j] == <span class="number">1</span>) &#123;</div><div class="line">                        ++count;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1834,7 +1833,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">452</span>
+                <span class="site-state-item-count">453</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
