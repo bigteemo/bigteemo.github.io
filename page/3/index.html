@@ -314,6 +314,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/11/11/390-Elimination-Game/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bigteemo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大提莫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/11/390-Elimination-Game/" itemprop="url">390. Elimination Game</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-11T08:31:23-05:00">
+                2017-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>There is a list of sorted integers from 1 to n. Starting from left to right, remove the first number and every other number afterward until you reach the end of the list.</p>
+<p>Repeat the previous step again, but this time from right to left, remove the right most number and every other number from the remaining numbers.</p>
+<p>We keep repeating the steps again, alternating left to right and right to left, until a single number remains.</p>
+<p>Find the last number that remains starting with a list of length n.</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">n = 9,</div><div class="line">1 2 3 4 5 6 7 8 9</div><div class="line">2 4 6 8</div><div class="line">2 6</div><div class="line">6</div><div class="line"></div><div class="line">Output:</div><div class="line">6</div></pre></td></tr></table></figure></p>
+<h3 id="解法1：-Recursion"><a href="#解法1：-Recursion" class="headerlink" title="解法1： Recursion"></a>解法1： Recursion</h3><p>观察可以发现，对于[1,2,3,4,5,6,7,8,9] 这个数组，第一遍从左到右去掉之后得到的是[2,4,6,8],这个时候需要从右往左。<br>那么她的结果也就是可以看成是两倍的right(1,2,3,4)。<br>同理，这个(1,2,3,4)又可以看成是从左到右的(1,2),不过这里要区分一下奇数和偶数的情况。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lastRemaining</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> left2Right(n);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">left2Right</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">2</span>) <span class="keyword">return</span> n;</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span> * right2Left(n / <span class="number">2</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">right2Left</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="comment">// differentiate between odd and even cases</span></div><div class="line">        <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">2</span> * left2Right(n / <span class="number">2</span>);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">2</span> * left2Right(n / <span class="number">2</span>) - <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解法2：-Iteration-TLE"><a href="#解法2：-Iteration-TLE" class="headerlink" title="解法2： Iteration  TLE"></a>解法2： Iteration  TLE</h3><p>也可以用约瑟夫环的类似的解法取去模拟删除的过程。不过大数据的时候就TLE了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lastRemaining</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">2</span>) <span class="keyword">return</span> n;</div><div class="line"></div><div class="line">        LinkedList&lt;Integer&gt; list = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">            list.add(i);</div><div class="line">        &#125;</div><div class="line">        ListIterator&lt;Integer&gt; iterator = list.listIterator();</div><div class="line">        <span class="keyword">boolean</span> left2Right = <span class="keyword">true</span>;</div><div class="line">        iterator.next();    <span class="comment">// starting from the starting point</span></div><div class="line">        <span class="keyword">while</span> (list.size() &gt; <span class="number">1</span>) &#123;</div><div class="line">            iterator.remove();</div><div class="line">            <span class="keyword">if</span> (left2Right) &#123;</div><div class="line">                <span class="keyword">if</span> (iterator.hasNext()) &#123;</div><div class="line">                    iterator.next();</div><div class="line">                    <span class="keyword">if</span> (iterator.hasNext()) &#123;</div><div class="line">                        iterator.next();</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        left2Right = <span class="keyword">false</span>;</div><div class="line">                        iterator.previous();</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    left2Right = <span class="keyword">false</span>;</div><div class="line">                    iterator.previous();</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span> (iterator.hasPrevious()) &#123;</div><div class="line">                    iterator.previous();</div><div class="line">                    <span class="keyword">if</span> (iterator.hasPrevious()) &#123;</div><div class="line">                        iterator.previous();</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        left2Right = <span class="keyword">true</span>;</div><div class="line">                        iterator.next();</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    left2Right = <span class="keyword">true</span>;</div><div class="line">                    iterator.next();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> list.get(<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/11/11/388-Longest-Absolute-File-Path/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1627,158 +1775,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://bigteemo.github.io/2017/11/05/443-String-Compression/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Bigteemo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="大提莫">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/443-String-Compression/" itemprop="url">443. String Compression</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T17:46:16-05:00">
-                2017-11-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题总结/" itemprop="url" rel="index">
-                    <span itemprop="name">刷题总结</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array of characters, compress it in-place.</p>
-<p>The length after compression must always be smaller than or equal to the original array.</p>
-<p>Every element of the array should be a character (not int) of length 1.</p>
-<p>After you are done modifying the input array in-place, return the new length of the array.</p>
-<p>Follow up:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Could you solve it using only O(1) extra space?</div></pre></td></tr></table></figure></p>
-<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">[&quot;a&quot;,&quot;a&quot;,&quot;b&quot;,&quot;b&quot;,&quot;c&quot;,&quot;c&quot;,&quot;c&quot;]</div><div class="line"></div><div class="line">Output:</div><div class="line">Return 6, and the first 6 characters of the input array should be: [&quot;a&quot;,&quot;2&quot;,&quot;b&quot;,&quot;2&quot;,&quot;c&quot;,&quot;3&quot;]</div><div class="line"></div><div class="line">Explanation:</div><div class="line">&quot;aa&quot; is replaced by &quot;a2&quot;. &quot;bb&quot; is replaced by &quot;b2&quot;. &quot;ccc&quot; is replaced by &quot;c3&quot;.</div></pre></td></tr></table></figure></p>
-<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">[&quot;a&quot;]</div><div class="line"></div><div class="line">Output:</div><div class="line">Return 1, and the first 1 characters of the input array should be: [&quot;a&quot;]</div><div class="line"></div><div class="line">Explanation:</div><div class="line">Nothing is replaced.</div></pre></td></tr></table></figure></p>
-<p>Example 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">[&quot;a&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;]</div><div class="line"></div><div class="line">Output:</div><div class="line">Return 4, and the first 4 characters of the input array should be: [&quot;a&quot;,&quot;b&quot;,&quot;1&quot;,&quot;2&quot;].</div><div class="line"></div><div class="line">Explanation:</div><div class="line">Since the character &quot;a&quot; does not repeat, it is not compressed. &quot;bbbbbbbbbbbb&quot; is replaced by &quot;b12&quot;.</div><div class="line">Notice each digit has it&apos;s own entry in the array.</div></pre></td></tr></table></figure></p>
-<p>Note:<br>All characters have an ASCII value in [35, 126].<br>1 &lt;= len(chars) &lt;= 1000.</p>
-<h3 id="解法1：-in-place"><a href="#解法1：-in-place" class="headerlink" title="解法1： in-place"></a>解法1： in-place</h3><p>inplace的解法就是用一个pos记录当前需要插入的位置。<br>用一个变量last记录上一个字符，用count记录那个字符重复的次数。<br>如果当前字符和last一样则更新count，否则的话就写入到array中。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compress</span><span class="params">(<span class="keyword">char</span>[] chars)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (chars == <span class="keyword">null</span> || chars.length == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (chars.length == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> pos = <span class="number">0</span>;</div><div class="line">        <span class="keyword">char</span> last = chars[<span class="number">0</span>];</div><div class="line">        <span class="keyword">int</span> count = <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; chars.length; i++) &#123;</div><div class="line">            <span class="keyword">char</span> current = chars[i];</div><div class="line">            <span class="keyword">if</span> (current == last) &#123;</div><div class="line">                count++;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                chars[pos++] = last;</div><div class="line">                <span class="keyword">if</span> (count &gt; <span class="number">1</span>) &#123;</div><div class="line">                    String digit = Integer.toString(count);</div><div class="line">                    <span class="keyword">for</span> (<span class="keyword">char</span> d : digit.toCharArray()) &#123;</div><div class="line">                        chars[pos++] = d;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                count = <span class="number">1</span>;</div><div class="line">                last = current;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        chars[pos++] = chars[chars.length - <span class="number">1</span>];</div><div class="line">        <span class="keyword">if</span> (count &gt; <span class="number">1</span>) &#123;</div><div class="line">            String digit = Integer.toString(count);</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">char</span> d : digit.toCharArray()) &#123;</div><div class="line">                chars[pos++] = d;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> pos;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1829,7 +1825,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">453</span>
+                <span class="site-state-item-count">454</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
